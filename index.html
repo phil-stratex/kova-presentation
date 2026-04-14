@@ -1,0 +1,2269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KOVA by stratex-ai – Student Housing Operations, Connected</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{font-family:'Outfit',sans-serif;background:#0a0e1a;color:#fff;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+canvas#bg{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0}
+.overlay{position:fixed;top:0;left:0;width:100%;height:100%;z-index:1;pointer-events:none;overflow:hidden}
+.scroll-spacer{height:1350vh}
+.sec{position:absolute;top:0;left:0;width:100%;height:100%;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;opacity:0;will-change:transform,opacity;padding:0 6vw}
+.sec h1{font-size:clamp(1.8rem,4.5vw,3.6rem);font-weight:600;line-height:1.15;max-width:850px;margin-bottom:1.2rem;letter-spacing:-0.02em}
+.sec h2{font-size:clamp(1.2rem,2.8vw,2rem);font-weight:500;margin-bottom:0.8rem;color:rgba(255,255,255,0.85)}
+.sec p{font-size:clamp(0.95rem,1.4vw,1.2rem);font-weight:300;color:rgba(255,255,255,0.55);max-width:480px;line-height:1.7}
+.sec .logo{width:clamp(140px,18vw,260px);margin-bottom:2.5rem;opacity:0.92;filter:brightness(1.1)}
+.sec .sub{margin-top:0.6rem}
+.char{display:inline-block;opacity:0}
+.word{display:inline-block;opacity:0;margin:0 0.25em}
+.accent{color:#3b82f6}
+.glow-text{text-shadow:0 0 30px rgba(59,130,246,0.6),0 0 60px rgba(59,130,246,0.3),0 0 100px rgba(59,130,246,0.15)}
+#sec3,#sec4{justify-content:flex-start;padding-top:5vh}
+#sec5,#sec6,#sec8,#sec9{justify-content:flex-start;padding-top:12vh}
+#sec7{justify-content:flex-start;padding-top:10vh}
+#sec10{justify-content:flex-start;padding-top:14vh}
+#sec11{justify-content:flex-start;padding-top:12vh}
+</style>
+</head>
+<body>
+<canvas id="bg"></canvas>
+<div class="overlay" id="overlay">
+
+  <div class="sec" id="sec1">
+    <img src="stratex ai (500 x 300 px) (2888 x 1920 px).png" alt="stratex-ai" class="logo" id="logo">
+    <h1 id="heroHL"></h1>
+    <p class="sub" id="heroSub">Modern student residences deserve modern operations.<br>Instead, most teams still juggle spreadsheets, disconnected tools, and manual handoffs.</p>
+  </div>
+
+  <div class="sec" id="sec2">
+    <h1 id="pauseHL"></h1>
+  </div>
+
+  <div class="sec" id="sec3">
+    <h2 id="sec3Title">Fragmented Operations</h2>
+  </div>
+
+  <div class="sec" id="sec4">
+    <h2 class="accent glow-text" id="sec4Title">Connected by KOVA</h2>
+  </div>
+
+  <div class="sec" id="sec5">
+    <h1 id="sec5Title">One view. Every residence.</h1>
+    <p id="sec5Body">Real-time occupancy, revenue, and maintenance insights across your entire portfolio&nbsp;— in a single dashboard designed for residence operators, not IT&nbsp;departments.</p>
+  </div>
+
+  <div class="sec" id="sec6">
+    <h1 id="sec6Title">The full resident journey.<br>Automated.</h1>
+    <p id="sec6Body">From the first inquiry to the final checkout&nbsp;— KOVA automates every milestone of the resident lifecycle. Viewings, deposits, contracts, move-ins, and move-outs&nbsp;— all tracked, all connected.</p>
+  </div>
+
+  <div class="sec" id="sec7">
+    <h1 id="sec7Title">Every request. Right person.<br>Right time.</h1>
+    <p id="sec7Body">A resident reports a broken heater. A parent asks about parking. An owner wants the monthly report. KOVA understands each request, assigns priority, and routes it to the right team&nbsp;— automatically.</p>
+  </div>
+
+  <div class="sec" id="sec8">
+    <h1 id="sec8Title">Connected to what you already use.</h1>
+    <p id="sec8Body">KOVA integrates with your existing tools&nbsp;— access control, payments, accounting, and communication&nbsp;— so nothing gets replaced, everything gets connected.</p>
+  </div>
+
+  <div class="sec" id="sec9">
+    <h1 id="sec9Title">From rent roll to owner report.<br>Automated.</h1>
+    <p id="sec9Body">Rent collection, arrears tracking, utility billing, deposit management, and owner distributions&nbsp;— all in one financial engine, fully automated.</p>
+  </div>
+
+  <div class="sec" id="sec10">
+    <h1 id="sec10Title">What changes with KOVA.</h1>
+    <p id="sec10Body">The operational improvements you can expect when everything is connected.</p>
+  </div>
+
+  <div class="sec" id="sec11">
+    <h1 id="sec11Title">Built by people who know<br>both worlds.</h1>
+    <p id="sec11Body">We combine hands-on student residence experience with modern software engineering. KOVA is built by a team that has managed residences&nbsp;— not just read about them.</p>
+  </div>
+
+  <div class="sec" id="sec12">
+    <h1><span id="sec12Pre">Your residence operations, connected with</span> <span class="accent glow-text" id="kovaWord">KOVA</span>.</h1>
+    <p id="sec12Sub" style="margin-top:1.5rem;opacity:0.4;font-size:0.95rem">by stratex-ai</p>
+  </div>
+
+</div>
+<div class="scroll-spacer"></div>
+
+<script>
+(function(){
+'use strict';
+
+/* =========================================================
+   CONSTANTS
+   ========================================================= */
+const COLORS = {
+  bg: '#0a0e1a',
+  bgR: 10, bgG: 14, bgB: 26,
+  dotGrid: 'rgba(255,255,255,0.03)',
+  dotGridHL: 'rgba(255,255,255,0.09)',
+  particle: [150,180,255],
+  particleBright: [200,220,255],
+  connLine: 'rgba(255,255,255,0.04)',
+  accent: '#3b82f6',
+  accentLight: '#60a5fa',
+  accentGlow: 'rgba(59,130,246,0.4)',
+  accentGlowStrong: 'rgba(59,130,246,0.7)',
+  textPri: '#ffffff',
+  textSec: 'rgba(255,255,255,0.6)',
+  textMuted: 'rgba(255,255,255,0.3)',
+  nodeBg: 'rgba(255,255,255,0.04)',
+  nodeBorder: 'rgba(255,255,255,0.1)',
+  nodeBorderActive: 'rgba(59,130,246,0.5)',
+  dashedLine: 'rgba(255,255,255,0.12)',
+  solidLine: '#3b82f6'
+};
+
+const SECTION_COUNT = 12;
+const SEG = 1 / SECTION_COUNT;
+const PARTICLE_COUNT = 72;
+const DOT_SPACING = 40;
+const CONNECT_DIST = 120;
+const NODE_LABELS = ['Lettings','Maintenance','Resident Comms','Owner Reporting','Revenue & Billing','Inspections','Compliance & Docs','Guest Experience'];
+const HERO_TEXT = "Student living is growing fast. Operations haven\u2019t kept up.";
+const PAUSE_TEXT = "The systems exist. The connection is missing.";
+
+const TRANSLATIONS = {
+  heroHL: {
+    en: "Student living is growing fast. Operations haven\u2019t kept up.",
+    de: "Studentisches Wohnen w\u00e4chst rasant. Die Betriebsprozesse hinken hinterher."
+  },
+  heroSub: {
+    en: "Modern student residences deserve modern operations.<br>Instead, most teams still juggle spreadsheets, disconnected tools, and manual handoffs.",
+    de: "Moderne Studentenresidenzen verdienen moderne Prozesse.<br>Stattdessen k\u00e4mpfen die meisten Teams noch mit Excel-Tabellen, getrennten Tools und manuellen \u00dcbergaben."
+  },
+  pauseHL: {
+    en: "The systems exist. The connection is missing.",
+    de: "Die Systeme existieren. Die Verbindung fehlt."
+  },
+  sec3Title: { en: "Fragmented Operations", de: "Fragmentierte Prozesse" },
+  sec4Title: { en: "Connected by KOVA", de: "Verbunden durch KOVA" },
+  sec5Title: { en: "One view. Every residence.", de: "Ein Blick. Jede Residenz." },
+  sec5Body: {
+    en: "Real-time occupancy, revenue, and maintenance insights across your entire portfolio\u00a0\u2014 in a single dashboard designed for residence operators, not IT\u00a0departments.",
+    de: "Echtzeit-Belegung, Umsatz und Wartungsdaten \u00fcber Ihr gesamtes Portfolio\u00a0\u2014 in einem Dashboard, das f\u00fcr Residenz-Betreiber gemacht ist, nicht f\u00fcr IT-Abteilungen."
+  },
+  sec6Title: { en: "The full resident journey.<br>Automated.", de: "Die komplette Bewohner-Reise.<br>Automatisiert." },
+  sec6Body: {
+    en: "From the first inquiry to the final checkout\u00a0\u2014 KOVA automates every milestone of the resident lifecycle. Viewings, deposits, contracts, move-ins, and move-outs\u00a0\u2014 all tracked, all connected.",
+    de: "Von der ersten Anfrage bis zur letzten \u00dcbergabe\u00a0\u2014 KOVA automatisiert jeden Meilenstein im Bewohner-Lebenszyklus. Besichtigungen, Kautionen, Vertr\u00e4ge, Einz\u00fcge und Ausz\u00fcge\u00a0\u2014 alles erfasst, alles verbunden."
+  },
+  sec7Title: { en: "Every request. Right person.<br>Right time.", de: "Jede Anfrage. Richtige Person.<br>Richtiger Zeitpunkt." },
+  sec7Body: {
+    en: "A resident reports a broken heater. A parent asks about parking. An owner wants the monthly report. KOVA understands each request, assigns priority, and routes it to the right team\u00a0\u2014 automatically.",
+    de: "Ein Bewohner meldet eine defekte Heizung. Ein Elternteil fragt nach Parkpl\u00e4tzen. Ein Eigent\u00fcmer m\u00f6chte den Monatsbericht. KOVA versteht jede Anfrage, vergibt Priorit\u00e4ten und leitet sie an das richtige Team\u00a0\u2014 automatisch."
+  },
+  sec8Title: { en: "Connected to what you already use.", de: "Verbunden mit dem, was Sie bereits nutzen." },
+  sec8Body: {
+    en: "KOVA integrates with your existing tools\u00a0\u2014 access control, payments, accounting, and communication\u00a0\u2014 so nothing gets replaced, everything gets connected.",
+    de: "KOVA integriert sich in Ihre bestehenden Tools\u00a0\u2014 Zutrittskontrolle, Zahlungsverkehr, Buchhaltung und Kommunikation\u00a0\u2014 nichts wird ersetzt, alles wird verbunden."
+  },
+  sec9Title: { en: "From rent roll to owner report.<br>Automated.", de: "Von der Mietliste zum Eigent\u00fcmerbericht.<br>Automatisiert." },
+  sec9Body: {
+    en: "Rent collection, arrears tracking, utility billing, deposit management, and owner distributions\u00a0\u2014 all in one financial engine, fully automated.",
+    de: "Mieteinzug, Mahnwesen, Nebenkostenabrechnung, Kautionsverwaltung und Eigent\u00fcmer-Aussch\u00fcttungen\u00a0\u2014 alles in einer Finanz-Engine, vollautomatisch."
+  },
+  sec10Title: { en: "What changes with KOVA.", de: "Was sich mit KOVA \u00e4ndert." },
+  sec10Body: {
+    en: "The operational improvements you can expect when everything is connected.",
+    de: "Die operativen Verbesserungen, die Sie erwarten k\u00f6nnen, wenn alles verbunden ist."
+  },
+  sec11Title: { en: "Built by people who know<br>both worlds.", de: "Entwickelt von Menschen, die<br>beide Welten kennen." },
+  sec11Body: {
+    en: "We combine hands-on student residence experience with modern software engineering. KOVA is built by a team that has managed residences\u00a0\u2014 not just read about them.",
+    de: "Wir verbinden praktische Erfahrung im Betrieb von Studentenresidenzen mit moderner Software-Entwicklung. KOVA wird von einem Team gebaut, das Residenzen betrieben hat\u00a0\u2014 nicht nur dar\u00fcber gelesen."
+  },
+  sec12Pre: { en: "Your residence operations, connected with", de: "Ihre Studentenwohnheime, verbunden mit" },
+  sec12Sub: { en: "by stratex-ai", de: "von stratex-ai" },
+  centerLabel: { en: "Property", de: "Immobilie" },
+  dashboardCards: {
+    en: ['Occupancy','Revenue','Open Tickets'],
+    de: ['Belegung','Umsatz','Offene Tickets']
+  },
+  kovaLabel: { en: "KOVA", de: "KOVA" },
+  nodeLabels: {
+    en: ['Lettings','Maintenance','Resident Comms','Owner Reporting','Revenue & Billing','Inspections','Compliance & Docs','Guest Experience'],
+    de: ['Vermietung','Instandhaltung','Bewohner-Komm.','Eigent\u00fcmer-Reports','Einnahmen & Abrechn.','Begehungen','Compliance & Doku','Bewohner-Erlebnis']
+  },
+  timelineSteps: {
+    en: ['Inquiry','Viewing','Deposit','Lease Signing','Move-in','Living','Notice','Move-out'],
+    de: ['Anfrage','Besichtigung','Kaution','Mietvertrag','Einzug','Wohnen','K\u00fcndigung','Auszug']
+  },
+  timelineSubs: {
+    en: ['Tracked','Scheduled','Auto-invoiced','Digital','Checklist','24/7 Support','Managed','Handover'],
+    de: ['Erfasst','Geplant','Auto-Rechnung','Digital','Checkliste','24/7 Support','Verwaltet','\u00dcbergabe']
+  },
+  routingSource: { en: 'Incoming Request', de: 'Eingehende Anfrage' },
+  routingPaths: {
+    en: ['Maintenance','Lettings','Finance','Management','External'],
+    de: ['Instandhaltung','Vermietung','Finanzen','Management','Externe']
+  },
+  integrationLabels: {
+    en: ['Access Control','Payments','Accounting','Communication','Documents'],
+    de: ['Zutrittskontrolle','Zahlungsverkehr','Buchhaltung','Kommunikation','Dokumente']
+  },
+  financeFlowLeft: {
+    en: ['Resident Rents','Deposits','Utilities'],
+    de: ['Bewohner-Mieten','Kautionen','Nebenkosten']
+  },
+  financeFlowRight: {
+    en: ['Owner Payout','Operating Costs','Reserves'],
+    de: ['Eigent\u00fcmer-Auszahlung','Betriebskosten','R\u00fccklagen']
+  },
+  impactMetrics: {
+    en: ['faster response','fewer manual handoffs','audit-ready compliance'],
+    de: ['schnellere Reaktion','weniger manuelle \u00dcbergaben','pr\u00fcfungssichere Compliance']
+  },
+  positioningLabels: {
+    en: ['Cloud Platform','Residence Know-how','Connected Ecosystem'],
+    de: ['Cloud-Plattform','Residenz-Expertise','Vernetztes \u00d6kosystem']
+  }
+};
+
+/* =========================================================
+   STATE
+   ========================================================= */
+let canvas, ctx, W, H, dpr;
+let scrollProg = 0;
+let mouseX = -9999, mouseY = -9999;
+let particles = [];
+let burstParticles = [];
+let burstFired = false;
+let lastTS = 0;
+let loadTime = 0;
+let heroChars = [];
+let pauseWords = [];
+let currentLang = 'en';
+let autoPlaying = false;
+let autoPlayStartTime = 0;
+const autoPlayDuration = 90000;
+
+/* =========================================================
+   UTILITIES
+   ========================================================= */
+function t(key){return TRANSLATIONS[key][currentLang]}
+function lerp(a,b,t){return a+(b-a)*t}
+function clamp(v,lo,hi){return Math.max(lo,Math.min(hi,v))}
+function easeInOut(t){return t<.5?2*t*t:1-Math.pow(-2*t+2,2)/2}
+function easeOut(t){return 1-Math.pow(1-t,3)}
+function easeIn(t){return t*t*t}
+
+function autoPlayEasing(tp){
+  const w=[
+    {time:0.00,scroll:0.000},{time:0.07,scroll:0.070},
+    {time:0.12,scroll:0.140},{time:0.22,scroll:0.250},
+    {time:0.30,scroll:0.330},{time:0.38,scroll:0.415},
+    {time:0.47,scroll:0.500},{time:0.55,scroll:0.580},
+    {time:0.63,scroll:0.660},{time:0.72,scroll:0.745},
+    {time:0.82,scroll:0.830},{time:0.92,scroll:0.920},
+    {time:1.00,scroll:1.000}
+  ];
+  for(let i=0;i<w.length-1;i++){
+    if(tp<=w[i+1].time){
+      const s=(tp-w[i].time)/(w[i+1].time-w[i].time);
+      const e=s*s*(3-2*s);
+      return lerp(w[i].scroll,w[i+1].scroll,e);
+    }
+  }
+  return 1;
+}
+function findTimeForScroll(target){
+  let lo=0,hi=1;
+  for(let i=0;i<20;i++){
+    const mid=(lo+hi)/2;
+    if(autoPlayEasing(mid)<target) lo=mid; else hi=mid;
+  }
+  return (lo+hi)/2;
+}
+function toggleAutoPlay(){
+  if(autoPlaying){
+    autoPlaying=false;
+  } else {
+    autoPlaying=true;
+    const maxScroll=document.body.scrollHeight-window.innerHeight;
+    const currentProg=maxScroll>0?window.scrollY/maxScroll:0;
+    autoPlayStartTime=performance.now()-findTimeForScroll(currentProg)*autoPlayDuration;
+  }
+  updatePlayButton();
+}
+function updatePlayButton(){
+  const btn=document.getElementById('playBtn');
+  if(btn) btn.textContent=autoPlaying?'\u23F8':'\u25B6';
+}
+function smoothstep(a,b,t){const x=clamp((t-a)/(b-a),0,1);return x*x*(3-2*x)}
+
+function secInfo(p){
+  const i = Math.min(SECTION_COUNT-1, Math.floor(p / SEG));
+  const local = clamp((p - i*SEG) / SEG, 0, 1);
+  return {idx: i+1, sp: local};
+}
+
+function textOpacity(sp){
+  if(sp<0.15) return sp/0.15;
+  if(sp>0.75) return 1-(sp-0.75)/0.25;
+  return 1;
+}
+function textY(sp){
+  if(sp<0.15) return 30*(1-sp/0.15);
+  if(sp>0.75) return -30*(sp-0.75)/0.25;
+  return 0;
+}
+
+/* =========================================================
+   CANVAS SETUP
+   ========================================================= */
+function initCanvas(){
+  canvas = document.getElementById('bg');
+  ctx = canvas.getContext('2d');
+  resize();
+}
+function resize(){
+  dpr = Math.min(window.devicePixelRatio||1, 2);
+  W = window.innerWidth;
+  H = window.innerHeight;
+  canvas.width = W * dpr;
+  canvas.height = H * dpr;
+  ctx.setTransform(dpr,0,0,dpr,0,0);
+}
+
+/* =========================================================
+   PARTICLE SYSTEM
+   ========================================================= */
+function createParticle(){
+  return {
+    x: Math.random()*W,
+    y: Math.random()*H,
+    baseX: 0, baseY: 0,
+    size: 1+Math.random()*2,
+    opacity: 0.08+Math.random()*0.28,
+    phaseX: Math.random()*Math.PI*2,
+    phaseY: Math.random()*Math.PI*2,
+    freqX: 0.0003+Math.random()*0.0006,
+    freqY: 0.0003+Math.random()*0.0006,
+    ampX: 20+Math.random()*40,
+    ampY: 15+Math.random()*30,
+    speedX: (Math.random()-0.5)*0.15,
+    speedY: (Math.random()-0.5)*0.15,
+    hasTrail: Math.random()<0.3,
+    trail: []
+  };
+}
+function initParticles(){
+  particles = [];
+  for(let i=0;i<PARTICLE_COUNT;i++){
+    const p = createParticle();
+    p.baseX = p.x;
+    p.baseY = p.y;
+    particles.push(p);
+  }
+}
+function updateParticles(dt, time, section, sp){
+  for(let i=0;i<particles.length;i++){
+    const p = particles[i];
+    // Organic drift via combined sines
+    p.baseX += p.speedX;
+    p.baseY += p.speedY;
+    // Wrap around
+    if(p.baseX < -50) p.baseX = W+50;
+    if(p.baseX > W+50) p.baseX = -50;
+    if(p.baseY < -50) p.baseY = H+50;
+    if(p.baseY > H+50) p.baseY = -50;
+
+    p.x = p.baseX + Math.sin(time*p.freqX + p.phaseX)*p.ampX
+                   + Math.sin(time*p.freqX*1.7 + p.phaseY)*p.ampX*0.3;
+    p.y = p.baseY + Math.sin(time*p.freqY + p.phaseY)*p.ampY
+                   + Math.cos(time*p.freqY*1.3 + p.phaseX)*p.ampY*0.3;
+
+    // Section 1 (Hero): gentle pull toward center → denser network
+    if(section === 1){
+      const dx = W/2 - p.baseX;
+      const dy = H/2 - p.baseY;
+      const dist = Math.sqrt(dx*dx+dy*dy);
+      if(dist > Math.min(W,H)*0.3){
+        p.baseX += dx * 0.001;
+        p.baseY += dy * 0.001;
+      }
+    }
+
+    // Section 2 (Pause): slow drift outward → "Stille"
+    if(section === 2){
+      const dx = p.baseX - W/2;
+      const dy = p.baseY - H/2;
+      const dist = Math.sqrt(dx*dx+dy*dy);
+      if(dist > 1){
+        p.baseX += dx/dist * 0.15 * sp;
+        p.baseY += dy/dist * 0.15 * sp;
+      }
+    }
+
+    // Section 12 (Closing): converge to center
+    if(section === 12){
+      const dx = W/2 - p.baseX;
+      const dy = H/2 - p.baseY;
+      const force = sp * 0.012;
+      p.baseX += dx * force;
+      p.baseY += dy * force;
+    }
+
+    // Trail
+    if(p.hasTrail){
+      p.trail.unshift({x:p.x, y:p.y});
+      if(p.trail.length>5) p.trail.pop();
+    }
+  }
+}
+
+/* =========================================================
+   BURST PARTICLES
+   ========================================================= */
+function triggerBurst(cx,cy,count){
+  count = count||30;
+  for(let i=0;i<count;i++){
+    const angle = Math.random()*Math.PI*2;
+    const speed = 2+Math.random()*5;
+    burstParticles.push({
+      x:cx, y:cy,
+      vx: Math.cos(angle)*speed,
+      vy: Math.sin(angle)*speed,
+      life: 1,
+      decay: 0.006+Math.random()*0.012,
+      size: 1.5+Math.random()*3
+    });
+  }
+}
+function updateBurst(){
+  for(let i=burstParticles.length-1;i>=0;i--){
+    const b = burstParticles[i];
+    b.x += b.vx;
+    b.y += b.vy;
+    b.vx *= 0.985;
+    b.vy *= 0.985;
+    b.life -= b.decay;
+    if(b.life<=0) burstParticles.splice(i,1);
+  }
+}
+function drawBurst(){
+  ctx.save();
+  for(let i=0;i<burstParticles.length;i++){
+    const b = burstParticles[i];
+    const a = b.life * 0.8;
+    // Outer glow
+    ctx.beginPath();
+    ctx.arc(b.x, b.y, b.size*4, 0, Math.PI*2);
+    ctx.fillStyle = `rgba(59,130,246,${a*0.1})`;
+    ctx.fill();
+    // Core particle with shadow glow
+    ctx.shadowColor = 'rgba(96,165,250,0.8)';
+    ctx.shadowBlur = 10 * b.life;
+    ctx.beginPath();
+    ctx.arc(b.x, b.y, b.size, 0, Math.PI*2);
+    ctx.fillStyle = `rgba(140,190,255,${a})`;
+    ctx.fill();
+    ctx.shadowBlur = 0;
+  }
+  ctx.restore();
+}
+
+/* =========================================================
+   DRAWING: BACKGROUND
+   ========================================================= */
+function drawBackground(prog){
+  ctx.fillStyle = COLORS.bg;
+  ctx.fillRect(0,0,W,H);
+  // Subtle vignette
+  const g = ctx.createRadialGradient(W/2,H/2,0, W/2,H/2, Math.max(W,H)*0.75);
+  g.addColorStop(0,'rgba(15,20,40,0)');
+  g.addColorStop(1,'rgba(0,0,0,0.4)');
+  ctx.fillStyle = g;
+  ctx.fillRect(0,0,W,H);
+}
+
+/* =========================================================
+   DRAWING: DOT GRID
+   ========================================================= */
+function drawDotGrid(prog, time, section, sp){
+  const offsetX = prog * 30;
+  const offsetY = prog * 15 + Math.sin(time*0.0001)*5;
+  const cols = Math.ceil(W/DOT_SPACING)+2;
+  const rows = Math.ceil(H/DOT_SPACING)+2;
+  const focusX = mouseX > 0 ? mouseX : W/2;
+  const focusY = mouseY > 0 ? mouseY : H/2;
+
+  // Section-aware grid brightness
+  let gridMult = 1;
+  if(section === 2) gridMult = lerp(1, 0.4, sp); // dim in pause
+  if(section === 4) gridMult = lerp(1, 1.5, sp);  // brighten during reveal
+  if(section === 12) gridMult = lerp(1, 0.3, sp);  // dim in closing
+
+  for(let r=0;r<rows;r++){
+    for(let c=0;c<cols;c++){
+      let x = c*DOT_SPACING - (offsetX % DOT_SPACING);
+      let y = r*DOT_SPACING - (offsetY % DOT_SPACING);
+      const dx = x - focusX;
+      const dy = y - focusY;
+      const dist = Math.sqrt(dx*dx+dy*dy);
+      const wave = Math.max(0, 1 - dist/280);
+      const baseAlpha = 0.03 * gridMult;
+      const alpha = baseAlpha + wave*0.07*gridMult;
+      const sz = 1 + wave*1.8;
+      ctx.beginPath();
+      ctx.arc(x,y,sz,0,Math.PI*2);
+      ctx.fillStyle = `rgba(255,255,255,${alpha})`;
+      ctx.fill();
+    }
+  }
+}
+
+/* =========================================================
+   DRAWING: PARTICLES + CONNECTIONS
+   ========================================================= */
+function drawParticles(prog, section, sp){
+  // Section-aware opacity multiplier
+  let opMult = 1;
+  let connR = COLORS.particle[0], connG = COLORS.particle[1], connB = COLORS.particle[2];
+  let connAlphaMult = 1;
+  if(section === 2){ opMult = lerp(1, 0.35, sp); connAlphaMult = 0.4; } // dim in pause
+  if(section === 4){ // blue tint in Kova reveal
+    connR = Math.floor(lerp(150, 80, sp));
+    connG = Math.floor(lerp(180, 150, sp));
+    connB = 255;
+    connAlphaMult = lerp(1, 1.8, sp);
+  }
+  if(section === 12){ connAlphaMult = lerp(1, 2.5, sp); } // brighter connections as converging
+
+  // Connection lines
+  ctx.lineWidth = 0.5;
+  for(let i=0;i<particles.length;i++){
+    for(let j=i+1;j<particles.length;j++){
+      const dx = particles[i].x - particles[j].x;
+      const dy = particles[i].y - particles[j].y;
+      const dist = Math.sqrt(dx*dx+dy*dy);
+      if(dist < CONNECT_DIST){
+        const a = (1-dist/CONNECT_DIST)*0.06*connAlphaMult;
+        ctx.beginPath();
+        ctx.moveTo(particles[i].x, particles[i].y);
+        ctx.lineTo(particles[j].x, particles[j].y);
+        ctx.strokeStyle = `rgba(${connR},${connG},${connB},${a})`;
+        ctx.stroke();
+      }
+    }
+  }
+
+  // Particles + trails
+  for(let i=0;i<particles.length;i++){
+    const p = particles[i];
+    const pOp = p.opacity * opMult;
+    // Trail
+    if(p.hasTrail && p.trail.length>1){
+      for(let t=1;t<p.trail.length;t++){
+        const ta = pOp*(1-t/p.trail.length)*0.4;
+        ctx.beginPath();
+        ctx.arc(p.trail[t].x, p.trail[t].y, p.size*0.6, 0, Math.PI*2);
+        ctx.fillStyle = `rgba(${connR},${connG},${connB},${ta})`;
+        ctx.fill();
+      }
+    }
+    // Main dot
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, p.size, 0, Math.PI*2);
+    ctx.fillStyle = `rgba(${connR},${connG},${connB},${pOp})`;
+    ctx.fill();
+  }
+}
+
+/* =========================================================
+   DRAWING: AMBIENT GLOW
+   ========================================================= */
+function drawAmbientGlow(prog, section, sp){
+  // Two drifting glow orbs
+  const t = performance.now()*0.0001;
+  const glowIntensity = (section===4) ? lerp(0.08, 0.22, sp) : 0.07;
+
+  const x1 = W*0.3 + Math.sin(t*1.1)*W*0.15 + prog*W*0.3;
+  const y1 = H*0.4 + Math.cos(t*0.8)*H*0.1;
+  const r1 = Math.max(W,H)*0.4;
+  const g1 = ctx.createRadialGradient(x1,y1,0, x1,y1,r1);
+  g1.addColorStop(0,`rgba(59,130,246,${glowIntensity})`);
+  g1.addColorStop(1,'rgba(59,130,246,0)');
+  ctx.fillStyle = g1;
+  ctx.fillRect(0,0,W,H);
+
+  const x2 = W*0.7 + Math.cos(t*0.9)*W*0.12 - prog*W*0.2;
+  const y2 = H*0.6 + Math.sin(t*1.2)*H*0.1;
+  const r2 = Math.max(W,H)*0.35;
+  const g2 = ctx.createRadialGradient(x2,y2,0, x2,y2,r2);
+  g2.addColorStop(0,`rgba(59,130,246,${glowIntensity*0.6})`);
+  g2.addColorStop(1,'rgba(59,130,246,0)');
+  ctx.fillStyle = g2;
+  ctx.fillRect(0,0,W,H);
+}
+
+/* =========================================================
+   DIAGRAM: NODE POSITIONS
+   ========================================================= */
+function getNodePositions(){
+  const cx = W/2, cy = H/2 + H*0.05;
+  const radius = Math.min(W,H)*0.33;
+  const labels = t('nodeLabels');
+  const nodes = [{x:cx, y:cy, label:t('centerLabel'), type:'center'}];
+  for(let i=0;i<8;i++){
+    const angle = (i*Math.PI*2/8) - Math.PI/2;
+    nodes.push({
+      x: cx + Math.cos(angle)*radius,
+      y: cy + Math.sin(angle)*radius,
+      label: labels[i],
+      type: 'outer',
+      angle: angle
+    });
+  }
+  return nodes;
+}
+
+/* =========================================================
+   DIAGRAM: NODE ICONS (simple canvas paths)
+   ========================================================= */
+function drawNodeIcon(type, cx, cy, s, color){
+  ctx.save();
+  const c = color || 'rgba(255,255,255,0.7)';
+  ctx.fillStyle = c;
+  ctx.strokeStyle = c;
+  ctx.lineWidth = 1.5;
+  ctx.lineCap = 'round';
+  ctx.lineJoin = 'round';
+
+  switch(type){
+    case 0: // Lettings – filled key
+      // Key head (ring)
+      ctx.beginPath();
+      ctx.arc(cx-2*s, cy-3*s, 4.5*s, 0, Math.PI*2);
+      ctx.fill();
+      // Punch out inner circle
+      ctx.save();
+      ctx.globalCompositeOperation = 'destination-out';
+      ctx.beginPath();
+      ctx.arc(cx-2*s, cy-3*s, 2.2*s, 0, Math.PI*2);
+      ctx.fill();
+      ctx.restore();
+      ctx.fillStyle = c;
+      // Shaft
+      ctx.fillRect(cx+1.5*s, cy-1.2*s, 6*s, 2.4*s);
+      // Teeth
+      ctx.fillRect(cx+5*s, cy+1.2*s, 2*s, 2.5*s);
+      ctx.fillRect(cx+2.5*s, cy+1.2*s, 2*s, 1.8*s);
+      break;
+
+    case 1: // Maintenance – filled gear
+      // Outer gear with 6 teeth
+      ctx.beginPath();
+      const gR = 6.5*s, gIR = 4.5*s, teeth = 6;
+      for(let i=0;i<teeth;i++){
+        const a1 = (i/teeth)*Math.PI*2 - Math.PI/2;
+        const a2 = ((i+0.35)/teeth)*Math.PI*2 - Math.PI/2;
+        const a3 = ((i+0.65)/teeth)*Math.PI*2 - Math.PI/2;
+        const a4 = ((i+1)/teeth)*Math.PI*2 - Math.PI/2;
+        if(i===0) ctx.moveTo(cx+Math.cos(a1)*gR, cy+Math.sin(a1)*gR);
+        ctx.lineTo(cx+Math.cos(a2)*gR, cy+Math.sin(a2)*gR);
+        ctx.lineTo(cx+Math.cos(a2)*gIR, cy+Math.sin(a2)*gIR);
+        ctx.lineTo(cx+Math.cos(a3)*gIR, cy+Math.sin(a3)*gIR);
+        ctx.lineTo(cx+Math.cos(a3)*gR, cy+Math.sin(a3)*gR);
+        ctx.lineTo(cx+Math.cos(a4)*gR, cy+Math.sin(a4)*gR);
+      }
+      ctx.closePath();
+      ctx.fill();
+      // Inner hole
+      ctx.save();
+      ctx.globalCompositeOperation = 'destination-out';
+      ctx.beginPath();
+      ctx.arc(cx, cy, 2.2*s, 0, Math.PI*2);
+      ctx.fill();
+      ctx.restore();
+      break;
+
+    case 2: // Resident Comms – filled speech bubble with dots
+      ctx.beginPath();
+      // Bubble body
+      const bw=14*s, bh=9*s, bx=cx-bw/2, by=cy-bh/2-1*s;
+      ctx.moveTo(bx+3*s, by);
+      ctx.lineTo(bx+bw-3*s, by);
+      ctx.quadraticCurveTo(bx+bw, by, bx+bw, by+3*s);
+      ctx.lineTo(bx+bw, by+bh-3*s);
+      ctx.quadraticCurveTo(bx+bw, by+bh, bx+bw-3*s, by+bh);
+      ctx.lineTo(bx+5*s, by+bh);
+      ctx.lineTo(bx+2*s, by+bh+3.5*s);
+      ctx.lineTo(bx+4*s, by+bh);
+      ctx.lineTo(bx+3*s, by+bh);
+      ctx.quadraticCurveTo(bx, by+bh, bx, by+bh-3*s);
+      ctx.lineTo(bx, by+3*s);
+      ctx.quadraticCurveTo(bx, by, bx+3*s, by);
+      ctx.closePath();
+      ctx.fill();
+      // 3 dots inside (punch out)
+      ctx.save();
+      ctx.globalCompositeOperation = 'destination-out';
+      const dotY = by + bh*0.45;
+      ctx.beginPath();
+      ctx.arc(cx-3*s, dotY, 1.2*s, 0, Math.PI*2);
+      ctx.arc(cx, dotY, 1.2*s, 0, Math.PI*2);
+      ctx.arc(cx+3*s, dotY, 1.2*s, 0, Math.PI*2);
+      ctx.fill();
+      ctx.restore();
+      break;
+
+    case 3: // Owner Reporting – filled document with bar chart
+      // Document body
+      ctx.beginPath();
+      ctx.roundRect(cx-5.5*s, cy-7.5*s, 11*s, 15*s, 2*s);
+      ctx.fill();
+      // Bar chart inside (punch out then fill with darker)
+      ctx.save();
+      ctx.globalCompositeOperation = 'destination-out';
+      // 3 bars
+      ctx.fillRect(cx-3.5*s, cy+1*s, 2.5*s, 4*s);
+      ctx.fillRect(cx-0.5*s, cy-2*s, 2.5*s, 7*s);
+      ctx.fillRect(cx+2.5*s, cy-0.5*s, 2.5*s, 5.5*s);
+      // 2 text lines at top
+      ctx.fillRect(cx-3.5*s, cy-5.5*s, 7*s, 1.2*s);
+      ctx.fillRect(cx-3.5*s, cy-3.5*s, 5*s, 1.2*s);
+      ctx.restore();
+      break;
+
+    case 4: // Revenue & Billing – filled euro coin
+      // Coin circle
+      ctx.beginPath();
+      ctx.arc(cx, cy, 7.5*s, 0, Math.PI*2);
+      ctx.fill();
+      // Euro sign (punch out)
+      ctx.save();
+      ctx.globalCompositeOperation = 'destination-out';
+      ctx.font = `700 ${14*s}px Outfit`;
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText('\u20AC', cx, cy+0.5*s);
+      ctx.restore();
+      break;
+
+    case 5: // Inspections – magnifying glass with checkmark
+      // Glass circle (filled)
+      ctx.beginPath();
+      ctx.arc(cx-1*s, cy-2*s, 5.5*s, 0, Math.PI*2);
+      ctx.fill();
+      // Handle
+      ctx.lineWidth = 3*s;
+      ctx.beginPath();
+      ctx.moveTo(cx+3*s, cy+2*s);
+      ctx.lineTo(cx+7*s, cy+6.5*s);
+      ctx.stroke();
+      ctx.lineWidth = 1.5;
+      // Checkmark inside (punch out)
+      ctx.save();
+      ctx.globalCompositeOperation = 'destination-out';
+      ctx.lineWidth = 2*s;
+      ctx.beginPath();
+      ctx.moveTo(cx-3.5*s, cy-2*s);
+      ctx.lineTo(cx-1.2*s, cy+0.5*s);
+      ctx.lineTo(cx+2.5*s, cy-4*s);
+      ctx.stroke();
+      ctx.restore();
+      break;
+
+    case 6: // Compliance – filled shield with checkmark
+      ctx.beginPath();
+      ctx.moveTo(cx, cy-8*s);
+      ctx.quadraticCurveTo(cx-8.5*s, cy-6*s, cx-7.5*s, cy-1*s);
+      ctx.quadraticCurveTo(cx-5.5*s, cy+6*s, cx, cy+8.5*s);
+      ctx.quadraticCurveTo(cx+5.5*s, cy+6*s, cx+7.5*s, cy-1*s);
+      ctx.quadraticCurveTo(cx+8.5*s, cy-6*s, cx, cy-8*s);
+      ctx.closePath();
+      ctx.fill();
+      // Checkmark (punch out)
+      ctx.save();
+      ctx.globalCompositeOperation = 'destination-out';
+      ctx.lineWidth = 2.5*s;
+      ctx.beginPath();
+      ctx.moveTo(cx-3.5*s, cy);
+      ctx.lineTo(cx-1*s, cy+3*s);
+      ctx.lineTo(cx+4*s, cy-3*s);
+      ctx.stroke();
+      ctx.restore();
+      break;
+
+    case 7: // Guest Experience – filled heart
+      ctx.beginPath();
+      ctx.moveTo(cx, cy+7*s);
+      ctx.bezierCurveTo(cx-12*s, cy-1*s, cx-5*s, cy-9*s, cx, cy-4*s);
+      ctx.bezierCurveTo(cx+5*s, cy-9*s, cx+12*s, cy-1*s, cx, cy+7*s);
+      ctx.closePath();
+      ctx.fill();
+      break;
+  }
+  ctx.restore();
+}
+
+/* =========================================================
+   DIAGRAM: DRAW A SINGLE NODE BOX
+   ========================================================= */
+function drawNodeBox(x, y, w, h, label, iconIdx, opts){
+  const o = opts || {};
+  const alpha = o.alpha || 1;
+  const vibX = o.vibX || 0;
+  const vibY = o.vibY || 0;
+  const isCenter = o.isCenter || false;
+  const isActive = o.isActive || false;
+  const scale = o.scale || 1;
+
+  const nx = x + vibX;
+  const ny = y + vibY;
+  const sw = w * scale;
+  const sh = h * scale;
+
+  ctx.save();
+  ctx.globalAlpha = alpha;
+
+  // Background — solid dark glass
+  const r = 14;
+  ctx.beginPath();
+  ctx.roundRect(nx - sw/2, ny - sh/2, sw, sh, r);
+  ctx.fillStyle = isActive ? 'rgba(20, 30, 55, 0.92)' : 'rgba(15, 22, 40, 0.85)';
+  ctx.fill();
+  ctx.strokeStyle = isActive ? 'rgba(59,130,246,0.45)' : 'rgba(100,140,200,0.15)';
+  ctx.lineWidth = isActive ? 1.5 : 1;
+  ctx.stroke();
+  // Top highlight gradient
+  const hlGrad = ctx.createLinearGradient(nx-sw/2, ny-sh/2, nx-sw/2, ny-sh/2+sh*0.4);
+  hlGrad.addColorStop(0, 'rgba(255,255,255,0.035)');
+  hlGrad.addColorStop(1, 'rgba(255,255,255,0)');
+  ctx.beginPath();
+  ctx.roundRect(nx - sw/2, ny - sh/2, sw, sh, r);
+  ctx.fillStyle = hlGrad;
+  ctx.fill();
+  // Icon badge circle
+  const badgeR = Math.min(sw, sh) * 0.26;
+  ctx.beginPath();
+  ctx.arc(nx, ny - sh*0.05, badgeR, 0, Math.PI*2);
+  ctx.fillStyle = isActive ? 'rgba(59,130,246,0.1)' : 'rgba(255,255,255,0.03)';
+  ctx.fill();
+
+  // Icon
+  if(iconIdx !== undefined && iconIdx >= 0){
+    const iconColor = isActive ? COLORS.accentLight : 'rgba(255,255,255,0.6)';
+    drawNodeIcon(iconIdx, nx, ny - sh*0.05, scale * (isCenter?1.8:1.5), iconColor);
+  }
+  // Center node: building icon (default) or Kova "K" (active)
+  if(isCenter){
+    if(isActive){
+      ctx.fillStyle = COLORS.accent;
+      ctx.font = `600 ${24*scale}px Outfit`;
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText('K', nx, ny - sh*0.05);
+    } else {
+      // Building / property icon (filled silhouette)
+      const bs = scale * 1.5;
+      const iy = ny - sh*0.05;
+      ctx.fillStyle = 'rgba(255,255,255,0.55)';
+      ctx.beginPath();
+      ctx.moveTo(nx-7*bs, iy+7*bs);
+      ctx.lineTo(nx-7*bs, iy-2*bs);
+      ctx.lineTo(nx, iy-8*bs);
+      ctx.lineTo(nx+7*bs, iy-2*bs);
+      ctx.lineTo(nx+7*bs, iy+7*bs);
+      ctx.closePath();
+      ctx.fill();
+      // Windows + door (punch out)
+      ctx.save();
+      ctx.globalCompositeOperation = 'destination-out';
+      ctx.fillRect(nx-4.5*bs, iy-1*bs, 3*bs, 2.8*bs);
+      ctx.fillRect(nx+1.5*bs, iy-1*bs, 3*bs, 2.8*bs);
+      ctx.fillRect(nx-1.5*bs, iy+3*bs, 3*bs, 4*bs);
+      ctx.restore();
+    }
+  }
+
+  // Label
+  ctx.fillStyle = isActive ? '#fff' : 'rgba(255,255,255,0.55)';
+  ctx.font = `${13*scale}px Outfit`;
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'top';
+  // Handle multi-word labels that might need two lines
+  const maxLabelW = sw * 1.4;
+  if(ctx.measureText(label).width > maxLabelW && label.includes(' ')){
+    const parts = label.split(' ');
+    const mid = Math.ceil(parts.length/2);
+    const l1 = parts.slice(0,mid).join(' ');
+    const l2 = parts.slice(mid).join(' ');
+    ctx.fillText(l1, nx, ny + sh/2 + 8*scale);
+    ctx.fillText(l2, nx, ny + sh/2 + 8*scale + 14*scale);
+  } else {
+    ctx.fillText(label, nx, ny + sh/2 + 10*scale);
+  }
+
+  ctx.restore();
+}
+
+/* =========================================================
+   DIAGRAM: FRAGMENTED (Section 3)
+   ========================================================= */
+function drawFragmentedDiagram(sp){
+  const nodes = getNodePositions();
+  const time = performance.now();
+
+  // Diagram alpha (fade in during first 30% of section)
+  const dAlpha = smoothstep(0, 0.3, sp);
+
+  // Draw dashed connections
+  ctx.save();
+  ctx.globalAlpha = dAlpha;
+  ctx.setLineDash([8,6]);
+  ctx.strokeStyle = COLORS.dashedLine;
+  ctx.lineWidth = 1;
+
+  for(let i=1;i<nodes.length;i++){
+    ctx.beginPath();
+    ctx.moveTo(nodes[0].x, nodes[0].y);
+    ctx.lineTo(nodes[i].x, nodes[i].y);
+    ctx.stroke();
+  }
+  ctx.setLineDash([]);
+  ctx.restore();
+
+  // Draw nodes with staggered entrance and vibration
+  for(let i=0;i<nodes.length;i++){
+    const delay = i * 0.04;
+    const nodeAlpha = dAlpha * smoothstep(delay, delay+0.15, sp);
+    const isCenter = i===0;
+    const vibAmp = 1.5;
+    const vibX = Math.sin(time*0.002 + i*1.7)*vibAmp;
+    const vibY = Math.cos(time*0.0018 + i*2.3)*vibAmp;
+    const nodeW = isCenter ? 150 : 120;
+    const nodeH = isCenter ? 105 : 82;
+
+    drawNodeBox(nodes[i].x, nodes[i].y, nodeW, nodeH,
+      nodes[i].label,
+      isCenter ? -1 : i-1,
+      {alpha: nodeAlpha, vibX, vibY, isCenter}
+    );
+  }
+
+  // Subtle flow pulses on fragmented lines
+  ctx.globalAlpha = dAlpha * 0.6;
+  drawFlowPulses(nodes, time, 0.15);
+}
+
+/* =========================================================
+   DIAGRAM: KOVA REVEAL (Section 4)
+   ========================================================= */
+function drawKovaReveal(sp){
+  const nodes = getNodePositions();
+  const time = performance.now();
+
+  // Sub-timeline
+  const pulsePhase = smoothstep(0, 0.15, sp);         // 0.00–0.15: tension pulse
+  const morphPhase = smoothstep(0.15, 0.40, sp);      // 0.15–0.40: center morph + burst
+  const linePhase = smoothstep(0.40, 0.70, sp);       // 0.40–0.70: lines transform
+  const stablePhase = smoothstep(0.70, 0.85, sp);     // 0.70–1.00: stable glow
+
+  // Trigger burst
+  if(morphPhase > 0.1 && !burstFired){
+    triggerBurst(nodes[0].x, nodes[0].y, 25);
+    burstFired = true;
+  }
+  if(sp < 0.1) burstFired = false;
+
+  // Draw connections
+  ctx.save();
+  for(let i=1;i<nodes.length;i++){
+    const dashProgress = 1 - linePhase;
+
+    if(linePhase > 0){
+      // Glow line behind
+      ctx.save();
+      ctx.shadowColor = 'rgba(59,130,246,0.6)';
+      ctx.shadowBlur = 15 * linePhase;
+      ctx.beginPath();
+      ctx.moveTo(nodes[0].x, nodes[0].y);
+      ctx.lineTo(nodes[i].x, nodes[i].y);
+      const lineAlpha = 0.12 + linePhase * 0.88;
+      ctx.strokeStyle = `rgba(59,130,246,${lineAlpha})`;
+      ctx.lineWidth = 2;
+      if(dashProgress > 0.01){
+        ctx.setLineDash([8,6]);
+        ctx.lineDashOffset = -time*0.05 * (1-linePhase);
+      } else {
+        ctx.setLineDash([]);
+      }
+      ctx.stroke();
+      ctx.restore();
+
+      // Core line on top
+      ctx.beginPath();
+      ctx.moveTo(nodes[0].x, nodes[0].y);
+      ctx.lineTo(nodes[i].x, nodes[i].y);
+      ctx.strokeStyle = `rgba(96,165,250,${linePhase*0.8})`;
+      ctx.lineWidth = 1;
+      ctx.setLineDash([]);
+      ctx.stroke();
+    } else {
+      // Still dashed during early phase
+      ctx.setLineDash([8,6]);
+      ctx.strokeStyle = COLORS.dashedLine;
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.moveTo(nodes[0].x, nodes[0].y);
+      ctx.lineTo(nodes[i].x, nodes[i].y);
+      ctx.stroke();
+    }
+  }
+  ctx.setLineDash([]);
+  ctx.restore();
+
+  // Pulsing glow on lines in stable phase
+  if(stablePhase > 0){
+    const pulseBright = 0.3 + Math.sin(time*0.003)*0.15;
+    ctx.save();
+    ctx.shadowColor = `rgba(59,130,246,${pulseBright})`;
+    ctx.shadowBlur = 20;
+    ctx.strokeStyle = `rgba(59,130,246,${pulseBright * stablePhase})`;
+    ctx.lineWidth = 2;
+    for(let i=1;i<nodes.length;i++){
+      ctx.beginPath();
+      ctx.moveTo(nodes[0].x, nodes[0].y);
+      ctx.lineTo(nodes[i].x, nodes[i].y);
+      ctx.stroke();
+    }
+    ctx.restore();
+  }
+
+  // Draw nodes
+  for(let i=0;i<nodes.length;i++){
+    const isCenter = i===0;
+
+    // Pulse effect in early phase
+    const pulseScale = 1 + (isCenter ? 0.08 : 0.04) * Math.sin(time*0.008 + i)*pulsePhase*(1-morphPhase);
+
+    // Center node morphing
+    const centerGrow = isCenter ? 1 + morphPhase*0.15 : 1;
+    const isActive = isCenter ? morphPhase > 0.3 : linePhase > 0.5;
+
+    const nodeW = (isCenter ? 150 : 120) * centerGrow;
+    const nodeH = (isCenter ? 105 : 82) * centerGrow;
+
+    drawNodeBox(nodes[i].x, nodes[i].y, nodeW, nodeH,
+      isCenter ? (morphPhase > 0.5 ? t('kovaLabel') : t('centerLabel')) : nodes[i].label,
+      isCenter ? -1 : i-1,
+      {alpha: 1, isCenter, isActive, scale: pulseScale * centerGrow}
+    );
+  }
+
+  // Bright flow pulses in stable phase
+  if(stablePhase > 0){
+    ctx.globalAlpha = stablePhase;
+    drawFlowPulses(nodes, time, 0.6);
+  }
+
+  // Draw burst particles
+  drawBurst();
+}
+
+/* =========================================================
+   VISUAL: DASHBOARD (Section 5)
+   ========================================================= */
+function drawDashboardVisual(sp){
+  const alpha = textOpacity(sp);
+  if(alpha < 0.01) return;
+
+  const cx = W/2, cy = H*0.66;
+  const bw = Math.min(W*0.75, 750);
+  const bh = bw*0.55;
+
+  ctx.save();
+  ctx.globalAlpha = alpha * smoothstep(0.05, 0.3, sp);
+  ctx.strokeStyle = `rgba(59,130,246,0.3)`;
+  ctx.lineWidth = 1;
+
+  // Main frame
+  ctx.beginPath();
+  ctx.roundRect(cx-bw/2, cy-bh/2, bw, bh, 12);
+  ctx.stroke();
+
+  // Header bar
+  ctx.beginPath();
+  ctx.moveTo(cx-bw/2, cy-bh/2+38);
+  ctx.lineTo(cx+bw/2, cy-bh/2+38);
+  ctx.stroke();
+
+  // 3 metric cards at top
+  const cardW = bw*0.28;
+  const cardH = 60;
+  const cardY = cy - bh/2 + 50;
+  for(let i=0;i<3;i++){
+    const cardDelay = smoothstep(0.1+i*0.08, 0.3+i*0.08, sp);
+    ctx.globalAlpha = alpha * cardDelay;
+    const cardX = cx - bw/2 + 22 + i*(cardW+18);
+    ctx.beginPath();
+    ctx.roundRect(cardX, cardY, cardW, cardH, 6);
+    ctx.fillStyle = 'rgba(59,130,246,0.06)';
+    ctx.fill();
+    ctx.strokeStyle = 'rgba(59,130,246,0.2)';
+    ctx.stroke();
+
+    // Card label
+    const cardLabels = t('dashboardCards');
+    ctx.fillStyle = 'rgba(255,255,255,0.35)';
+    ctx.font = '10px Outfit';
+    ctx.textAlign = 'left';
+    ctx.textBaseline = 'top';
+    ctx.fillText(cardLabels[i], cardX+8, cardY+8);
+    // Metric line inside
+    ctx.fillStyle = 'rgba(59,130,246,0.4)';
+    ctx.fillRect(cardX+8, cardY+24, cardW*0.5, 5);
+    ctx.fillStyle = 'rgba(255,255,255,0.15)';
+    ctx.fillRect(cardX+8, cardY+38, cardW*0.35, 3);
+  }
+
+  // Bar chart area
+  ctx.globalAlpha = alpha * smoothstep(0.2, 0.5, sp);
+  const chartX = cx - bw/2 + 22;
+  const chartY = cardY + cardH + 30;
+  const chartW = bw*0.45;
+  const chartH = bh - 150;
+  const barW = chartW / 8;
+  const heights = [0.6, 0.8, 0.45, 0.9, 0.7, 0.5, 0.85, 0.65];
+  for(let i=0;i<heights.length;i++){
+    const bH = chartH * heights[i] * smoothstep(0.2+i*0.03, 0.5+i*0.03, sp);
+    ctx.fillStyle = i===3 ? 'rgba(59,130,246,0.5)' : 'rgba(59,130,246,0.2)';
+    ctx.fillRect(chartX + i*barW + 2, chartY+chartH-bH, barW-4, bH);
+  }
+
+  // Line chart area (right side)
+  ctx.globalAlpha = alpha * smoothstep(0.3, 0.6, sp);
+  const lcX = cx + bw*0.05;
+  const lcY = chartY;
+  const lcW = bw*0.4;
+  const lcH = chartH;
+  ctx.beginPath();
+  const pts = [0.5,0.3,0.6,0.2,0.4,0.15,0.35,0.1];
+  for(let i=0;i<pts.length;i++){
+    const px = lcX + (i/(pts.length-1))*lcW;
+    const py = lcY + pts[i]*lcH;
+    if(i===0) ctx.moveTo(px,py);
+    else ctx.lineTo(px,py);
+  }
+  ctx.strokeStyle = 'rgba(59,130,246,0.5)';
+  ctx.lineWidth = 3;
+  ctx.stroke();
+
+  // Fill under line
+  ctx.lineTo(lcX+lcW, lcY+lcH);
+  ctx.lineTo(lcX, lcY+lcH);
+  ctx.closePath();
+  ctx.fillStyle = 'rgba(59,130,246,0.05)';
+  ctx.fill();
+
+  ctx.restore();
+}
+
+/* =========================================================
+   VISUAL: LEASE TIMELINE (Section 6)
+   ========================================================= */
+function drawTimelineVisual(sp){
+  const alpha = textOpacity(sp);
+  if(alpha < 0.01) return;
+
+  const cy = H*0.68;
+  const lineW = Math.min(W*0.9, 1060);
+  const startX = (W - lineW)/2;
+  const steps = t('timelineSteps');
+  const subs = t('timelineSubs');
+  const stepCount = steps.length;
+
+  ctx.save();
+  ctx.globalAlpha = alpha;
+
+  // Draw line progressively
+  const lineProgress = smoothstep(0.08, 0.7, sp);
+  const drawnW = lineW * lineProgress;
+
+  // Background line (faint)
+  ctx.beginPath();
+  ctx.moveTo(startX, cy);
+  ctx.lineTo(startX + lineW, cy);
+  ctx.strokeStyle = 'rgba(255,255,255,0.06)';
+  ctx.lineWidth = 3;
+  ctx.stroke();
+
+  // Active line with glow
+  if(drawnW > 0){
+    ctx.beginPath();
+    ctx.moveTo(startX, cy);
+    ctx.lineTo(startX + drawnW, cy);
+    ctx.strokeStyle = COLORS.accent;
+    ctx.lineWidth = 3;
+    ctx.shadowColor = 'rgba(59,130,246,0.5)';
+    ctx.shadowBlur = 16;
+    ctx.stroke();
+    ctx.shadowBlur = 0;
+  }
+
+  // Step dots, labels, and sub-labels
+  for(let i=0;i<stepCount;i++){
+    const x = startX + (i/(stepCount-1))*lineW;
+    const stepProg = (i/(stepCount-1));
+    const active = lineProgress >= stepProg;
+    const dotAlpha = active ? 1 : 0.2;
+    const isCurrent = active && Math.abs(lineProgress - stepProg) < 0.14;
+
+    ctx.beginPath();
+    ctx.arc(x, cy, active ? 7 : 5, 0, Math.PI*2);
+    ctx.fillStyle = active ? COLORS.accent : 'rgba(255,255,255,0.15)';
+    ctx.globalAlpha = alpha * dotAlpha;
+    ctx.fill();
+
+    // Glow ring on current dot
+    if(isCurrent){
+      ctx.beginPath();
+      ctx.arc(x, cy, 16, 0, Math.PI*2);
+      ctx.fillStyle = 'rgba(59,130,246,0.15)';
+      ctx.fill();
+    }
+
+    // Step label
+    ctx.globalAlpha = alpha * (active ? 0.85 : 0.2);
+    ctx.fillStyle = '#fff';
+    ctx.font = active ? '600 13px Outfit' : '13px Outfit';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'top';
+    ctx.fillText(steps[i], x, cy + 20);
+
+    // Sub-label (only on active steps)
+    if(active && subs && subs[i]){
+      ctx.globalAlpha = alpha * (isCurrent ? 0.5 : 0.3);
+      ctx.font = '10px Outfit';
+      ctx.fillStyle = COLORS.accentLight;
+      ctx.fillText(subs[i], x, cy + 36);
+    }
+  }
+
+  ctx.restore();
+}
+
+/* =========================================================
+   VISUAL: ROUTING (Section 7)
+   ========================================================= */
+function drawRoutingVisual(sp){
+  const alpha = textOpacity(sp);
+  if(alpha < 0.01) return;
+
+  const cx = W/2;
+  const topY = H*0.52;
+  const botY = H*0.82;
+  const spread = Math.min(W*0.4, 400);
+  const time = performance.now();
+
+  const rpLabels = t('routingPaths');
+  const pathCount = rpLabels.length;
+  const paths = [];
+  for(let i=0;i<pathCount;i++){
+    const xPos = cx + (i - (pathCount-1)/2) * (spread*2/(pathCount-1));
+    paths.push({label:rpLabels[i], endX: xPos});
+  }
+
+  ctx.save();
+  ctx.globalAlpha = alpha;
+
+  // Source node (pushed down to avoid text overlap)
+  const srcAlpha = smoothstep(0.05, 0.2, sp);
+  ctx.globalAlpha = alpha * srcAlpha;
+  ctx.beginPath();
+  ctx.arc(cx, topY, 10, 0, Math.PI*2);
+  ctx.fillStyle = COLORS.accent;
+  ctx.shadowColor = 'rgba(59,130,246,0.5)';
+  ctx.shadowBlur = 16;
+  ctx.fill();
+  ctx.shadowBlur = 0;
+
+  // Source label
+  ctx.fillStyle = 'rgba(255,255,255,0.5)';
+  ctx.font = '13px Outfit';
+  ctx.textAlign = 'center';
+  ctx.fillText(t('routingSource'), cx, topY - 22);
+
+  // Branching paths
+  const pathAlpha = smoothstep(0.15, 0.4, sp);
+  ctx.globalAlpha = alpha * pathAlpha;
+
+  for(let i=0;i<paths.length;i++){
+    const p = paths[i];
+    const midY = (topY + botY)/2;
+
+    // Draw curved path
+    ctx.beginPath();
+    ctx.moveTo(cx, topY+10);
+    ctx.bezierCurveTo(cx, midY, p.endX, midY, p.endX, botY-14);
+    ctx.strokeStyle = 'rgba(59,130,246,0.3)';
+    ctx.lineWidth = 2;
+    ctx.stroke();
+
+    // End node
+    ctx.beginPath();
+    ctx.arc(p.endX, botY, 8, 0, Math.PI*2);
+    ctx.fillStyle = 'rgba(59,130,246,0.3)';
+    ctx.fill();
+    ctx.strokeStyle = 'rgba(59,130,246,0.5)';
+    ctx.lineWidth = 1.5;
+    ctx.stroke();
+
+    // End label
+    ctx.fillStyle = 'rgba(255,255,255,0.5)';
+    ctx.font = '13px Outfit';
+    ctx.textAlign = 'center';
+    ctx.fillText(p.label, p.endX, botY + 20);
+
+    // Animated data packets
+    if(sp > 0.25){
+      for(let j=0;j<2;j++){
+        const tp = ((time*0.0004 + i*0.2 + j*0.5) % 1);
+        const px = (1-tp)*(1-tp)*(1-tp)*cx + 3*(1-tp)*(1-tp)*tp*cx + 3*(1-tp)*tp*tp*p.endX + tp*tp*tp*p.endX;
+        const py = (1-tp)*(1-tp)*(1-tp)*(topY+10) + 3*(1-tp)*(1-tp)*tp*midY + 3*(1-tp)*tp*tp*midY + tp*tp*tp*(botY-14);
+        const pa = Math.sin(tp*Math.PI)*0.8;
+        ctx.beginPath();
+        ctx.arc(px, py, 4, 0, Math.PI*2);
+        ctx.fillStyle = `rgba(96,165,250,${pa})`;
+        ctx.shadowColor = 'rgba(59,130,246,0.6)';
+        ctx.shadowBlur = 12;
+        ctx.fill();
+        ctx.shadowBlur = 0;
+      }
+    }
+  }
+
+  ctx.restore();
+}
+
+/* =========================================================
+   VISUAL: POSITIONING (Section 8)
+   ========================================================= */
+function drawPositioningVisual(sp){
+  const alpha = textOpacity(sp);
+  if(alpha < 0.01) return;
+
+  const cx = W/2;
+  const baseY = H*0.52;
+  const layerW = Math.min(W*0.6, 520);
+  const layerH = 52;
+  const gap = 14;
+  const time = performance.now();
+  const labels = t('positioningLabels');
+
+  // 3 layers stacking from bottom to top
+  // Layer 2 (bottom) = Residence Know-how (foundation)
+  // Layer 1 (middle) = Connected Ecosystem (integrations)
+  // Layer 0 (top)    = Cloud Platform (Kova)
+  const layers = [
+    { label: labels[0], color: 'rgba(59,130,246,0.35)', border: 'rgba(59,130,246,0.5)', y: baseY },
+    { label: labels[2], color: 'rgba(59,130,246,0.15)', border: 'rgba(59,130,246,0.3)', y: baseY + layerH + gap },
+    { label: labels[1], color: 'rgba(59,130,246,0.08)', border: 'rgba(59,130,246,0.2)', y: baseY + (layerH + gap)*2 },
+  ];
+
+  ctx.save();
+
+  for(let i=0;i<layers.length;i++){
+    const l = layers[i];
+    const entrance = smoothstep(0.08 + (2-i)*0.12, 0.3 + (2-i)*0.12, sp);
+    const pulse = 1 + Math.sin(time*0.002 + i)*0.01;
+    const lw = layerW * (1 - i*0.06) * pulse;
+    const lx = cx - lw/2;
+
+    ctx.globalAlpha = alpha * entrance;
+
+    // Layer background
+    ctx.beginPath();
+    ctx.roundRect(lx, l.y, lw, layerH, 10);
+    ctx.fillStyle = l.color;
+    ctx.fill();
+    ctx.strokeStyle = l.border;
+    ctx.lineWidth = 1;
+    ctx.stroke();
+
+    // Top highlight
+    const hl = ctx.createLinearGradient(lx, l.y, lx, l.y + layerH*0.4);
+    hl.addColorStop(0, 'rgba(255,255,255,0.04)');
+    hl.addColorStop(1, 'rgba(255,255,255,0)');
+    ctx.beginPath();
+    ctx.roundRect(lx, l.y, lw, layerH, 10);
+    ctx.fillStyle = hl;
+    ctx.fill();
+
+    // Label centered in layer
+    ctx.fillStyle = i === 0 ? '#fff' : 'rgba(255,255,255,0.7)';
+    ctx.font = i === 0 ? '600 15px Outfit' : '14px Outfit';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(l.label, cx, l.y + layerH/2);
+
+    // Connection dots between layers
+    if(i < layers.length - 1){
+      const dotY = l.y + layerH + gap/2;
+      for(let d=0;d<3;d++){
+        const dx = cx + (d-1)*40;
+        const dotAlpha = 0.15 + Math.sin(time*0.004 + d + i)*0.1;
+        ctx.beginPath();
+        ctx.arc(dx, dotY, 2, 0, Math.PI*2);
+        ctx.fillStyle = `rgba(59,130,246,${dotAlpha})`;
+        ctx.fill();
+      }
+    }
+  }
+
+  // "Kova" badge on top layer
+  const kovaEntrance = smoothstep(0.4, 0.6, sp);
+  if(kovaEntrance > 0){
+    ctx.globalAlpha = alpha * kovaEntrance;
+    const kx = cx - layerW*0.47*0.5 + 30;
+    const ky = baseY + layerH/2;
+    ctx.beginPath();
+    ctx.roundRect(kx - 28, ky - 12, 56, 24, 6);
+    ctx.fillStyle = 'rgba(59,130,246,0.25)';
+    ctx.fill();
+    ctx.strokeStyle = 'rgba(59,130,246,0.5)';
+    ctx.lineWidth = 1;
+    ctx.stroke();
+    ctx.fillStyle = COLORS.accentLight;
+    ctx.font = '600 12px Outfit';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText('KOVA', kx, ky);
+  }
+
+  ctx.restore();
+}
+
+/* =========================================================
+   DATA FLOW PULSES (used in S3/S4)
+   ========================================================= */
+function drawFlowPulses(nodes, time, intensity){
+  ctx.save();
+  for(let i=1;i<nodes.length;i++){
+    for(let j=0;j<2;j++){
+      const tp = ((time*0.0003 + i*0.12 + j*0.5) % 1);
+      const px = lerp(nodes[i].x, nodes[0].x, tp);
+      const py = lerp(nodes[i].y, nodes[0].y, tp);
+      const a = Math.sin(tp*Math.PI) * intensity;
+      ctx.beginPath();
+      ctx.arc(px, py, 2.5, 0, Math.PI*2);
+      ctx.fillStyle = `rgba(96,165,250,${a})`;
+      ctx.shadowColor = 'rgba(59,130,246,0.7)';
+      ctx.shadowBlur = 8;
+      ctx.fill();
+      ctx.shadowBlur = 0;
+    }
+  }
+  ctx.restore();
+}
+
+/* =========================================================
+   VISUAL: INTEGRATIONS (Section 8)
+   ========================================================= */
+function drawIntegrationIcon(type, cx, cy, s, color){
+  ctx.save();
+  ctx.fillStyle = color;
+  ctx.strokeStyle = color;
+  ctx.lineWidth = 1.2;
+  ctx.lineCap = 'round';
+  switch(type){
+    case 0: // Access Control - Lock
+      ctx.beginPath();
+      ctx.arc(cx, cy-4*s, 4*s, Math.PI, 0);
+      ctx.lineWidth = 2.5*s;
+      ctx.stroke();
+      ctx.lineWidth = 1.2;
+      ctx.beginPath();
+      ctx.roundRect(cx-5.5*s, cy, 11*s, 8*s, 2*s);
+      ctx.fill();
+      break;
+    case 1: // Payments - Credit card
+      ctx.beginPath();
+      ctx.roundRect(cx-7*s, cy-5*s, 14*s, 10*s, 2*s);
+      ctx.fill();
+      ctx.save();
+      ctx.globalCompositeOperation = 'destination-out';
+      ctx.fillRect(cx-7*s, cy-1.5*s, 14*s, 2.5*s);
+      ctx.restore();
+      break;
+    case 2: // Accounting - Book
+      ctx.beginPath();
+      ctx.roundRect(cx-6*s, cy-7*s, 12*s, 14*s, 1.5*s);
+      ctx.fill();
+      ctx.save();
+      ctx.globalCompositeOperation = 'destination-out';
+      ctx.fillRect(cx-0.5*s, cy-7*s, 1.5*s, 14*s);
+      ctx.fillRect(cx-3.5*s, cy-3*s, 3*s, 1*s);
+      ctx.fillRect(cx-3.5*s, cy, 3*s, 1*s);
+      ctx.restore();
+      break;
+    case 3: // Communication - Bell
+      ctx.beginPath();
+      ctx.moveTo(cx-5*s, cy+2*s);
+      ctx.quadraticCurveTo(cx-5*s, cy-6*s, cx, cy-7*s);
+      ctx.quadraticCurveTo(cx+5*s, cy-6*s, cx+5*s, cy+2*s);
+      ctx.lineTo(cx+7*s, cy+4*s);
+      ctx.lineTo(cx-7*s, cy+4*s);
+      ctx.closePath();
+      ctx.fill();
+      ctx.beginPath();
+      ctx.arc(cx, cy+6*s, 2*s, 0, Math.PI);
+      ctx.fill();
+      break;
+    case 4: // Documents - Cloud
+      ctx.beginPath();
+      ctx.arc(cx-3*s, cy, 4*s, Math.PI*0.5, Math.PI*1.5);
+      ctx.arc(cx, cy-4*s, 3.5*s, Math.PI, 0);
+      ctx.arc(cx+3*s, cy, 4*s, -Math.PI*0.5, Math.PI*0.5);
+      ctx.lineTo(cx-3*s, cy+4*s);
+      ctx.closePath();
+      ctx.fill();
+      break;
+  }
+  ctx.restore();
+}
+
+function drawIntegrationsVisual(sp){
+  const alpha = textOpacity(sp);
+  if(alpha < 0.01) return;
+  const cx = W/2;
+  const topY = H*0.50;
+  const barY = H*0.70;
+  const kovaY = H*0.82;
+  const labels = t('integrationLabels');
+  const spacing = Math.min(W*0.16, 130);
+  const time = performance.now();
+
+  ctx.save();
+  ctx.globalAlpha = alpha;
+
+  // Horizontal connection bar
+  const barEntr = smoothstep(0.2, 0.4, sp);
+  ctx.globalAlpha = alpha * barEntr;
+  const barLeft = cx - spacing*2 - 10;
+  const barRight = cx + spacing*2 + 10;
+  ctx.beginPath();
+  ctx.moveTo(barLeft, barY);
+  ctx.lineTo(barRight, barY);
+  ctx.strokeStyle = 'rgba(59,130,246,0.25)';
+  ctx.lineWidth = 2;
+  ctx.stroke();
+
+  // Vertical line from bar center down to Kova badge
+  const kovaEntr = smoothstep(0.35, 0.55, sp);
+  ctx.globalAlpha = alpha * kovaEntr;
+  ctx.beginPath();
+  ctx.moveTo(cx, barY);
+  ctx.lineTo(cx, kovaY - 20);
+  ctx.strokeStyle = 'rgba(59,130,246,0.2)';
+  ctx.lineWidth = 1.5;
+  ctx.stroke();
+
+  // Kova badge at bottom
+  ctx.beginPath();
+  ctx.roundRect(cx-40, kovaY-18, 80, 36, 10);
+  ctx.fillStyle = 'rgba(20,30,55,0.92)';
+  ctx.fill();
+  ctx.strokeStyle = 'rgba(59,130,246,0.5)';
+  ctx.lineWidth = 1.5;
+  ctx.stroke();
+  ctx.fillStyle = COLORS.accentLight;
+  ctx.font = '600 16px Outfit';
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.fillText('KOVA', cx, kovaY);
+
+  // 5 integration nodes in horizontal row
+  for(let i=0;i<5;i++){
+    const nx = cx + (i-2)*spacing;
+    const ny = topY;
+    const entrance = smoothstep(0.05+i*0.05, 0.25+i*0.05, sp);
+    ctx.globalAlpha = alpha * entrance;
+
+    // Vertical line from node down to bar
+    ctx.beginPath();
+    ctx.moveTo(nx, ny+28);
+    ctx.lineTo(nx, barY);
+    ctx.strokeStyle = 'rgba(59,130,246,0.15)';
+    ctx.lineWidth = 1;
+    ctx.stroke();
+
+    // Node box
+    ctx.beginPath();
+    ctx.roundRect(nx-50, ny-26, 100, 52, 10);
+    ctx.fillStyle = 'rgba(15,22,40,0.85)';
+    ctx.fill();
+    ctx.strokeStyle = 'rgba(100,140,200,0.15)';
+    ctx.lineWidth = 1;
+    ctx.stroke();
+    // Top highlight
+    const hl = ctx.createLinearGradient(nx-50, ny-26, nx-50, ny-26+20);
+    hl.addColorStop(0, 'rgba(255,255,255,0.03)');
+    hl.addColorStop(1, 'rgba(255,255,255,0)');
+    ctx.beginPath();
+    ctx.roundRect(nx-50, ny-26, 100, 52, 10);
+    ctx.fillStyle = hl;
+    ctx.fill();
+
+    // Icon
+    drawIntegrationIcon(i, nx, ny-5, 1.1, 'rgba(255,255,255,0.55)');
+
+    // Label
+    ctx.fillStyle = 'rgba(255,255,255,0.55)';
+    ctx.font = '11px Outfit';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'top';
+    ctx.fillText(labels[i], nx, ny+15);
+
+    // Animated dot flowing down from node to bar, then along bar to center
+    if(entrance > 0.5){
+      const tp = ((time*0.0003 + i*0.2) % 1);
+      let px, py;
+      if(tp < 0.6){
+        // Moving down vertically
+        const vt = tp/0.6;
+        px = nx;
+        py = lerp(ny+28, barY, vt);
+      } else {
+        // Moving along bar toward center
+        const ht = (tp-0.6)/0.4;
+        px = lerp(nx, cx, ht);
+        py = barY;
+      }
+      const pa = Math.sin(tp*Math.PI)*0.6;
+      ctx.beginPath();
+      ctx.arc(px, py, 3, 0, Math.PI*2);
+      ctx.fillStyle = `rgba(96,165,250,${pa})`;
+      ctx.shadowColor = 'rgba(59,130,246,0.6)';
+      ctx.shadowBlur = 8;
+      ctx.fill();
+      ctx.shadowBlur = 0;
+    }
+  }
+
+  // Dot flowing down from bar to Kova
+  if(kovaEntr > 0.3){
+    const tp = ((time*0.0004) % 1);
+    const py = lerp(barY, kovaY-20, tp);
+    const pa = Math.sin(tp*Math.PI)*0.5;
+    ctx.globalAlpha = alpha * kovaEntr;
+    ctx.beginPath();
+    ctx.arc(cx, py, 3, 0, Math.PI*2);
+    ctx.fillStyle = `rgba(96,165,250,${pa})`;
+    ctx.shadowColor = 'rgba(59,130,246,0.6)';
+    ctx.shadowBlur = 8;
+    ctx.fill();
+    ctx.shadowBlur = 0;
+  }
+
+  ctx.restore();
+}
+
+/* =========================================================
+   VISUAL: FINANCE (Section 9)
+   ========================================================= */
+function drawFinanceVisual(sp){
+  const alpha = textOpacity(sp);
+  if(alpha < 0.01) return;
+  const cx = W/2, cy = H*0.66;
+  const boxW = 140, boxH = 50;
+  const spread = Math.min(W*0.35, 300);
+  const time = performance.now();
+  const leftLabels = t('financeFlowLeft');
+  const rightLabels = t('financeFlowRight');
+
+  ctx.save();
+  ctx.globalAlpha = alpha;
+
+  // Center box
+  const centerEntr = smoothstep(0.1, 0.3, sp);
+  ctx.globalAlpha = alpha * centerEntr;
+  ctx.beginPath();
+  ctx.roundRect(cx-boxW/2, cy-boxH/2, boxW, boxH, 12);
+  ctx.fillStyle = 'rgba(20,30,55,0.92)';
+  ctx.fill();
+  ctx.strokeStyle = 'rgba(59,130,246,0.45)';
+  ctx.lineWidth = 1.5;
+  ctx.stroke();
+  ctx.fillStyle = COLORS.accentLight;
+  ctx.font = '600 13px Outfit';
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.fillText('KOVA', cx, cy);
+
+  const ySpacing = 65;
+
+  // 3 left sources
+  for(let i=0;i<3;i++){
+    const lx = cx - spread;
+    const ly = cy + (i-1)*ySpacing;
+    const entr = smoothstep(0.05+i*0.06, 0.25+i*0.06, sp);
+    ctx.globalAlpha = alpha * entr;
+
+    // Source node
+    ctx.beginPath();
+    ctx.roundRect(lx-55, ly-16, 110, 32, 8);
+    ctx.fillStyle = 'rgba(15,22,40,0.85)';
+    ctx.fill();
+    ctx.strokeStyle = 'rgba(100,140,200,0.12)';
+    ctx.lineWidth = 1;
+    ctx.stroke();
+    ctx.fillStyle = 'rgba(255,255,255,0.6)';
+    ctx.font = '12px Outfit';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(leftLabels[i], lx, ly);
+
+    // Line to center
+    ctx.beginPath();
+    ctx.moveTo(lx+55, ly);
+    const cpx1 = lx+55+(cx-boxW/2-lx-55)*0.5;
+    const cpx2 = cx-boxW/2-(cx-boxW/2-lx-55)*0.4;
+    ctx.bezierCurveTo(cpx1, ly, cpx2, cy, cx-boxW/2, cy);
+    ctx.strokeStyle = 'rgba(59,130,246,0.2)';
+    ctx.lineWidth = 1.5;
+    ctx.stroke();
+
+    // Animated dot
+    if(entr > 0.5){
+      const tp = ((time*0.00035 + i*0.33) % 1);
+      const e = tp*tp*(3-2*tp);
+      const px = lerp(lx+55, cx-boxW/2, e);
+      const py = lerp(ly, cy, e);
+      ctx.beginPath();
+      ctx.arc(px, py, 3, 0, Math.PI*2);
+      ctx.fillStyle = `rgba(96,165,250,${Math.sin(tp*Math.PI)*0.7})`;
+      ctx.shadowColor = 'rgba(59,130,246,0.6)';
+      ctx.shadowBlur = 8;
+      ctx.fill();
+      ctx.shadowBlur = 0;
+    }
+  }
+
+  // 3 right destinations
+  for(let i=0;i<3;i++){
+    const rx = cx + spread;
+    const ry = cy + (i-1)*ySpacing;
+    const entr = smoothstep(0.15+i*0.06, 0.35+i*0.06, sp);
+    ctx.globalAlpha = alpha * entr;
+
+    // Dest node
+    ctx.beginPath();
+    ctx.roundRect(rx-55, ry-16, 110, 32, 8);
+    ctx.fillStyle = 'rgba(15,22,40,0.85)';
+    ctx.fill();
+    ctx.strokeStyle = 'rgba(100,140,200,0.12)';
+    ctx.lineWidth = 1;
+    ctx.stroke();
+    ctx.fillStyle = 'rgba(255,255,255,0.6)';
+    ctx.font = '12px Outfit';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(rightLabels[i], rx, ry);
+
+    // Line from center
+    ctx.beginPath();
+    ctx.moveTo(cx+boxW/2, cy);
+    const cpx1 = cx+boxW/2+(rx-55-cx-boxW/2)*0.4;
+    const cpx2 = rx-55-(rx-55-cx-boxW/2)*0.5;
+    ctx.bezierCurveTo(cpx1, cy, cpx2, ry, rx-55, ry);
+    ctx.strokeStyle = 'rgba(59,130,246,0.2)';
+    ctx.lineWidth = 1.5;
+    ctx.stroke();
+
+    // Animated dot
+    if(entr > 0.5){
+      const tp = ((time*0.00035 + i*0.33 + 0.15) % 1);
+      const e = tp*tp*(3-2*tp);
+      const px = lerp(cx+boxW/2, rx-55, e);
+      const py = lerp(cy, ry, e);
+      ctx.beginPath();
+      ctx.arc(px, py, 3, 0, Math.PI*2);
+      ctx.fillStyle = `rgba(96,165,250,${Math.sin(tp*Math.PI)*0.7})`;
+      ctx.shadowColor = 'rgba(59,130,246,0.6)';
+      ctx.shadowBlur = 8;
+      ctx.fill();
+      ctx.shadowBlur = 0;
+    }
+  }
+
+  ctx.restore();
+}
+
+/* =========================================================
+   VISUAL: IMPACT (Section 10)
+   ========================================================= */
+function drawImpactVisual(sp){
+  const alpha = textOpacity(sp);
+  if(alpha < 0.01) return;
+  const cx = W/2, cy = H*0.66;
+  const spacing = Math.min(W*0.28, 220);
+  const metricLabels = t('impactMetrics');
+  const values = [60, 3, 100];
+  const units = ['%', '\u00d7', '%'];
+  const ringR = 62;
+  const time = performance.now();
+
+  ctx.save();
+  ctx.globalAlpha = alpha;
+
+  for(let i=0;i<3;i++){
+    const nx = cx + (i-1)*spacing;
+    const ny = cy;
+    const entrance = smoothstep(0.08+i*0.1, 0.35+i*0.1, sp);
+    ctx.globalAlpha = alpha * entrance;
+
+    // Progress ring background
+    ctx.beginPath();
+    ctx.arc(nx, ny, ringR, 0, Math.PI*2);
+    ctx.strokeStyle = 'rgba(59,130,246,0.08)';
+    ctx.lineWidth = 4;
+    ctx.stroke();
+
+    // Progress ring filled arc
+    const progress = entrance;
+    const targetAngle = (values[i] / (i===1?3:100)) * Math.PI*2;
+    const currentAngle = targetAngle * progress;
+    ctx.beginPath();
+    ctx.arc(nx, ny, ringR, -Math.PI/2, -Math.PI/2 + currentAngle);
+    ctx.strokeStyle = COLORS.accent;
+    ctx.lineWidth = 4;
+    ctx.shadowColor = 'rgba(59,130,246,0.4)';
+    ctx.shadowBlur = 10;
+    ctx.stroke();
+    ctx.shadowBlur = 0;
+
+    // Pulse glow
+    const pulse = 1 + Math.sin(time*0.002 + i*2)*0.03;
+    ctx.beginPath();
+    ctx.arc(nx, ny, ringR*0.85*pulse, 0, Math.PI*2);
+    ctx.fillStyle = 'rgba(59,130,246,0.04)';
+    ctx.fill();
+
+    // Number (centered in ring)
+    const displayVal = Math.round(values[i] * progress);
+    ctx.fillStyle = '#fff';
+    ctx.font = '700 30px Outfit';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(displayVal + units[i], nx, ny);
+
+    // Sub-label (below the ring)
+    ctx.fillStyle = 'rgba(255,255,255,0.5)';
+    ctx.font = '13px Outfit';
+    const label = metricLabels[i];
+    const maxW = spacing * 0.85;
+    if(ctx.measureText(label).width > maxW && label.includes(' ')){
+      const parts = label.split(' ');
+      const mid = Math.ceil(parts.length/2);
+      ctx.fillText(parts.slice(0,mid).join(' '), nx, ny + ringR + 18);
+      ctx.fillText(parts.slice(mid).join(' '), nx, ny + ringR + 33);
+    } else {
+      ctx.fillText(label, nx, ny + ringR + 18);
+    }
+  }
+
+  ctx.restore();
+}
+
+/* =========================================================
+   VISUAL: CLOSING (Section 12)
+   ========================================================= */
+function drawClosingVisual(sp){
+  if(sp < 0.01) return;
+  const time = performance.now();
+  const cx = W/2, cy = H/2;
+
+  // Multi-layer converging glow
+  const glowR = Math.max(W,H)*0.55*(1 - sp*0.4);
+  const glowAlpha = 0.06 + sp*0.2;
+
+  // Outer glow layer
+  const g1 = ctx.createRadialGradient(cx, cy, 0, cx, cy, glowR);
+  g1.addColorStop(0, `rgba(59,130,246,${glowAlpha})`);
+  g1.addColorStop(0.3, `rgba(59,130,246,${glowAlpha*0.5})`);
+  g1.addColorStop(0.7, `rgba(59,130,246,${glowAlpha*0.1})`);
+  g1.addColorStop(1, 'rgba(59,130,246,0)');
+  ctx.fillStyle = g1;
+  ctx.fillRect(0,0,W,H);
+
+  // Inner bright core
+  if(sp > 0.15){
+    const coreAlpha = (sp-0.15)*0.15;
+    const coreR = 120 + Math.sin(time*0.001)*20;
+    const g2 = ctx.createRadialGradient(cx, cy, 0, cx, cy, coreR);
+    g2.addColorStop(0, `rgba(100,170,255,${coreAlpha})`);
+    g2.addColorStop(1, 'rgba(59,130,246,0)');
+    ctx.fillStyle = g2;
+    ctx.fillRect(0,0,W,H);
+  }
+
+  // Bloom ring — pulsing
+  if(sp > 0.25){
+    const ringAlpha = (sp-0.25)*0.35;
+    const pulse = Math.sin(time*0.002)*0.15 + 1;
+    const ringR = (50 + sp*30) * pulse;
+    ctx.beginPath();
+    ctx.arc(cx, cy, ringR, 0, Math.PI*2);
+    ctx.strokeStyle = `rgba(59,130,246,${ringAlpha*0.6})`;
+    ctx.lineWidth = 1.5;
+    ctx.shadowColor = 'rgba(59,130,246,0.6)';
+    ctx.shadowBlur = 35 * sp;
+    ctx.stroke();
+    ctx.shadowBlur = 0;
+
+    // Second wider ring
+    ctx.beginPath();
+    ctx.arc(cx, cy, ringR*1.6, 0, Math.PI*2);
+    ctx.strokeStyle = `rgba(59,130,246,${ringAlpha*0.2})`;
+    ctx.lineWidth = 1;
+    ctx.stroke();
+  }
+
+  // Canvas-rendered "KOVA" text bloom behind the HTML text
+  if(sp > 0.1){
+    const bloomAlpha = smoothstep(0.1, 0.4, sp) * 0.25;
+    const fontSize = Math.min(W*0.12, 120);
+    ctx.save();
+    ctx.font = `700 ${fontSize}px Outfit`;
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    // Multiple bloom layers
+    for(let layer=3; layer>=0; layer--){
+      const blur = (layer+1) * 15;
+      const a = bloomAlpha * (1 - layer*0.2);
+      ctx.shadowColor = `rgba(59,130,246,${a})`;
+      ctx.shadowBlur = blur;
+      ctx.fillStyle = `rgba(59,130,246,${a*0.3})`;
+      ctx.fillText('KOVA', cx, cy);
+    }
+    ctx.shadowBlur = 0;
+    ctx.restore();
+  }
+}
+
+/* =========================================================
+   TEXT: INIT CHARACTER/WORD SPANS
+   ========================================================= */
+function buildHeroChars(text){
+  const heroEl = document.getElementById('heroHL');
+  heroEl.innerHTML = '';
+  heroChars = [];
+  const heroWords = text.split(' ');
+  heroWords.forEach((word, wi) => {
+    const wordWrap = document.createElement('span');
+    wordWrap.style.display = 'inline-block';
+    wordWrap.style.whiteSpace = 'nowrap';
+    for(let i=0;i<word.length;i++){
+      const span = document.createElement('span');
+      span.className = 'char';
+      span.textContent = word[i];
+      wordWrap.appendChild(span);
+      heroChars.push(span);
+    }
+    heroEl.appendChild(wordWrap);
+    if(wi < heroWords.length - 1){
+      heroEl.appendChild(document.createTextNode(' '));
+    }
+  });
+}
+function buildPauseWords(text){
+  const pauseEl = document.getElementById('pauseHL');
+  pauseEl.innerHTML = '';
+  pauseWords = [];
+  const words = text.split(' ');
+  for(let i=0;i<words.length;i++){
+    const span = document.createElement('span');
+    span.className = 'word';
+    span.textContent = words[i];
+    pauseEl.appendChild(span);
+    pauseWords.push(span);
+  }
+}
+function initTextElements(){
+  buildHeroChars(t('heroHL'));
+  buildPauseWords(t('pauseHL'));
+}
+
+function updateStaticSections(){
+  document.getElementById('heroSub').innerHTML = t('heroSub');
+  document.getElementById('sec3Title').textContent = t('sec3Title');
+  document.getElementById('sec4Title').textContent = t('sec4Title');
+  document.getElementById('sec5Title').textContent = t('sec5Title');
+  document.getElementById('sec5Body').innerHTML = t('sec5Body');
+  document.getElementById('sec6Title').innerHTML = t('sec6Title');
+  document.getElementById('sec6Body').innerHTML = t('sec6Body');
+  document.getElementById('sec7Title').innerHTML = t('sec7Title');
+  document.getElementById('sec7Body').innerHTML = t('sec7Body');
+  document.getElementById('sec8Title').textContent = t('sec8Title');
+  document.getElementById('sec8Body').innerHTML = t('sec8Body');
+  document.getElementById('sec9Title').innerHTML = t('sec9Title');
+  document.getElementById('sec9Body').innerHTML = t('sec9Body');
+  document.getElementById('sec10Title').textContent = t('sec10Title');
+  document.getElementById('sec10Body').innerHTML = t('sec10Body');
+  document.getElementById('sec11Title').innerHTML = t('sec11Title');
+  document.getElementById('sec11Body').innerHTML = t('sec11Body');
+  document.getElementById('sec12Pre').textContent = t('sec12Pre');
+  document.getElementById('sec12Sub').textContent = t('sec12Sub');
+}
+
+function switchLanguage(lang){
+  currentLang = lang;
+  const overlay = document.getElementById('overlay');
+  overlay.style.transition = 'opacity 0.3s ease';
+  overlay.style.opacity = '0';
+  setTimeout(() => {
+    buildHeroChars(t('heroHL'));
+    buildPauseWords(t('pauseHL'));
+    updateStaticSections();
+    overlay.style.opacity = '1';
+  }, 300);
+  updateLangButton();
+}
+
+function updateLangButton(){
+  const btn = document.getElementById('langToggle');
+  if(btn) btn.textContent = currentLang === 'en' ? 'DE' : 'EN';
+}
+
+/* =========================================================
+   TEXT: UPDATE OVERLAYS
+   ========================================================= */
+function updateTextOverlays(prog){
+  const {idx, sp} = secInfo(prog);
+  const secs = document.querySelectorAll('.sec');
+
+  for(let i=0;i<secs.length;i++){
+    const secIdx = i+1;
+    if(secIdx === idx){
+      // Active section
+      let opacity, yOff;
+
+      if(secIdx === 1){
+        // Hero: time-based intro blended with scroll
+        const elapsed = (performance.now() - loadTime) / 1000; // seconds since load
+        opacity = sp < 0.85 ? 1 : 1-(sp-0.85)/0.15;
+        yOff = sp > 0.85 ? -20*(sp-0.85)/0.15 : 0;
+
+        // Logo: fades in over first 1.5s, always visible after
+        const logo = document.getElementById('logo');
+        const logoIntro = clamp(elapsed / 1.5, 0, 1);
+        logo.style.opacity = Math.max(logoIntro, Math.min(1, sp/0.08));
+
+        // Character reveal: time-based intro (first 3s reveals ~35%), then scroll takes over
+        const introCharProg = clamp(Math.max(0, elapsed - 0.8) / 2.5, 0, 0.35);
+        const scrollCharProg = Math.min(1, sp / 0.45);
+        const charProg = Math.max(introCharProg, scrollCharProg);
+        const visibleChars = Math.floor(charProg * heroChars.length);
+        for(let c=0;c<heroChars.length;c++){
+          heroChars[c].style.opacity = c < visibleChars ? '1' : '0';
+        }
+
+        // Subtext: appears after intro or scroll
+        const subEl = document.getElementById('heroSub');
+        const introSub = clamp((elapsed - 3.5) / 1.0, 0, 1);
+        const scrollSub = smoothstep(0.4, 0.55, sp);
+        subEl.style.opacity = Math.max(introSub, scrollSub) * (sp > 0.85 ? 1-(sp-0.85)/0.15 : 1);
+
+      } else if(secIdx === 2){
+        // Pause word-by-word
+        opacity = sp > 0.78 ? 1-(sp-0.78)/0.22 : 1;
+        yOff = textY(sp);
+        const wordProg = Math.min(1, sp / 0.55);
+        for(let w=0;w<pauseWords.length;w++){
+          const threshold = w / pauseWords.length;
+          pauseWords[w].style.opacity = wordProg > threshold ? '1' : '0';
+        }
+      } else if(secIdx === 12){
+        // Closing: fade in, hold forever (no fade out at end)
+        opacity = smoothstep(0, 0.2, sp);
+        yOff = sp < 0.15 ? 30*(1-sp/0.15) : 0;
+      } else {
+        opacity = textOpacity(sp);
+        yOff = textY(sp);
+      }
+
+      secs[i].style.opacity = Math.max(0,opacity);
+      secs[i].style.transform = `translateY(${yOff}px)`;
+    } else {
+      secs[i].style.opacity = '0';
+    }
+  }
+}
+
+/* =========================================================
+   RENDER LOOP
+   ========================================================= */
+function render(timestamp){
+  const dt = timestamp - lastTS;
+  lastTS = timestamp;
+  const time = timestamp;
+
+  // Auto-play scroll
+  const maxScroll = document.body.scrollHeight - window.innerHeight;
+  if(autoPlaying){
+    const elapsed = timestamp - autoPlayStartTime;
+    const normTime = clamp(elapsed / autoPlayDuration, 0, 1);
+    const targetProg = autoPlayEasing(normTime);
+    window.scrollTo(0, targetProg * maxScroll);
+    if(normTime >= 1){ autoPlaying = false; updatePlayButton(); }
+  }
+
+  // Read scroll
+  scrollProg = maxScroll > 0 ? window.scrollY / maxScroll : 0;
+  scrollProg = clamp(scrollProg, 0, 1);
+
+  const {idx: section, sp} = secInfo(scrollProg);
+
+  // Clear
+  ctx.clearRect(0,0,W,H);
+
+  // 1. Background
+  drawBackground(scrollProg);
+
+  // 2. Dot grid (section-aware)
+  drawDotGrid(scrollProg, time, section, sp);
+
+  // 3. Ambient glow
+  drawAmbientGlow(scrollProg, section, sp);
+
+  // 4. Update + draw particles (section-aware)
+  updateParticles(dt, time, section, sp);
+  drawParticles(scrollProg, section, sp);
+
+  // 5. Update burst particles
+  updateBurst();
+
+  // 6. Section-specific canvas content
+  if(section === 3) drawFragmentedDiagram(sp);
+  if(section === 4) drawKovaReveal(sp);
+  if(section === 5) drawDashboardVisual(sp);
+  if(section === 6) drawTimelineVisual(sp);
+  if(section === 7) drawRoutingVisual(sp);
+  if(section === 8) drawIntegrationsVisual(sp);
+  if(section === 9) drawFinanceVisual(sp);
+  if(section === 10) drawImpactVisual(sp);
+  if(section === 11) drawPositioningVisual(sp);
+  if(section === 12) drawClosingVisual(sp);
+
+  // Cross-fade diagram at section edges for smooth transitions
+  if(section === 2 && sp > 0.8){
+    const crossFade = (sp - 0.8) / 0.2;
+    ctx.save(); ctx.globalAlpha = crossFade * 0.4;
+    drawFragmentedDiagram(0);
+    ctx.restore();
+  }
+  if(section === 5 && sp < 0.2){
+    // Fade out Kova reveal into dashboard section
+    ctx.save(); ctx.globalAlpha = (1 - sp/0.2) * 0.3;
+    drawKovaReveal(1);
+    ctx.restore();
+  }
+
+  // 7. Scroll progress bar (thin blue line at bottom)
+  if(scrollProg > 0.005){
+    ctx.fillStyle = 'rgba(59,130,246,0.4)';
+    ctx.fillRect(0, H-2, W * scrollProg, 2);
+    // Glow tip
+    const tipX = W * scrollProg;
+    const gp = ctx.createRadialGradient(tipX, H-1, 0, tipX, H-1, 15);
+    gp.addColorStop(0, 'rgba(96,165,250,0.5)');
+    gp.addColorStop(1, 'rgba(59,130,246,0)');
+    ctx.fillStyle = gp;
+    ctx.fillRect(tipX-15, H-16, 30, 16);
+  }
+
+  // 8. Update text overlays
+  updateTextOverlays(scrollProg);
+
+  requestAnimationFrame(render);
+}
+
+/* =========================================================
+   INITIALIZATION
+   ========================================================= */
+function createUIBar(){
+  const bar = document.createElement('div');
+  bar.id = 'uiBar';
+  bar.style.cssText = 'position:fixed;top:20px;right:20px;z-index:10;pointer-events:auto;display:flex;gap:8px;align-items:center;opacity:0;transition:opacity 1s ease;';
+
+  const btnStyle = "background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);color:rgba(255,255,255,0.6);font-family:'Outfit',sans-serif;font-size:13px;padding:7px 14px;border-radius:8px;cursor:pointer;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);transition:all 0.2s ease;outline:none;";
+
+  const playBtn = document.createElement('button');
+  playBtn.id = 'playBtn';
+  playBtn.style.cssText = btnStyle + 'font-size:15px;padding:7px 12px;';
+  playBtn.textContent = '\u25B6';
+  playBtn.addEventListener('click', toggleAutoPlay);
+  playBtn.addEventListener('mouseenter', function(){this.style.background='rgba(255,255,255,0.14)';this.style.color='rgba(255,255,255,0.9)';});
+  playBtn.addEventListener('mouseleave', function(){this.style.background='rgba(255,255,255,0.06)';this.style.color='rgba(255,255,255,0.6)';});
+
+  const langBtn = document.createElement('button');
+  langBtn.id = 'langToggle';
+  langBtn.style.cssText = btnStyle;
+  langBtn.textContent = 'DE';
+  langBtn.addEventListener('click', function(){
+    switchLanguage(currentLang === 'en' ? 'de' : 'en');
+  });
+  langBtn.addEventListener('mouseenter', function(){this.style.background='rgba(255,255,255,0.14)';this.style.color='rgba(255,255,255,0.9)';});
+  langBtn.addEventListener('mouseleave', function(){this.style.background='rgba(255,255,255,0.06)';this.style.color='rgba(255,255,255,0.6)';});
+
+  bar.appendChild(playBtn);
+  bar.appendChild(langBtn);
+  document.body.appendChild(bar);
+
+  setTimeout(function(){ bar.style.opacity = '1'; }, 1500);
+}
+
+function init(){
+  initCanvas();
+  initParticles();
+  initTextElements();
+  createUIBar();
+
+  window.addEventListener('resize', ()=>{
+    resize();
+  });
+
+  window.addEventListener('mousemove', (e)=>{
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+  });
+
+  // Manual scroll interrupts auto-play
+  window.addEventListener('wheel', ()=>{
+    if(autoPlaying){ autoPlaying=false; updatePlayButton(); }
+  }, {passive:true});
+  window.addEventListener('touchmove', ()=>{
+    if(autoPlaying){ autoPlaying=false; updatePlayButton(); }
+  }, {passive:true});
+  window.addEventListener('keydown', (e)=>{
+    const keys=['ArrowDown','ArrowUp','PageDown','PageUp',' ','Home','End'];
+    if(autoPlaying && keys.includes(e.key)){ autoPlaying=false; updatePlayButton(); }
+  });
+
+  // Start immediately at top
+  window.scrollTo(0,0);
+  loadTime = performance.now();
+  lastTS = loadTime;
+  requestAnimationFrame(render);
+}
+
+init();
+
+})();
+</script>
+</body>
+</html>
