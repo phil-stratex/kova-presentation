@@ -14,10 +14,10 @@ canvas#bg{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0}
 .overlay{position:fixed;top:0;left:0;width:100%;height:100%;z-index:1;pointer-events:none;overflow:hidden}
 .scroll-spacer{height:1350vh}
 .sec{position:absolute;top:0;left:0;width:100%;height:100%;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;opacity:0;will-change:transform,opacity;padding:0 6vw}
-.sec h1{font-size:clamp(1.8rem,4.5vw,3.6rem);font-weight:600;line-height:1.15;max-width:850px;margin-bottom:1.2rem;letter-spacing:-0.02em}
-.sec h2{font-size:clamp(1.2rem,2.8vw,2rem);font-weight:500;margin-bottom:0.8rem;color:rgba(15,23,42,0.85)}
-.sec p{font-size:clamp(0.95rem,1.4vw,1.2rem);font-weight:300;color:rgba(15,23,42,0.55);max-width:480px;line-height:1.7}
-.sec .logo{width:clamp(140px,18vw,260px);margin-bottom:2.5rem;opacity:0.92;filter:brightness(1.1)}
+.sec h1{font-size:clamp(2rem,5vw,4.2rem);font-weight:600;line-height:1.15;max-width:900px;margin-bottom:1.2rem;letter-spacing:-0.02em}
+.sec h2{font-size:clamp(1.4rem,3.2vw,2.4rem);font-weight:500;margin-bottom:0.8rem;color:rgba(15,23,42,0.85)}
+.sec p{font-size:clamp(1rem,1.6vw,1.4rem);font-weight:300;color:rgba(15,23,42,0.55);max-width:540px;line-height:1.7}
+.sec .logo{width:clamp(160px,20vw,300px);margin-bottom:2.5rem;opacity:0.92;filter:brightness(1.1)}
 .sec .sub{margin-top:0.6rem}
 .char{display:inline-block;opacity:0}
 .word{display:inline-block;opacity:0;margin:0 0.25em}
@@ -979,7 +979,7 @@ function drawNodeBox(x, y, w, h, label, iconIdx, opts){
 
   // Label
   ctx.fillStyle = isActive ? COLORS.textPri : themeText(0.55);
-  ctx.font = `${13*scale}px Outfit`;
+  ctx.font = `${15*scale}px Outfit`;
   ctx.textAlign = 'center';
   ctx.textBaseline = 'top';
   // Handle multi-word labels that might need two lines
@@ -1207,7 +1207,7 @@ function drawDashboardVisual(sp){
     // Card label
     const cardLabels = t('dashboardCards');
     ctx.fillStyle = themeText(0.35);
-    ctx.font = '10px Outfit';
+    ctx.font = '16px Outfit';
     ctx.textAlign = 'left';
     ctx.textBaseline = 'top';
     ctx.fillText(cardLabels[i], cardX+8, cardY+8);
@@ -1327,7 +1327,7 @@ function drawTimelineVisual(sp){
     // Step label
     ctx.globalAlpha = alpha * (active ? 0.85 : 0.2);
     ctx.fillStyle = COLORS.textPri;
-    ctx.font = active ? '600 13px Outfit' : '13px Outfit';
+    ctx.font = active ? '600 15px Outfit' : '15px Outfit';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'top';
     ctx.fillText(steps[i], x, cy + 20);
@@ -1335,7 +1335,7 @@ function drawTimelineVisual(sp){
     // Sub-label (only on active steps)
     if(active && subs && subs[i]){
       ctx.globalAlpha = alpha * (isCurrent ? 0.5 : 0.3);
-      ctx.font = '10px Outfit';
+      ctx.font = '16px Outfit';
       ctx.fillStyle = COLORS.accentLight;
       ctx.fillText(subs[i], x, cy + 36);
     }
@@ -1381,7 +1381,7 @@ function drawRoutingVisual(sp){
 
   // Source label
   ctx.fillStyle = themeText(0.5);
-  ctx.font = '14px Outfit';
+  ctx.font = '16px Outfit';
   ctx.textAlign = 'center';
   ctx.fillText(t('routingSource'), cx, topY - 22);
 
@@ -1412,7 +1412,7 @@ function drawRoutingVisual(sp){
 
     // End label
     ctx.fillStyle = themeText(0.5);
-    ctx.font = '13px Outfit';
+    ctx.font = '15px Outfit';
     ctx.textAlign = 'center';
     ctx.fillText(p.label, p.endX, botY + 18);
 
@@ -1480,14 +1480,14 @@ function drawPositioningVisual(sp){
 
     // Labels INSIDE each circle at the outer edge (away from center)
     ctx.fillStyle = themeText(0.65);
-    ctx.font = '600 13px Outfit';
+    ctx.font = '600 17px Outfit';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
     // Labels centered in each circle
     const labelX = p.x;
     const labelY = i===0 ? p.y - circleR*0.45 : p.y + circleR*0.45;
     ctx.fillText(labels[i], labelX, labelY);
-    ctx.font = '11px Outfit';
+    ctx.font = '15px Outfit';
     ctx.fillStyle = themeText(0.3);
     ctx.fillText(subItems[i][0], labelX, labelY + 16);
     ctx.fillText(subItems[i][1], labelX, labelY + 30);
@@ -1515,7 +1515,7 @@ function drawPositioningVisual(sp){
   ctx.lineWidth = 1.5;
   ctx.stroke();
   ctx.fillStyle = COLORS.accentLight;
-  ctx.font = '600 15px Outfit';
+  ctx.font = '600 17px Outfit';
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
   ctx.fillText('KOVA', cx, centroidY);
@@ -1657,7 +1657,7 @@ function drawIntegrationsVisual(sp){
   ctx.lineWidth = 1.5;
   ctx.stroke();
   ctx.fillStyle = COLORS.accentLight;
-  ctx.font = '600 16px Outfit';
+  ctx.font = '600 17px Outfit';
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
   ctx.fillText('KOVA', cx, kovaY);
@@ -1700,7 +1700,7 @@ function drawIntegrationsVisual(sp){
 
     // Label above the tile
     ctx.fillStyle = themeText(0.6);
-    ctx.font = '13px Outfit';
+    ctx.font = '15px Outfit';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'bottom';
     ctx.fillText(labels[i], nx, ny-30);
@@ -1848,7 +1848,7 @@ function drawImpactVisual(sp){
 
     // Text label (multi-line, split on \n)
     ctx.fillStyle = themeText(0.7);
-    ctx.font = '13px Outfit';
+    ctx.font = '15px Outfit';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
     const lines = metricLabels[i].split('\n');
@@ -1927,19 +1927,19 @@ function drawRoadmapVisual(sp){
     ctx.fillStyle = i===0 ? 'rgba(59,130,246,0.3)' : 'rgba(59,130,246,0.12)';
     ctx.fill();
     ctx.fillStyle = i===0 ? COLORS.textPri : themeText(0.7);
-    ctx.font = '600 12px Outfit';
+    ctx.font = '600 14px Outfit';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
     ctx.fillText(''+(i+1), px, py - phaseH*0.32);
 
     // Phase title
     ctx.fillStyle = i===0 ? COLORS.textPri : themeText(0.7);
-    ctx.font = (i===0 ? '600 ' : '') + '14px Outfit';
+    ctx.font = (i===0 ? '600 ' : '') + '16px Outfit';
     ctx.fillText(phases[i], px, py - phaseH*0.12);
 
     // Phase details (multi-line)
     ctx.fillStyle = themeText(0.4);
-    ctx.font = '12px Outfit';
+    ctx.font = '16px Outfit';
     const dLines = details[i].split('\n');
     for(let l=0;l<dLines.length;l++){
       ctx.fillText(dLines[l], px, py + phaseH*0.08 + l*16);
