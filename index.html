@@ -1759,9 +1759,9 @@ function drawImpactVisual(sp){
   if(alpha < 0.01) return;
   const cx = W/2, cyBase = H*0.56;
   const cardW = Math.min(W*0.22, 195);
-  const cardH = cardW * 1.0;
+  const cardH = cardW * 1.15;
   const spacingX = cardW + 25;
-  const spacingY = cardH + 22;
+  const spacingY = cardH + 18;
   const metricLabels = t('impactMetrics');
   const time = performance.now();
 
@@ -1850,12 +1850,12 @@ function drawImpactVisual(sp){
 
     // Text label (multi-line, split on \n)
     ctx.fillStyle = themeText(0.7);
-    ctx.font = '15px Outfit';
+    ctx.font = '13px Outfit';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
     const lines = metricLabels[i].split('\n');
-    const lineH = 16;
-    const textStartY = ny + cardH*0.22;
+    const lineH = 15;
+    const textStartY = ny + cardH*0.15;
     for(let l=0;l<lines.length;l++){
       ctx.fillText(lines[l], nx, textStartY + l*lineH - (lines.length-1)*lineH*0.5);
     }
@@ -1880,7 +1880,7 @@ function drawRoadmapVisual(sp){
   if(alpha < 0.01) return;
   const cx = W/2, cyBase = H*0.55;
   const phaseW = Math.min(W*0.2, 170);
-  const phaseH = phaseW * 1.05;
+  const phaseH = phaseW * 1.2;
   const gap = 20;
   const rowGap = 22;
   const totalW = phaseW*3 + gap*2;
