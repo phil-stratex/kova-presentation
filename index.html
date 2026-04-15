@@ -1879,23 +1879,34 @@ function drawRoadmapVisual(sp){
   ctx.save();
   ctx.globalAlpha = alpha;
 
-  // Connecting lines behind cards (2 rows)
+  // Connecting lines behind cards (2 rows + wrap connector)
   const lineEntr = smoothstep(0.15, 0.45, sp);
   ctx.globalAlpha = alpha * lineEntr;
   ctx.setLineDash([6,4]);
   ctx.strokeStyle = 'rgba(59,130,246,0.15)';
   ctx.lineWidth = 2;
-  for(let r=0;r<2;r++){
-    const ry = cyBase + r*(phaseH + rowGap);
-    ctx.beginPath();
-    ctx.moveTo(startX + phaseW/2, ry);
-    ctx.lineTo(startX + totalW - phaseW/2, ry);
-    ctx.stroke();
-  }
-  // Vertical connector between rows (right end of row 1 → left start of row 2)
+  const row1Y = cyBase;
+  const row2Y = cyBase + phaseH + rowGap;
+  // Row 1: left → right
   ctx.beginPath();
-  ctx.moveTo(startX + totalW - phaseW/2, cyBase + phaseH*0.4);
-  ctx.lineTo(startX + totalW - phaseW/2, cyBase + phaseH + rowGap - phaseH*0.4);
+  ctx.moveTo(startX + phaseW/2, row1Y);
+  ctx.lineTo(startX + totalW - phaseW/2, row1Y);
+  ctx.stroke();
+  // Wrap connector: top-right → down → across to bottom-left (clear U-turn)
+  const wrapR = startX + totalW - phaseW/2 + gap*0.7;
+  const wrapL = startX + phaseW/2 - gap*0.7;
+  ctx.beginPath();
+  ctx.moveTo(startX + totalW - phaseW/2, row1Y);
+  ctx.lineTo(wrapR, row1Y);
+  ctx.quadraticCurveTo(wrapR + 8, row1Y, wrapR + 8, row1Y + 10);
+  ctx.lineTo(wrapR + 8, row2Y - 10);
+  ctx.quadraticCurveTo(wrapR + 8, row2Y, wrapR, row2Y);
+  ctx.lineTo(startX + phaseW/2, row2Y);
+  ctx.stroke();
+  // Row 2: left → right
+  ctx.beginPath();
+  ctx.moveTo(startX + phaseW/2, row2Y);
+  ctx.lineTo(startX + totalW - phaseW/2, row2Y);
   ctx.stroke();
   ctx.setLineDash([]);
 
@@ -1952,19 +1963,27 @@ function drawRoadmapVisual(sp){
     }
   }
 
-  // Arrow indicators between cards (2 rows)
+  // Arrow indicators between cards
   ctx.globalAlpha = alpha * lineEntr * 0.4;
   ctx.fillStyle = 'rgba(59,130,246,0.4)';
-  for(let r=0;r<2;r++){
-    const ry = cyBase + r*(phaseH + rowGap);
-    for(let c=0;c<2;c++){
-      const ax = startX + (c+1)*(phaseW + gap) - gap/2;
-      ctx.beginPath();
-      ctx.moveTo(ax-4, ry-5);
-      ctx.lineTo(ax+4, ry);
-      ctx.lineTo(ax-4, ry+5);
-      ctx.fill();
-    }
+  // Row 1 arrows (→)
+  for(let c=0;c<2;c++){
+    const ax = startX + (c+1)*(phaseW + gap) - gap/2;
+    ctx.beginPath();
+    ctx.moveTo(ax-4, row1Y-5); ctx.lineTo(ax+4, row1Y); ctx.lineTo(ax-4, row1Y+5);
+    ctx.fill();
+  }
+  // Wrap arrow (↓) on the right connector
+  const wrapArrowY = (row1Y + row2Y) / 2;
+  ctx.beginPath();
+  ctx.moveTo(wrapR+8-5, wrapArrowY-4); ctx.lineTo(wrapR+8, wrapArrowY+4); ctx.lineTo(wrapR+8+5, wrapArrowY-4);
+  ctx.fill();
+  // Row 2 arrows (→)
+  for(let c=0;c<2;c++){
+    const ax = startX + (c+1)*(phaseW + gap) - gap/2;
+    ctx.beginPath();
+    ctx.moveTo(ax-4, row2Y-5); ctx.lineTo(ax+4, row2Y); ctx.lineTo(ax-4, row2Y+5);
+    ctx.fill();
   }
 
   ctx.restore();
