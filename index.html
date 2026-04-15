@@ -1169,7 +1169,7 @@ function drawDashboardVisual(sp){
   const alpha = textOpacity(sp);
   if(alpha < 0.01) return;
 
-  const cx = W/2, cy = H*0.66;
+  const cx = W/2, cy = H*0.70;
   const bw = Math.min(W*0.75, 750);
   const bh = bw*0.55;
 
@@ -1267,7 +1267,7 @@ function drawTimelineVisual(sp){
   const alpha = textOpacity(sp);
   if(alpha < 0.01) return;
 
-  const cy = H*0.68;
+  const cy = H*0.75;
   const lineW = Math.min(W*0.9, 1060);
   const startX = (W - lineW)/2;
   const steps = t('timelineSteps');
@@ -1352,8 +1352,8 @@ function drawRoutingVisual(sp){
   if(alpha < 0.01) return;
 
   const cx = W/2;
-  const topY = H*0.52;
-  const botY = H*0.82;
+  const topY = H*0.60;
+  const botY = H*0.90;
   const spread = Math.min(W*0.42, 440);
   const time = performance.now();
 
@@ -1444,17 +1444,17 @@ function drawPositioningVisual(sp){
   const alpha = textOpacity(sp);
   if(alpha < 0.01) return;
 
-  const cx = W/2, cy = H*0.72;
-  const circleR = Math.min(W*0.14, 115);
-  const spread = circleR * 0.78;
+  const cx = W/2, cy = H*0.78;
+  const circleR = Math.min(W*0.11, 100);
+  const spread = circleR * 0.82;
   const time = performance.now();
   const labels = t('positioningLabels');
 
   // Triangle positions — tight overlap for real Venn effect
   const positions = [
     { x: cx, y: cy - spread*0.55 },
-    { x: cx - spread*0.85, y: cy + spread*0.45 },
-    { x: cx + spread*0.85, y: cy + spread*0.45 }
+    { x: cx - spread*1.2, y: cy + spread*0.55 },
+    { x: cx + spread*1.2, y: cy + spread*0.55 }
   ];
   const subItems = [
     ['Modern SaaS', 'Open APIs'],
@@ -1616,9 +1616,9 @@ function drawIntegrationsVisual(sp){
   const alpha = textOpacity(sp);
   if(alpha < 0.01) return;
   const cx = W/2;
-  const topY = H*0.55;
-  const barY = H*0.74;
-  const kovaY = H*0.86;
+  const topY = H*0.58;
+  const barY = H*0.78;
+  const kovaY = H*0.90;
   const labels = t('integrationLabels');
   const spacing = Math.min(W*0.16, 130);
   const time = performance.now();
@@ -1755,7 +1755,7 @@ function drawIntegrationsVisual(sp){
 function drawImpactVisual(sp){
   const alpha = textOpacity(sp);
   if(alpha < 0.01) return;
-  const cx = W/2, cyBase = H*0.52;
+  const cx = W/2, cyBase = H*0.56;
   const cardW = Math.min(W*0.22, 195);
   const cardH = cardW * 0.85;
   const spacingX = cardW + 25;
@@ -1876,7 +1876,7 @@ function drawImpactVisual(sp){
 function drawRoadmapVisual(sp){
   const alpha = textOpacity(sp);
   if(alpha < 0.01) return;
-  const cx = W/2, cyBase = H*0.50;
+  const cx = W/2, cyBase = H*0.55;
   const phaseW = Math.min(W*0.2, 170);
   const phaseH = phaseW * 0.9;
   const gap = 20;
