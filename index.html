@@ -1441,8 +1441,8 @@ function drawPositioningVisual(sp){
   const alpha = textOpacity(sp);
   if(alpha < 0.01) return;
 
-  const cx = W/2, cy = H*0.78;
-  const circleR = Math.min(W*0.11, 100);
+  const cx = W/2, cy = H*0.72;
+  const circleR = Math.min(W*0.14, 120);
   const spread = circleR * 0.82;
   const time = performance.now();
   const labels = t('positioningLabels');
@@ -1482,12 +1482,12 @@ function drawPositioningVisual(sp){
     ctx.textBaseline = 'middle';
     // Labels centered in each circle
     const labelX = p.x;
-    const labelY = i===0 ? p.y - circleR*0.45 : p.y + circleR*0.45;
+    const labelY = i===0 ? p.y - circleR*0.40 : p.y + circleR*0.40;
     ctx.fillText(labels[i], labelX, labelY);
-    ctx.font = '15px Outfit';
+    ctx.font = '14px Outfit';
     ctx.fillStyle = themeText(0.3);
-    ctx.fillText(subItems[i][0], labelX, labelY + 16);
-    ctx.fillText(subItems[i][1], labelX, labelY + 30);
+    ctx.fillText(subItems[i][0], labelX, labelY + 19);
+    ctx.fillText(subItems[i][1], labelX, labelY + 35);
   }
 
   // Center overlap glow
