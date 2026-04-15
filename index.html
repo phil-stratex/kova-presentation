@@ -24,10 +24,12 @@ canvas#bg{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0}
 .accent{color:#3b82f6}
 .glow-text{text-shadow:0 0 30px rgba(59,130,246,0.6),0 0 60px rgba(59,130,246,0.3),0 0 100px rgba(59,130,246,0.15)}
 #sec3,#sec4{justify-content:flex-start;padding-top:5vh}
-#sec5,#sec6,#sec8{justify-content:flex-start;padding-top:12vh}
-#sec7{justify-content:flex-start;padding-top:10vh}
-#sec9{justify-content:flex-start;padding-top:14vh}
-#sec10,#sec11{justify-content:flex-start;padding-top:12vh}
+#sec5,#sec6{justify-content:flex-start;padding-top:8vh}
+#sec7{justify-content:flex-start;padding-top:6vh}
+#sec8{justify-content:flex-start;padding-top:8vh}
+#sec9{justify-content:flex-start;padding-top:8vh}
+#sec10{justify-content:flex-start;padding-top:8vh}
+#sec11{justify-content:flex-start;padding-top:8vh}
 </style>
 </head>
 <body>
@@ -1757,7 +1759,7 @@ function drawImpactVisual(sp){
   if(alpha < 0.01) return;
   const cx = W/2, cyBase = H*0.56;
   const cardW = Math.min(W*0.22, 195);
-  const cardH = cardW * 0.85;
+  const cardH = cardW * 1.0;
   const spacingX = cardW + 25;
   const spacingY = cardH + 22;
   const metricLabels = t('impactMetrics');
@@ -1852,8 +1854,8 @@ function drawImpactVisual(sp){
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
     const lines = metricLabels[i].split('\n');
-    const lineH = 17;
-    const textStartY = ny + cardH*0.18;
+    const lineH = 16;
+    const textStartY = ny + cardH*0.22;
     for(let l=0;l<lines.length;l++){
       ctx.fillText(lines[l], nx, textStartY + l*lineH - (lines.length-1)*lineH*0.5);
     }
@@ -1878,7 +1880,7 @@ function drawRoadmapVisual(sp){
   if(alpha < 0.01) return;
   const cx = W/2, cyBase = H*0.55;
   const phaseW = Math.min(W*0.2, 170);
-  const phaseH = phaseW * 0.9;
+  const phaseH = phaseW * 1.05;
   const gap = 20;
   const rowGap = 22;
   const totalW = phaseW*3 + gap*2;
