@@ -12,7 +12,7 @@
 html,body{font-family:'Outfit',sans-serif;background:#0a0e1a;color:#fff;overflow-x:hidden;-webkit-font-smoothing:antialiased}
 canvas#bg{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0}
 .overlay{position:fixed;top:0;left:0;width:100%;height:100%;z-index:1;pointer-events:none;overflow:hidden}
-.scroll-spacer{height:1450vh}
+.scroll-spacer{height:1350vh}
 .sec{position:absolute;top:0;left:0;width:100%;height:100%;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;opacity:0;will-change:transform,opacity;padding:0 6vw}
 .sec h1{font-size:clamp(1.8rem,4.5vw,3.6rem);font-weight:600;line-height:1.15;max-width:850px;margin-bottom:1.2rem;letter-spacing:-0.02em}
 .sec h2{font-size:clamp(1.2rem,2.8vw,2rem);font-weight:500;margin-bottom:0.8rem;color:rgba(255,255,255,0.85)}
@@ -24,11 +24,10 @@ canvas#bg{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0}
 .accent{color:#3b82f6}
 .glow-text{text-shadow:0 0 30px rgba(59,130,246,0.6),0 0 60px rgba(59,130,246,0.3),0 0 100px rgba(59,130,246,0.15)}
 #sec3,#sec4{justify-content:flex-start;padding-top:5vh}
-#sec5,#sec6,#sec8,#sec9{justify-content:flex-start;padding-top:12vh}
+#sec5,#sec6,#sec8{justify-content:flex-start;padding-top:12vh}
 #sec7{justify-content:flex-start;padding-top:10vh}
-#sec10{justify-content:flex-start;padding-top:14vh}
-#sec11{justify-content:flex-start;padding-top:12vh}
-#sec12{justify-content:flex-start;padding-top:12vh}
+#sec9{justify-content:flex-start;padding-top:14vh}
+#sec10,#sec11{justify-content:flex-start;padding-top:12vh}
 </style>
 </head>
 <body>
@@ -74,28 +73,23 @@ canvas#bg{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0}
   </div>
 
   <div class="sec" id="sec9">
-    <h1 id="sec9Title">From rent roll to owner report.<br>Automated.</h1>
-    <p id="sec9Body">Rent collection, arrears tracking, utility billing, deposit management, and owner distributions&nbsp;— all in one financial engine, fully automated.</p>
-  </div>
-
-  <div class="sec" id="sec10">
     <h1 id="sec10Title">What changes with KOVA.</h1>
     <p id="sec10Body">The operational improvements you can expect when everything is connected.</p>
   </div>
 
+  <div class="sec" id="sec10">
+    <h1 id="sec10Title">The roadmap.</h1>
+    <p id="sec10Body">KOVA is being built in three phases&nbsp;— from core platform to full automation, backed by a network of specialized partners in property tech, fintech, and facility management.</p>
+  </div>
+
   <div class="sec" id="sec11">
-    <h1 id="sec11Title">The roadmap.</h1>
-    <p id="sec11Body">KOVA is being built in three phases&nbsp;— from core platform to full automation, backed by a network of specialized partners in property tech, fintech, and facility management.</p>
+    <h1 id="sec11Title">Built by people who know<br>all three worlds.</h1>
+    <p id="sec11Body">We&rsquo;ve managed student residences before writing a single line of code. KOVA is built by operators who lived the pain&nbsp;— not consultants who read about it.</p>
   </div>
 
   <div class="sec" id="sec12">
-    <h1 id="sec12Title">Built by people who know<br>both worlds.</h1>
-    <p id="sec12Body">We&rsquo;ve managed student residences before writing a single line of code. KOVA is built by operators who lived the pain&nbsp;— not consultants who read about it.</p>
-  </div>
-
-  <div class="sec" id="sec13">
-    <h1><span id="sec13Pre">Your student residences, connected with</span> <span class="accent glow-text" id="kovaWord">KOVA</span>.</h1>
-    <p id="sec13Sub" style="margin-top:1.5rem;opacity:0.4;font-size:0.95rem">by stratex-ai</p>
+    <h1><span id="sec12Pre">Your student residences, connected with</span> <span class="accent glow-text" id="kovaWord">KOVA</span>.</h1>
+    <p id="sec12Sub" style="margin-top:1.5rem;opacity:0.4;font-size:0.95rem">by stratex-ai</p>
   </div>
 
 </div>
@@ -130,12 +124,12 @@ const COLORS = {
   solidLine: '#3b82f6'
 };
 
-const SECTION_COUNT = 13;
+const SECTION_COUNT = 12;
 const SEG = 1 / SECTION_COUNT;
 const PARTICLE_COUNT = 72;
 const DOT_SPACING = 40;
 const CONNECT_DIST = 120;
-const NODE_LABELS = ['Lettings','Maintenance','Resident Comms','Owner Reporting','Revenue & Billing','Inspections','Compliance & Docs','Guest Experience'];
+const NODE_LABELS = ['Lettings','Maintenance','Internal Comms','External Comms','Owner Reporting','Revenue & Billing','Quality Mgmt','Operator Duties','Compliance & Docs','Resident Service'];
 const HERO_TEXT = "Student living is growing fast. Operations haven\u2019t kept up.";
 const PAUSE_TEXT = "The systems exist. The connection is missing.";
 
@@ -171,38 +165,33 @@ const TRANSLATIONS = {
   },
   sec8Title: { en: "Connected to what you already use.", de: "Verbunden mit dem, was Sie bereits nutzen." },
   sec8Body: {
-    en: "KOVA\u2019s open API architecture connects to access control systems like Salto or dormakaba, payment providers like Stripe or SEPA, and accounting tools like DATEV\u00a0\u2014 nothing gets replaced, everything gets connected.",
-    de: "KOVAs offene API-Architektur verbindet sich mit Zutrittssystemen wie Salto oder dormakaba, Zahlungsanbietern wie Stripe oder SEPA und Buchhaltungstools wie DATEV\u00a0\u2014 nichts wird ersetzt, alles wird verbunden."
+    en: "KOVA\u2019s open API architecture connects to access control systems like Salto, payment providers like Stripe or SEPA, and accounting tools like DATEV\u00a0\u2014 nothing gets replaced, everything gets connected.",
+    de: "KOVAs offene API-Architektur verbindet sich mit Zutrittssystemen wie Salto, Zahlungsanbietern wie Stripe oder SEPA und Buchhaltungstools wie DATEV\u00a0\u2014 nichts wird ersetzt, alles wird verbunden."
   },
-  sec9Title: { en: "From rent roll to owner report.<br>Automated.", de: "Von der Mietliste zum Eigent\u00fcmerbericht.<br>Automatisiert." },
+  sec9Title: { en: "What changes with KOVA.", de: "Was sich mit KOVA \u00e4ndert." },
   sec9Body: {
-    en: "Rent collection, arrears tracking, utility billing, deposit management, and owner distributions\u00a0\u2014 built to handle DACH-specific requirements like Betriebskostenverordnung and Heizkostenverordnung.",
-    de: "Mieteinzug, Mahnwesen, Nebenkostenabrechnung, Kautionsverwaltung und Eigent\u00fcmer-Aussch\u00fcttungen\u00a0\u2014 konzipiert f\u00fcr DACH-spezifische Anforderungen wie Betriebskostenverordnung und Heizkostenverordnung."
+    en: "The operational improvements you can expect when everything works together\u00a0\u2014 from faster responses to complete transparency.",
+    de: "Die operativen Verbesserungen, die Sie erwarten k\u00f6nnen, wenn alles zusammenarbeitet\u00a0\u2014 von schnelleren Reaktionen bis zur vollst\u00e4ndigen Transparenz."
   },
-  sec10Title: { en: "What changes with KOVA.", de: "Was sich mit KOVA \u00e4ndert." },
+  sec10Title: { en: "The roadmap.", de: "Die Roadmap." },
   sec10Body: {
-    en: "The operational improvements you can expect when everything is connected.",
-    de: "Die operativen Verbesserungen, die Sie erwarten k\u00f6nnen, wenn alles verbunden ist."
+    en: "KOVA is being built in six phases\u00a0\u2014 from core platform to full ecosystem, backed by specialized partners in property tech, fintech, and facility management.",
+    de: "KOVA wird in sechs Phasen entwickelt\u00a0\u2014 von der Kernplattform zum vollst\u00e4ndigen \u00d6kosystem, unterst\u00fctzt durch spezialisierte Partner in PropTech, FinTech und Facility Management."
   },
-  sec11Title: { en: "The roadmap.", de: "Die Roadmap." },
+  sec11Title: { en: "Built by people who know<br>all three worlds.", de: "Entwickelt von Menschen, die<br>alle drei Welten kennen." },
   sec11Body: {
-    en: "KOVA is being built in three phases\u00a0\u2014 from core platform to full automation, backed by a network of specialized partners in property tech, fintech, and facility management.",
-    de: "KOVA wird in drei Phasen entwickelt\u00a0\u2014 von der Kernplattform bis zur Vollautomatisierung, unterst\u00fctzt durch ein Netzwerk spezialisierter Partner in PropTech, FinTech und Facility Management."
+    en: "We\u2019ve managed student residences and run hospitality operations before writing a single line of code. KOVA is built by operators and hoteliers who lived the daily challenges\u00a0\u2014 not consultants who read about them.",
+    de: "Wir haben Studentenwohnheime betrieben und Hospitality-Betriebe gef\u00fchrt, bevor wir eine einzige Zeile Code geschrieben haben. KOVA wird von Betreibern und Hoteliers gebaut, die den Alltag kennen\u00a0\u2014 nicht von Beratern, die dar\u00fcber gelesen haben."
   },
-  sec12Title: { en: "Built by people who know<br>both worlds.", de: "Entwickelt von Menschen, die<br>beide Welten kennen." },
-  sec12Body: {
-    en: "We\u2019ve managed student residences before writing a single line of code. KOVA is built by operators who lived the pain\u00a0\u2014 not consultants who read about it.",
-    de: "Wir haben Studentenwohnheime betrieben, bevor wir eine einzige Zeile Code geschrieben haben. KOVA wird von Betreibern gebaut, die den Alltag kennen\u00a0\u2014 nicht von Beratern, die dar\u00fcber gelesen haben."
-  },
-  sec13Pre: { en: "Your student residences, connected with", de: "Ihre Studentenwohnheime, verbunden mit" },
-  sec13Sub: { en: "by stratex-ai", de: "von stratex-ai" },
+  sec12Pre: { en: "Your student residences, connected with", de: "Ihre Studentenwohnheime, verbunden mit" },
+  sec12Sub: { en: "by stratex-ai", de: "von stratex-ai" },
   roadmapPhases: {
-    en: ['Foundation','Intelligence','Full Automation'],
-    de: ['Grundlage','Intelligenz','Vollautomatisierung']
+    en: ['Foundation','Core Features','Intelligence','Integrations','Automation','Full Ecosystem'],
+    de: ['Grundlage','Kernfunktionen','Intelligenz','Integrationen','Automatisierung','Volles \u00d6kosystem']
   },
   roadmapDetails: {
-    en: ['Core Platform\nResident Lifecycle\nPortfolio Dashboard','Smart Routing\nAutomated Workflows\nPartner Integrations','AI-powered Requests\nPredictive Maintenance\nAuto Compliance'],
-    de: ['Kernplattform\nBewohner-Lebenszyklus\nPortfolio-Dashboard','Intelligentes Routing\nAutomatisierte Workflows\nPartner-Integrationen','KI-gest\u00fctzte Anfragen\nPredictive Maintenance\nAuto-Compliance']
+    en: ['Core Platform\nData Model\nUser Management','Resident Lifecycle\nPortfolio Dashboard\nTicket System','Smart Routing\nAutomated Workflows\nReporting Engine','Partner APIs\nAccess Control\nPayment Gateway','Rule-based Automation\nCompliance Alerts\nOwner Reports','AI Assistance\nPredictive Maintenance\nFull Self-Service'],
+    de: ['Kernplattform\nDatenmodell\nBenutzerverwaltung','Bewohner-Lebenszyklus\nPortfolio-Dashboard\nTicket-System','Intelligentes Routing\nAutomatisierte Workflows\nReporting-Engine','Partner-APIs\nZutrittskontrolle\nZahlungsgateway','Regelbasierte Automatisierung\nCompliance-Alerts\nEigent\u00fcmer-Reports','KI-Assistenz\nPredictive Maintenance\nVoll-Self-Service']
   },
   centerLabel: { en: "Property", de: "Immobilie" },
   dashboardCards: {
@@ -211,8 +200,8 @@ const TRANSLATIONS = {
   },
   kovaLabel: { en: "KOVA", de: "KOVA" },
   nodeLabels: {
-    en: ['Lettings','Maintenance','Kommunikation','Owner Reporting','Revenue & Billing','Inspections','Compliance & Docs','Resident Service'],
-    de: ['Vermietung','Instandhaltung','Kommunikation','Eigent\u00fcmer-Reports','Einnahmen & Abrechn.','Begehungen','Compliance & Doku','Bewohner-Service']
+    en: ['Lettings','Maintenance','Internal Comms','External Comms','Owner Reporting','Revenue & Billing','Quality Management','Operator Duties','Compliance & Docs','Resident Service'],
+    de: ['Vermietung','Instandhaltung','Interne Komm.','Externe Komm.','Eigent\u00fcmer-Reports','Einnahmen & Abrechn.','Qualit\u00e4tsmanagement','Betreiberpflicht','Compliance & Doku','Bewohner-Service']
   },
   timelineSteps: {
     en: ['Inquiry','Viewing','Deposit','Lease Signing','Move-in','Living','Notice','Move-out'],
@@ -224,28 +213,20 @@ const TRANSLATIONS = {
   },
   routingSource: { en: 'Incoming Request', de: 'Eingehende Anfrage' },
   routingPaths: {
-    en: ['Maintenance','Lettings','Finance','Management','External'],
-    de: ['Instandhaltung','Vermietung','Finanzen','Management','Externe']
+    en: ['Maintenance','Lettings','Finance','Management','Operations','IT','External'],
+    de: ['Instandhaltung','Vermietung','Finanzen','Management','Operations','IT','Externe']
   },
   integrationLabels: {
     en: ['Access Control','Payments','Accounting','Communication','Documents'],
     de: ['Zutrittskontrolle','Zahlungsverkehr','Buchhaltung','Kommunikation','Dokumente']
   },
-  financeFlowLeft: {
-    en: ['Resident Rents','Deposits','Utilities'],
-    de: ['Bewohner-Mieten','Kautionen','Nebenkosten']
-  },
-  financeFlowRight: {
-    en: ['Owner Payout','Operating Costs','Reserves'],
-    de: ['Eigent\u00fcmer-Auszahlung','Betriebskosten','R\u00fccklagen']
-  },
   impactMetrics: {
-    en: ['Significantly faster\nresponse times','Dramatically fewer\nmanual handoffs','Structured, audit-ready\ndocumentation'],
-    de: ['Deutlich schnellere\nReaktionszeiten','Drastisch weniger\nmanuelle \u00dcbergaben','Strukturierte,\npr\u00fcfungssichere Dokumentation']
+    en: ['Significantly faster\nresponse times','Dramatically fewer\nmanual handoffs','Structured, audit-ready\ndocumentation','Full portfolio\ntransparency','Automated\ncompliance tracking','Seamless resident\ncommunication'],
+    de: ['Deutlich schnellere\nReaktionszeiten','Drastisch weniger\nmanuelle \u00dcbergaben','Strukturierte,\npr\u00fcfungssichere Dokumentation','Vollst\u00e4ndige\nPortfolio-Transparenz','Automatisiertes\nCompliance-Tracking','Nahtlose\nBewohner-Kommunikation']
   },
   positioningLabels: {
-    en: ['Cloud Platform','Residence Know-how','Connected Ecosystem'],
-    de: ['Cloud-Plattform','Residenz-Expertise','Vernetztes \u00d6kosystem']
+    en: ['Cloud Platform','Residence Know-how','Hospitality Experience'],
+    de: ['Cloud-Plattform','Residenz-Expertise','Hospitality-Erfahrung']
   }
 };
 
@@ -279,13 +260,13 @@ function easeIn(t){return t*t*t}
 
 function autoPlayEasing(tp){
   const w=[
-    {time:0.00,scroll:0.000},{time:0.06,scroll:0.065},
-    {time:0.11,scroll:0.130},{time:0.20,scroll:0.230},
-    {time:0.27,scroll:0.310},{time:0.34,scroll:0.385},
-    {time:0.42,scroll:0.460},{time:0.50,scroll:0.540},
-    {time:0.57,scroll:0.615},{time:0.64,scroll:0.690},
-    {time:0.72,scroll:0.770},{time:0.80,scroll:0.845},
-    {time:0.90,scroll:0.925},{time:1.00,scroll:1.000}
+    {time:0.00,scroll:0.000},{time:0.07,scroll:0.070},
+    {time:0.12,scroll:0.140},{time:0.22,scroll:0.250},
+    {time:0.30,scroll:0.330},{time:0.38,scroll:0.415},
+    {time:0.47,scroll:0.500},{time:0.55,scroll:0.580},
+    {time:0.64,scroll:0.665},{time:0.74,scroll:0.750},
+    {time:0.84,scroll:0.835},{time:0.93,scroll:0.925},
+    {time:1.00,scroll:1.000}
   ];
   for(let i=0;i<w.length-1;i++){
     if(tp<=w[i+1].time){
@@ -426,7 +407,7 @@ function updateParticles(dt, time, section, sp){
     }
 
     // Section 13 (Closing): converge to center
-    if(section === 13){
+    if(section === 12){
       const dx = W/2 - p.baseX;
       const dy = H/2 - p.baseY;
       const force = sp * 0.012;
@@ -522,7 +503,7 @@ function drawDotGrid(prog, time, section, sp){
   let gridMult = 1;
   if(section === 2) gridMult = lerp(1, 0.4, sp); // dim in pause
   if(section === 4) gridMult = lerp(1, 1.5, sp);  // brighten during reveal
-  if(section === 13) gridMult = lerp(1, 0.3, sp);  // dim in closing
+  if(section === 12) gridMult = lerp(1, 0.3, sp);  // dim in closing
 
   for(let r=0;r<rows;r++){
     for(let c=0;c<cols;c++){
@@ -558,7 +539,7 @@ function drawParticles(prog, section, sp){
     connB = 255;
     connAlphaMult = lerp(1, 1.8, sp);
   }
-  if(section === 13){ connAlphaMult = lerp(1, 2.5, sp); } // brighter connections as converging
+  if(section === 12){ connAlphaMult = lerp(1, 2.5, sp); } // brighter connections as converging
 
   // Connection lines
   ctx.lineWidth = 0.5;
@@ -635,8 +616,8 @@ function getNodePositions(){
   const radius = Math.min(W,H)*0.33;
   const labels = t('nodeLabels');
   const nodes = [{x:cx, y:cy, label:t('centerLabel'), type:'center'}];
-  for(let i=0;i<8;i++){
-    const angle = (i*Math.PI*2/8) - Math.PI/2;
+  for(let i=0;i<10;i++){
+    const angle = (i*Math.PI*2/10) - Math.PI/2;
     nodes.push({
       x: cx + Math.cos(angle)*radius,
       y: cy + Math.sin(angle)*radius,
@@ -708,10 +689,9 @@ function drawNodeIcon(type, cx, cy, s, color){
       ctx.restore();
       break;
 
-    case 2: // Resident Comms – filled speech bubble with dots
-      ctx.beginPath();
-      // Bubble body
+    case 2: { // Internal Comms – filled speech bubble with dots
       const bw=14*s, bh=9*s, bx=cx-bw/2, by=cy-bh/2-1*s;
+      ctx.beginPath();
       ctx.moveTo(bx+3*s, by);
       ctx.lineTo(bx+bw-3*s, by);
       ctx.quadraticCurveTo(bx+bw, by, bx+bw, by+3*s);
@@ -737,8 +717,39 @@ function drawNodeIcon(type, cx, cy, s, color){
       ctx.fill();
       ctx.restore();
       break;
+    }
 
-    case 3: // Owner Reporting – filled document with bar chart
+    case 3: // External Comms – envelope with outgoing arrow
+      // Envelope body
+      ctx.beginPath();
+      ctx.roundRect(cx-7*s, cy-4*s, 14*s, 10*s, 1.5*s);
+      ctx.fill();
+      // Flap (punch out triangle)
+      ctx.save();
+      ctx.globalCompositeOperation = 'destination-out';
+      ctx.beginPath();
+      ctx.moveTo(cx-7*s, cy-4*s);
+      ctx.lineTo(cx, cy+1*s);
+      ctx.lineTo(cx+7*s, cy-4*s);
+      ctx.closePath();
+      ctx.fill();
+      ctx.restore();
+      // Outgoing arrow top-right
+      ctx.fillStyle = c;
+      ctx.lineWidth = 1.8*s;
+      ctx.strokeStyle = c;
+      ctx.beginPath();
+      ctx.moveTo(cx+3*s, cy-6*s);
+      ctx.lineTo(cx+8*s, cy-10*s);
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.moveTo(cx+5*s, cy-10*s);
+      ctx.lineTo(cx+8*s, cy-10*s);
+      ctx.lineTo(cx+8*s, cy-7*s);
+      ctx.stroke();
+      break;
+
+    case 4: // Owner Reporting – filled document with bar chart
       // Document body
       ctx.beginPath();
       ctx.roundRect(cx-5.5*s, cy-7.5*s, 11*s, 15*s, 2*s);
@@ -756,7 +767,7 @@ function drawNodeIcon(type, cx, cy, s, color){
       ctx.restore();
       break;
 
-    case 4: // Revenue & Billing – filled euro coin
+    case 5: // Revenue & Billing – filled euro coin
       // Coin circle
       ctx.beginPath();
       ctx.arc(cx, cy, 7.5*s, 0, Math.PI*2);
@@ -771,7 +782,54 @@ function drawNodeIcon(type, cx, cy, s, color){
       ctx.restore();
       break;
 
-    case 5: // Inspections – magnifying glass with checkmark
+    case 6: // Quality Management – star with checkmark
+      ctx.beginPath();
+      // Star shape (filled)
+      for(let p=0;p<5;p++){
+        const a1 = (p*Math.PI*2/5) - Math.PI/2;
+        const a2 = ((p+0.5)*Math.PI*2/5) - Math.PI/2;
+        const ox = cx + Math.cos(a1)*7*s;
+        const oy = cy + Math.sin(a1)*7*s;
+        const ix = cx + Math.cos(a2)*3.5*s;
+        const iy = cy + Math.sin(a2)*3.5*s;
+        if(p===0) ctx.moveTo(ox, oy);
+        else ctx.lineTo(ox, oy);
+        ctx.lineTo(ix, iy);
+      }
+      ctx.closePath();
+      ctx.fill();
+      // Checkmark punch-out
+      ctx.save();
+      ctx.globalCompositeOperation = 'destination-out';
+      ctx.lineWidth = 2*s;
+      ctx.beginPath();
+      ctx.moveTo(cx-2.5*s, cy);
+      ctx.lineTo(cx-0.5*s, cy+2*s);
+      ctx.lineTo(cx+3*s, cy-2*s);
+      ctx.stroke();
+      ctx.restore();
+      break;
+
+    case 7: // Operator Duties – clipboard with § symbol
+      // Clipboard body
+      ctx.beginPath();
+      ctx.roundRect(cx-6*s, cy-7*s, 12*s, 15*s, 2*s);
+      ctx.fill();
+      // Clip at top
+      ctx.beginPath();
+      ctx.roundRect(cx-3*s, cy-9*s, 6*s, 4*s, 1.5*s);
+      ctx.fill();
+      // § symbol punch-out
+      ctx.save();
+      ctx.globalCompositeOperation = 'destination-out';
+      ctx.font = `700 ${10*s}px Outfit`;
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText('\u00A7', cx, cy+1*s);
+      ctx.restore();
+      break;
+
+    case 8: // Compliance – filled shield with checkmark (was case 6)
       // Glass circle (filled)
       ctx.beginPath();
       ctx.arc(cx-1*s, cy-2*s, 5.5*s, 0, Math.PI*2);
@@ -795,7 +853,7 @@ function drawNodeIcon(type, cx, cy, s, color){
       ctx.restore();
       break;
 
-    case 6: // Compliance – filled shield with checkmark
+    case 7: // Compliance – filled shield with checkmark
       ctx.beginPath();
       ctx.moveTo(cx, cy-8*s);
       ctx.quadraticCurveTo(cx-8.5*s, cy-6*s, cx-7.5*s, cy-1*s);
@@ -816,7 +874,7 @@ function drawNodeIcon(type, cx, cy, s, color){
       ctx.restore();
       break;
 
-    case 7: // Guest Experience – filled heart
+    case 9: // Resident Service – filled heart
       ctx.beginPath();
       ctx.moveTo(cx, cy+7*s);
       ctx.bezierCurveTo(cx-12*s, cy-1*s, cx-5*s, cy-9*s, cx, cy-4*s);
@@ -963,8 +1021,8 @@ function drawFragmentedDiagram(sp){
     const vibAmp = 1.5;
     const vibX = Math.sin(time*0.002 + i*1.7)*vibAmp;
     const vibY = Math.cos(time*0.0018 + i*2.3)*vibAmp;
-    const nodeW = isCenter ? 150 : 120;
-    const nodeH = isCenter ? 105 : 82;
+    const nodeW = isCenter ? 145 : 110;
+    const nodeH = isCenter ? 100 : 75;
 
     drawNodeBox(nodes[i].x, nodes[i].y, nodeW, nodeH,
       nodes[i].label,
@@ -1285,7 +1343,7 @@ function drawRoutingVisual(sp){
   const cx = W/2;
   const topY = H*0.52;
   const botY = H*0.82;
-  const spread = Math.min(W*0.4, 400);
+  const spread = Math.min(W*0.42, 440);
   const time = performance.now();
 
   const rpLabels = t('routingPaths');
@@ -1343,9 +1401,9 @@ function drawRoutingVisual(sp){
 
     // End label
     ctx.fillStyle = 'rgba(255,255,255,0.5)';
-    ctx.font = '13px Outfit';
+    ctx.font = '11px Outfit';
     ctx.textAlign = 'center';
-    ctx.fillText(p.label, p.endX, botY + 20);
+    ctx.fillText(p.label, p.endX, botY + 18);
 
     // Animated data packets
     if(sp > 0.25){
@@ -1375,93 +1433,81 @@ function drawPositioningVisual(sp){
   const alpha = textOpacity(sp);
   if(alpha < 0.01) return;
 
-  const cx = W/2;
-  const baseY = H*0.52;
-  const layerW = Math.min(W*0.6, 520);
-  const layerH = 52;
-  const gap = 14;
+  const cx = W/2, cy = H*0.64;
+  const circleR = Math.min(W*0.12, 95);
+  const triR = circleR * 1.1;
   const time = performance.now();
   const labels = t('positioningLabels');
+  // labels[0]=Cloud Platform, [1]=Residence Know-how, [2]=Hospitality Experience
 
-  // 3 layers stacking from bottom to top
-  // Layer 2 (bottom) = Residence Know-how (foundation)
-  // Layer 1 (middle) = Connected Ecosystem (integrations)
-  // Layer 0 (top)    = Cloud Platform (Kova)
-  const layers = [
-    { label: labels[0], color: 'rgba(59,130,246,0.35)', border: 'rgba(59,130,246,0.5)', y: baseY },
-    { label: labels[2], color: 'rgba(59,130,246,0.15)', border: 'rgba(59,130,246,0.3)', y: baseY + layerH + gap },
-    { label: labels[1], color: 'rgba(59,130,246,0.08)', border: 'rgba(59,130,246,0.2)', y: baseY + (layerH + gap)*2 },
+  // Triangle positions: top, bottom-left, bottom-right
+  const positions = [
+    { x: cx, y: cy - triR*0.7 },                    // Cloud Platform (top)
+    { x: cx - triR*1.05, y: cy + triR*0.55 },       // Residence Know-how (bottom-left)
+    { x: cx + triR*1.05, y: cy + triR*0.55 }        // Hospitality Experience (bottom-right)
+  ];
+  const subItems = [
+    ['Modern SaaS', 'Open APIs'],
+    ['PBSA Operations', 'Facility Management'],
+    ['Guest Services', 'Service Excellence']
   ];
 
   ctx.save();
 
-  for(let i=0;i<layers.length;i++){
-    const l = layers[i];
-    const entrance = smoothstep(0.08 + (2-i)*0.12, 0.3 + (2-i)*0.12, sp);
-    const pulse = 1 + Math.sin(time*0.002 + i)*0.01;
-    const lw = layerW * (1 - i*0.06) * pulse;
-    const lx = cx - lw/2;
-
+  // Draw 3 circles
+  for(let i=0;i<3;i++){
+    const p = positions[i];
+    const entrance = smoothstep(0.08+i*0.1, 0.3+i*0.1, sp);
     ctx.globalAlpha = alpha * entrance;
 
-    // Layer background
     ctx.beginPath();
-    ctx.roundRect(lx, l.y, lw, layerH, 10);
-    ctx.fillStyle = l.color;
+    ctx.arc(p.x, p.y, circleR, 0, Math.PI*2);
+    ctx.fillStyle = 'rgba(59,130,246,0.06)';
     ctx.fill();
-    ctx.strokeStyle = l.border;
-    ctx.lineWidth = 1;
+    ctx.strokeStyle = 'rgba(59,130,246,0.25)';
+    ctx.lineWidth = 1.5;
     ctx.stroke();
 
-    // Top highlight
-    const hl = ctx.createLinearGradient(lx, l.y, lx, l.y + layerH*0.4);
-    hl.addColorStop(0, 'rgba(255,255,255,0.04)');
-    hl.addColorStop(1, 'rgba(255,255,255,0)');
-    ctx.beginPath();
-    ctx.roundRect(lx, l.y, lw, layerH, 10);
-    ctx.fillStyle = hl;
-    ctx.fill();
-
-    // Label centered in layer
-    ctx.fillStyle = i === 0 ? '#fff' : 'rgba(255,255,255,0.7)';
-    ctx.font = i === 0 ? '600 15px Outfit' : '14px Outfit';
+    // Label
+    const labelOffsetY = i===0 ? -circleR-18 : circleR+18;
+    ctx.fillStyle = 'rgba(255,255,255,0.65)';
+    ctx.font = '600 13px Outfit';
     ctx.textAlign = 'center';
-    ctx.textBaseline = 'middle';
-    ctx.fillText(l.label, cx, l.y + layerH/2);
+    ctx.textBaseline = i===0 ? 'bottom' : 'top';
+    ctx.fillText(labels[i], p.x, p.y + labelOffsetY);
 
-    // Connection dots between layers
-    if(i < layers.length - 1){
-      const dotY = l.y + layerH + gap/2;
-      for(let d=0;d<3;d++){
-        const dx = cx + (d-1)*40;
-        const dotAlpha = 0.15 + Math.sin(time*0.004 + d + i)*0.1;
-        ctx.beginPath();
-        ctx.arc(dx, dotY, 2, 0, Math.PI*2);
-        ctx.fillStyle = `rgba(59,130,246,${dotAlpha})`;
-        ctx.fill();
-      }
-    }
+    // Sub-items
+    ctx.font = '11px Outfit';
+    ctx.fillStyle = 'rgba(255,255,255,0.35)';
+    const subY = i===0 ? p.y + labelOffsetY - 30 : p.y + labelOffsetY + 15;
+    ctx.fillText(subItems[i][0] + '  \u00b7  ' + subItems[i][1], p.x, subY);
   }
 
-  // "Kova" badge on top layer
-  const kovaEntrance = smoothstep(0.4, 0.6, sp);
-  if(kovaEntrance > 0){
-    ctx.globalAlpha = alpha * kovaEntrance;
-    const kx = cx - layerW*0.47*0.5 + 30;
-    const ky = baseY + layerH/2;
-    ctx.beginPath();
-    ctx.roundRect(kx - 28, ky - 12, 56, 24, 6);
-    ctx.fillStyle = 'rgba(59,130,246,0.25)';
-    ctx.fill();
-    ctx.strokeStyle = 'rgba(59,130,246,0.5)';
-    ctx.lineWidth = 1;
-    ctx.stroke();
-    ctx.fillStyle = COLORS.accentLight;
-    ctx.font = '600 12px Outfit';
-    ctx.textAlign = 'center';
-    ctx.textBaseline = 'middle';
-    ctx.fillText('KOVA', kx, ky);
-  }
+  // Center overlap glow
+  const overlapEntr = smoothstep(0.25, 0.5, sp);
+  ctx.globalAlpha = alpha * overlapEntr;
+  const glow = ctx.createRadialGradient(cx, cy, 0, cx, cy, circleR*0.7);
+  glow.addColorStop(0, 'rgba(59,130,246,0.12)');
+  glow.addColorStop(1, 'rgba(59,130,246,0)');
+  ctx.fillStyle = glow;
+  ctx.fillRect(cx-circleR, cy-circleR, circleR*2, circleR*2);
+
+  // KOVA badge in center
+  const kovaEntr = smoothstep(0.35, 0.55, sp);
+  ctx.globalAlpha = alpha * kovaEntr;
+  const pulse = 1 + Math.sin(time*0.002)*0.02;
+  ctx.beginPath();
+  ctx.roundRect(cx-30*pulse, cy-14*pulse, 60*pulse, 28*pulse, 8);
+  ctx.fillStyle = 'rgba(20,30,55,0.92)';
+  ctx.fill();
+  ctx.strokeStyle = 'rgba(59,130,246,0.5)';
+  ctx.lineWidth = 1.5;
+  ctx.stroke();
+  ctx.fillStyle = COLORS.accentLight;
+  ctx.font = '600 15px Outfit';
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.fillText('KOVA', cx, cy);
 
   ctx.restore();
 }
@@ -1692,158 +1738,27 @@ function drawIntegrationsVisual(sp){
 }
 
 /* =========================================================
-   VISUAL: FINANCE (Section 9)
-   ========================================================= */
-function drawFinanceVisual(sp){
-  const alpha = textOpacity(sp);
-  if(alpha < 0.01) return;
-  const cx = W/2, cy = H*0.66;
-  const boxW = 140, boxH = 50;
-  const spread = Math.min(W*0.35, 300);
-  const time = performance.now();
-  const leftLabels = t('financeFlowLeft');
-  const rightLabels = t('financeFlowRight');
-
-  ctx.save();
-  ctx.globalAlpha = alpha;
-
-  // Center box
-  const centerEntr = smoothstep(0.1, 0.3, sp);
-  ctx.globalAlpha = alpha * centerEntr;
-  ctx.beginPath();
-  ctx.roundRect(cx-boxW/2, cy-boxH/2, boxW, boxH, 12);
-  ctx.fillStyle = 'rgba(20,30,55,0.92)';
-  ctx.fill();
-  ctx.strokeStyle = 'rgba(59,130,246,0.45)';
-  ctx.lineWidth = 1.5;
-  ctx.stroke();
-  ctx.fillStyle = COLORS.accentLight;
-  ctx.font = '600 13px Outfit';
-  ctx.textAlign = 'center';
-  ctx.textBaseline = 'middle';
-  ctx.fillText('KOVA', cx, cy);
-
-  const ySpacing = 65;
-
-  // 3 left sources
-  for(let i=0;i<3;i++){
-    const lx = cx - spread;
-    const ly = cy + (i-1)*ySpacing;
-    const entr = smoothstep(0.05+i*0.06, 0.25+i*0.06, sp);
-    ctx.globalAlpha = alpha * entr;
-
-    // Source node
-    ctx.beginPath();
-    ctx.roundRect(lx-55, ly-16, 110, 32, 8);
-    ctx.fillStyle = 'rgba(15,22,40,0.85)';
-    ctx.fill();
-    ctx.strokeStyle = 'rgba(100,140,200,0.12)';
-    ctx.lineWidth = 1;
-    ctx.stroke();
-    ctx.fillStyle = 'rgba(255,255,255,0.6)';
-    ctx.font = '12px Outfit';
-    ctx.textAlign = 'center';
-    ctx.textBaseline = 'middle';
-    ctx.fillText(leftLabels[i], lx, ly);
-
-    // Line to center
-    ctx.beginPath();
-    ctx.moveTo(lx+55, ly);
-    const cpx1 = lx+55+(cx-boxW/2-lx-55)*0.5;
-    const cpx2 = cx-boxW/2-(cx-boxW/2-lx-55)*0.4;
-    ctx.bezierCurveTo(cpx1, ly, cpx2, cy, cx-boxW/2, cy);
-    ctx.strokeStyle = 'rgba(59,130,246,0.2)';
-    ctx.lineWidth = 1.5;
-    ctx.stroke();
-
-    // Animated dot
-    if(entr > 0.5){
-      const tp = ((time*0.00035 + i*0.33) % 1);
-      const e = tp*tp*(3-2*tp);
-      const px = lerp(lx+55, cx-boxW/2, e);
-      const py = lerp(ly, cy, e);
-      ctx.beginPath();
-      ctx.arc(px, py, 3, 0, Math.PI*2);
-      ctx.fillStyle = `rgba(96,165,250,${Math.sin(tp*Math.PI)*0.7})`;
-      ctx.shadowColor = 'rgba(59,130,246,0.6)';
-      ctx.shadowBlur = 8;
-      ctx.fill();
-      ctx.shadowBlur = 0;
-    }
-  }
-
-  // 3 right destinations
-  for(let i=0;i<3;i++){
-    const rx = cx + spread;
-    const ry = cy + (i-1)*ySpacing;
-    const entr = smoothstep(0.15+i*0.06, 0.35+i*0.06, sp);
-    ctx.globalAlpha = alpha * entr;
-
-    // Dest node
-    ctx.beginPath();
-    ctx.roundRect(rx-55, ry-16, 110, 32, 8);
-    ctx.fillStyle = 'rgba(15,22,40,0.85)';
-    ctx.fill();
-    ctx.strokeStyle = 'rgba(100,140,200,0.12)';
-    ctx.lineWidth = 1;
-    ctx.stroke();
-    ctx.fillStyle = 'rgba(255,255,255,0.6)';
-    ctx.font = '12px Outfit';
-    ctx.textAlign = 'center';
-    ctx.textBaseline = 'middle';
-    ctx.fillText(rightLabels[i], rx, ry);
-
-    // Line from center
-    ctx.beginPath();
-    ctx.moveTo(cx+boxW/2, cy);
-    const cpx1 = cx+boxW/2+(rx-55-cx-boxW/2)*0.4;
-    const cpx2 = rx-55-(rx-55-cx-boxW/2)*0.5;
-    ctx.bezierCurveTo(cpx1, cy, cpx2, ry, rx-55, ry);
-    ctx.strokeStyle = 'rgba(59,130,246,0.2)';
-    ctx.lineWidth = 1.5;
-    ctx.stroke();
-
-    // Animated dot
-    if(entr > 0.5){
-      const tp = ((time*0.00035 + i*0.33 + 0.15) % 1);
-      const e = tp*tp*(3-2*tp);
-      const px = lerp(cx+boxW/2, rx-55, e);
-      const py = lerp(cy, ry, e);
-      ctx.beginPath();
-      ctx.arc(px, py, 3, 0, Math.PI*2);
-      ctx.fillStyle = `rgba(96,165,250,${Math.sin(tp*Math.PI)*0.7})`;
-      ctx.shadowColor = 'rgba(59,130,246,0.6)';
-      ctx.shadowBlur = 8;
-      ctx.fill();
-      ctx.shadowBlur = 0;
-    }
-  }
-
-  ctx.restore();
-}
-
-/* =========================================================
-   VISUAL: IMPACT (Section 10)
+   VISUAL: IMPACT (Section 9)
    ========================================================= */
 function drawImpactVisual(sp){
   const alpha = textOpacity(sp);
   if(alpha < 0.01) return;
-  const cx = W/2, cy = H*0.64;
-  const cardW = Math.min(W*0.22, 200);
-  const cardH = cardW * 0.9;
-  const spacing = cardW + 30;
+  const cx = W/2, cyBase = H*0.52;
+  const cardW = Math.min(W*0.2, 175);
+  const cardH = cardW * 0.8;
+  const spacingX = cardW + 22;
+  const spacingY = cardH + 22;
   const metricLabels = t('impactMetrics');
   const time = performance.now();
-
-  // Icons: 0=lightning (speed), 1=arrows (handoffs), 2=shield (compliance)
-  const icons = [0, 1, 2];
 
   ctx.save();
   ctx.globalAlpha = alpha;
 
-  for(let i=0;i<3;i++){
-    const nx = cx + (i-1)*spacing;
-    const ny = cy;
+  for(let i=0;i<6;i++){
+    const row = Math.floor(i/3);
+    const col = i%3;
+    const nx = cx + (col-1)*spacingX;
+    const ny = cyBase + row*spacingY;
     const entrance = smoothstep(0.08+i*0.1, 0.35+i*0.1, sp);
     ctx.globalAlpha = alpha * entrance;
 
@@ -1865,36 +1780,57 @@ function drawImpactVisual(sp){
     ctx.fillStyle = hl;
     ctx.fill();
 
-    // Icon area — filled icon at top of card
+    // Icon area
     const iconY = ny - cardH*0.18;
     ctx.fillStyle = COLORS.accentLight;
-    if(i===0){
-      // Lightning bolt
+    ctx.strokeStyle = COLORS.accentLight;
+    ctx.lineCap = 'round';
+    ctx.lineJoin = 'round';
+    ctx.lineWidth = 1.5;
+    if(i===0){ // Clock — faster response
+      ctx.beginPath(); ctx.arc(nx, iconY, 11, 0, Math.PI*2); ctx.lineWidth = 1.8; ctx.stroke();
+      ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(nx, iconY); ctx.lineTo(nx+7, iconY-5); ctx.stroke();
+      ctx.beginPath(); ctx.arc(nx, iconY, 2, 0, Math.PI*2); ctx.fill();
+    } else if(i===1){ // Merge nodes — fewer handoffs
+      ctx.lineWidth = 1.3;
+      ctx.beginPath(); ctx.arc(nx-10, iconY-6, 2.5, 0, Math.PI*2); ctx.stroke();
+      ctx.beginPath(); ctx.arc(nx-10, iconY+6, 2.5, 0, Math.PI*2); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(nx-7, iconY-6); ctx.lineTo(nx+4, iconY); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(nx-7, iconY+6); ctx.lineTo(nx+4, iconY); ctx.stroke();
+      ctx.beginPath(); ctx.arc(nx+8, iconY, 4, 0, Math.PI*2); ctx.fill();
+    } else if(i===2){ // Document — audit-ready
+      ctx.beginPath(); ctx.roundRect(nx-8, iconY-11, 16, 21, 2); ctx.fill();
+      ctx.save(); ctx.globalCompositeOperation='destination-out';
+      ctx.lineWidth=2; ctx.beginPath(); ctx.moveTo(nx-3,iconY+3); ctx.lineTo(nx-1,iconY+6); ctx.lineTo(nx+4,iconY+1); ctx.stroke();
+      ctx.fillRect(nx-5,iconY-7,10,1.5); ctx.fillRect(nx-5,iconY-4,7,1.5);
+      ctx.restore();
+    } else if(i===3){ // Eye — transparency
       ctx.beginPath();
-      ctx.moveTo(nx+2, iconY-14); ctx.lineTo(nx-6, iconY+2);
-      ctx.lineTo(nx-1, iconY+2); ctx.lineTo(nx-3, iconY+14);
-      ctx.lineTo(nx+7, iconY-2); ctx.lineTo(nx+2, iconY-2);
-      ctx.closePath(); ctx.fill();
-    } else if(i===1){
-      // Converging arrows (fewer handoffs)
-      ctx.lineWidth = 2; ctx.strokeStyle = COLORS.accentLight; ctx.lineCap = 'round';
-      ctx.beginPath(); ctx.moveTo(nx-12, iconY-8); ctx.lineTo(nx, iconY); ctx.lineTo(nx-12, iconY+8); ctx.stroke();
-      ctx.beginPath(); ctx.moveTo(nx+12, iconY-8); ctx.lineTo(nx, iconY); ctx.lineTo(nx+12, iconY+8); ctx.stroke();
-      ctx.beginPath(); ctx.arc(nx, iconY, 3, 0, Math.PI*2); ctx.fill();
-    } else {
-      // Shield with checkmark
+      ctx.moveTo(nx-12, iconY); ctx.quadraticCurveTo(nx, iconY-10, nx+12, iconY);
+      ctx.quadraticCurveTo(nx, iconY+10, nx-12, iconY); ctx.closePath();
+      ctx.lineWidth = 1.5; ctx.stroke();
+      ctx.beginPath(); ctx.arc(nx, iconY, 4, 0, Math.PI*2); ctx.fill();
+    } else if(i===4){ // Calendar check — compliance
+      ctx.beginPath(); ctx.roundRect(nx-10, iconY-9, 20, 18, 2); ctx.fill();
+      ctx.save(); ctx.globalCompositeOperation='destination-out';
+      ctx.fillRect(nx-10, iconY-5, 20, 1.5);
+      ctx.lineWidth=2; ctx.beginPath(); ctx.moveTo(nx-4,iconY+2); ctx.lineTo(nx-1,iconY+5); ctx.lineTo(nx+5,iconY-1); ctx.stroke();
+      ctx.fillRect(nx-5, iconY-8, 3, 4); ctx.fillRect(nx+2, iconY-8, 3, 4);
+      ctx.restore();
+    } else { // Chat bubble — communication
       ctx.beginPath();
-      ctx.moveTo(nx, iconY-12);
-      ctx.quadraticCurveTo(nx-12, iconY-9, nx-10, iconY);
-      ctx.quadraticCurveTo(nx-8, iconY+9, nx, iconY+13);
-      ctx.quadraticCurveTo(nx+8, iconY+9, nx+10, iconY);
-      ctx.quadraticCurveTo(nx+12, iconY-9, nx, iconY-12);
+      ctx.moveTo(nx-10, iconY-3); ctx.quadraticCurveTo(nx-10, iconY-10, nx, iconY-10);
+      ctx.quadraticCurveTo(nx+10, iconY-10, nx+10, iconY-3);
+      ctx.quadraticCurveTo(nx+10, iconY+3, nx, iconY+3);
+      ctx.lineTo(nx-3, iconY+8); ctx.lineTo(nx-2, iconY+3);
+      ctx.quadraticCurveTo(nx-10, iconY+3, nx-10, iconY-3);
       ctx.closePath(); ctx.fill();
-      // Checkmark punch-out
-      ctx.save();
-      ctx.globalCompositeOperation = 'destination-out';
-      ctx.lineWidth = 2.5; ctx.lineCap = 'round';
-      ctx.beginPath(); ctx.moveTo(nx-4, iconY+1); ctx.lineTo(nx-1, iconY+4); ctx.lineTo(nx+5, iconY-3); ctx.stroke();
+      // Waves
+      ctx.save(); ctx.globalCompositeOperation='destination-out';
+      ctx.lineWidth=1.5;
+      ctx.beginPath(); ctx.arc(nx-3, iconY-4, 1.5, 0, Math.PI*2); ctx.fill();
+      ctx.beginPath(); ctx.arc(nx+1, iconY-4, 1.5, 0, Math.PI*2); ctx.fill();
+      ctx.beginPath(); ctx.arc(nx+5, iconY-4, 1.5, 0, Math.PI*2); ctx.fill();
       ctx.restore();
     }
 
@@ -1923,15 +1859,16 @@ function drawImpactVisual(sp){
 }
 
 /* =========================================================
-   VISUAL: ROADMAP (Section 11)
+   VISUAL: ROADMAP (Section 10)
    ========================================================= */
 function drawRoadmapVisual(sp){
   const alpha = textOpacity(sp);
   if(alpha < 0.01) return;
-  const cx = W/2, cy = H*0.64;
-  const phaseW = Math.min(W*0.22, 190);
+  const cx = W/2, cyBase = H*0.50;
+  const phaseW = Math.min(W*0.18, 155);
   const phaseH = phaseW * 0.85;
-  const gap = 35;
+  const gap = 20;
+  const rowGap = 22;
   const totalW = phaseW*3 + gap*2;
   const startX = cx - totalW/2;
   const time = performance.now();
@@ -1941,35 +1878,32 @@ function drawRoadmapVisual(sp){
   ctx.save();
   ctx.globalAlpha = alpha;
 
-  // Connecting line behind cards
+  // Connecting lines behind cards (2 rows)
   const lineEntr = smoothstep(0.15, 0.45, sp);
   ctx.globalAlpha = alpha * lineEntr;
-  ctx.beginPath();
-  ctx.moveTo(startX + phaseW/2, cy);
-  ctx.lineTo(startX + totalW - phaseW/2, cy);
+  ctx.setLineDash([6,4]);
   ctx.strokeStyle = 'rgba(59,130,246,0.15)';
   ctx.lineWidth = 2;
-  ctx.setLineDash([6,4]);
+  for(let r=0;r<2;r++){
+    const ry = cyBase + r*(phaseH + rowGap);
+    ctx.beginPath();
+    ctx.moveTo(startX + phaseW/2, ry);
+    ctx.lineTo(startX + totalW - phaseW/2, ry);
+    ctx.stroke();
+  }
+  // Vertical connector between rows (right end of row 1 → left start of row 2)
+  ctx.beginPath();
+  ctx.moveTo(startX + totalW - phaseW/2, cyBase + phaseH*0.4);
+  ctx.lineTo(startX + totalW - phaseW/2, cyBase + phaseH + rowGap - phaseH*0.4);
   ctx.stroke();
   ctx.setLineDash([]);
 
-  // Animated dot along line
-  if(lineEntr > 0.3){
-    const tp = ((time*0.0003) % 1);
-    const px = lerp(startX + phaseW/2, startX + totalW - phaseW/2, tp);
-    ctx.beginPath();
-    ctx.arc(px, cy, 3, 0, Math.PI*2);
-    ctx.fillStyle = `rgba(96,165,250,${Math.sin(tp*Math.PI)*0.5})`;
-    ctx.shadowColor = 'rgba(59,130,246,0.6)';
-    ctx.shadowBlur = 8;
-    ctx.fill();
-    ctx.shadowBlur = 0;
-  }
-
-  // 3 phase cards
-  for(let i=0;i<3;i++){
-    const px = startX + i*(phaseW + gap) + phaseW/2;
-    const py = cy;
+  // 6 phase cards in 2 rows
+  for(let i=0;i<6;i++){
+    const row = Math.floor(i/3);
+    const col = i%3;
+    const px = startX + col*(phaseW + gap) + phaseW/2;
+    const py = cyBase + row*(phaseH + rowGap);
     const entrance = smoothstep(0.1+i*0.12, 0.35+i*0.12, sp);
     ctx.globalAlpha = alpha * entrance;
 
@@ -2017,16 +1951,19 @@ function drawRoadmapVisual(sp){
     }
   }
 
-  // Arrow indicators between cards
+  // Arrow indicators between cards (2 rows)
   ctx.globalAlpha = alpha * lineEntr * 0.4;
-  for(let i=0;i<2;i++){
-    const ax = startX + (i+1)*(phaseW + gap) - gap/2;
-    ctx.fillStyle = 'rgba(59,130,246,0.4)';
-    ctx.beginPath();
-    ctx.moveTo(ax-4, cy-5);
-    ctx.lineTo(ax+4, cy);
-    ctx.lineTo(ax-4, cy+5);
-    ctx.fill();
+  ctx.fillStyle = 'rgba(59,130,246,0.4)';
+  for(let r=0;r<2;r++){
+    const ry = cyBase + r*(phaseH + rowGap);
+    for(let c=0;c<2;c++){
+      const ax = startX + (c+1)*(phaseW + gap) - gap/2;
+      ctx.beginPath();
+      ctx.moveTo(ax-4, ry-5);
+      ctx.lineTo(ax+4, ry);
+      ctx.lineTo(ax-4, ry+5);
+      ctx.fill();
+    }
   }
 
   ctx.restore();
@@ -2163,16 +2100,14 @@ function updateStaticSections(){
   document.getElementById('sec7Body').innerHTML = t('sec7Body');
   document.getElementById('sec8Title').textContent = t('sec8Title');
   document.getElementById('sec8Body').innerHTML = t('sec8Body');
-  document.getElementById('sec9Title').innerHTML = t('sec9Title');
+  document.getElementById('sec9Title').textContent = t('sec9Title');
   document.getElementById('sec9Body').innerHTML = t('sec9Body');
   document.getElementById('sec10Title').textContent = t('sec10Title');
   document.getElementById('sec10Body').innerHTML = t('sec10Body');
-  document.getElementById('sec11Title').textContent = t('sec11Title');
+  document.getElementById('sec11Title').innerHTML = t('sec11Title');
   document.getElementById('sec11Body').innerHTML = t('sec11Body');
-  document.getElementById('sec12Title').innerHTML = t('sec12Title');
-  document.getElementById('sec12Body').innerHTML = t('sec12Body');
-  document.getElementById('sec13Pre').textContent = t('sec13Pre');
-  document.getElementById('sec13Sub').textContent = t('sec13Sub');
+  document.getElementById('sec12Pre').textContent = t('sec12Pre');
+  document.getElementById('sec12Sub').textContent = t('sec12Sub');
 }
 
 function switchLanguage(lang){
@@ -2242,7 +2177,7 @@ function updateTextOverlays(prog){
           const threshold = w / pauseWords.length;
           pauseWords[w].style.opacity = wordProg > threshold ? '1' : '0';
         }
-      } else if(secIdx === 13){
+      } else if(secIdx === 12){
         // Closing: fade in, hold forever (no fade out at end)
         opacity = smoothstep(0, 0.2, sp);
         yOff = sp < 0.15 ? 30*(1-sp/0.15) : 0;
@@ -2309,11 +2244,10 @@ function render(timestamp){
   if(section === 6) drawTimelineVisual(sp);
   if(section === 7) drawRoutingVisual(sp);
   if(section === 8) drawIntegrationsVisual(sp);
-  if(section === 9) drawFinanceVisual(sp);
-  if(section === 10) drawImpactVisual(sp);
-  if(section === 11) drawRoadmapVisual(sp);
-  if(section === 12) drawPositioningVisual(sp);
-  if(section === 13) drawClosingVisual(sp);
+  if(section === 9) drawImpactVisual(sp);
+  if(section === 10) drawRoadmapVisual(sp);
+  if(section === 11) drawPositioningVisual(sp);
+  if(section === 12) drawClosingVisual(sp);
 
   // Cross-fade diagram at section edges for smooth transitions
   if(section === 2 && sp > 0.8){
