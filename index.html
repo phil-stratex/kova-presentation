@@ -133,6 +133,7 @@ const COLORS = Object.assign({}, LIGHT_COLORS);
 function themeText(a){ return darkMode ? `rgba(255,255,255,${a})` : `rgba(15,23,42,${a})`; }
 function themeNodeBg(){ return darkMode ? 'rgba(15,22,40,0.85)' : 'rgba(255,255,255,0.9)'; }
 function themeNodeBorder(){ return darkMode ? 'rgba(100,140,200,0.15)' : 'rgba(0,0,0,0.08)'; }
+function themeHighlight(a){ return darkMode ? `rgba(255,255,255,${a})` : `rgba(0,0,0,${a})`; }
 
 const SECTION_COUNT = 12;
 const SEG = 1 / SECTION_COUNT;
@@ -256,7 +257,7 @@ let pauseWords = [];
 let currentLang = 'de';
 let autoPlaying = false;
 let autoPlayStartTime = 0;
-const autoPlayDuration = 120000;
+const autoPlayDuration = 150000;
 
 /* =========================================================
    UTILITIES
@@ -644,7 +645,7 @@ function getNodePositions(){
    ========================================================= */
 function drawNodeIcon(type, cx, cy, s, color){
   ctx.save();
-  const c = color || 'rgba(255,255,255,0.7)';
+  const c = color || themeText(0.7);
   ctx.fillStyle = c;
   ctx.strokeStyle = c;
   ctx.lineWidth = 1.5;
@@ -927,8 +928,8 @@ function drawNodeBox(x, y, w, h, label, iconIdx, opts){
   ctx.stroke();
   // Top highlight gradient
   const hlGrad = ctx.createLinearGradient(nx-sw/2, ny-sh/2, nx-sw/2, ny-sh/2+sh*0.4);
-  hlGrad.addColorStop(0, 'rgba(255,255,255,0.035)');
-  hlGrad.addColorStop(1, 'rgba(255,255,255,0)');
+  hlGrad.addColorStop(0, themeHighlight(0.035));
+  hlGrad.addColorStop(1, themeHighlight(0));
   ctx.beginPath();
   ctx.roundRect(nx - sw/2, ny - sh/2, sw, sh, r);
   ctx.fillStyle = hlGrad;
@@ -937,12 +938,12 @@ function drawNodeBox(x, y, w, h, label, iconIdx, opts){
   const badgeR = Math.min(sw, sh) * 0.26;
   ctx.beginPath();
   ctx.arc(nx, ny - sh*0.05, badgeR, 0, Math.PI*2);
-  ctx.fillStyle = isActive ? 'rgba(59,130,246,0.1)' : 'rgba(255,255,255,0.03)';
+  ctx.fillStyle = isActive ? 'rgba(59,130,246,0.1)' : themeHighlight(0.03);
   ctx.fill();
 
   // Icon
   if(iconIdx !== undefined && iconIdx >= 0){
-    const iconColor = isActive ? COLORS.accentLight : 'rgba(255,255,255,0.6)';
+    const iconColor = isActive ? COLORS.accentLight : themeText(0.6);
     drawNodeIcon(iconIdx, nx, ny - sh*0.05, scale * (isCenter?1.8:1.5), iconColor);
   }
   // Center node: building icon (default) or Kova "K" (active)
@@ -1487,7 +1488,7 @@ function drawPositioningVisual(sp){
     const labelY = i===0 ? p.y - circleR*0.45 : p.y + circleR*0.45;
     ctx.fillText(labels[i], labelX, labelY);
     ctx.font = '11px Outfit';
-    ctx.fillStyle = 'rgba(255,255,255,0.3)';
+    ctx.fillStyle = themeText(0.3);
     ctx.fillText(subItems[i][0], labelX, labelY + 16);
     ctx.fillText(subItems[i][1], labelX, labelY + 30);
   }
@@ -1615,9 +1616,9 @@ function drawIntegrationsVisual(sp){
   const alpha = textOpacity(sp);
   if(alpha < 0.01) return;
   const cx = W/2;
-  const topY = H*0.50;
-  const barY = H*0.70;
-  const kovaY = H*0.82;
+  const topY = H*0.55;
+  const barY = H*0.74;
+  const kovaY = H*0.86;
   const labels = t('integrationLabels');
   const spacing = Math.min(W*0.16, 130);
   const time = performance.now();
@@ -1686,8 +1687,8 @@ function drawIntegrationsVisual(sp){
     ctx.stroke();
     // Top highlight
     const hl = ctx.createLinearGradient(nx-50, ny-26, nx-50, ny-26+20);
-    hl.addColorStop(0, 'rgba(255,255,255,0.03)');
-    hl.addColorStop(1, 'rgba(255,255,255,0)');
+    hl.addColorStop(0, themeHighlight(0.03));
+    hl.addColorStop(1, themeHighlight(0));
     ctx.beginPath();
     ctx.roundRect(nx-50, ny-26, 100, 52, 10);
     ctx.fillStyle = hl;
@@ -1695,14 +1696,14 @@ function drawIntegrationsVisual(sp){
 
     // Icon
     const nodeIconMap = [0, 1, 5, 8, 9]; // Lettings, Maintenance, Revenue, Compliance, Service
-    drawNodeIcon(nodeIconMap[i], nx, ny-5, 1.1, 'rgba(255,255,255,0.55)');
+    drawNodeIcon(nodeIconMap[i], nx, ny-5, 1.1, themeText(0.55));
 
-    // Label
-    ctx.fillStyle = themeText(0.55);
+    // Label above the tile
+    ctx.fillStyle = themeText(0.6);
     ctx.font = '13px Outfit';
     ctx.textAlign = 'center';
-    ctx.textBaseline = 'top';
-    ctx.fillText(labels[i], nx, ny+15);
+    ctx.textBaseline = 'bottom';
+    ctx.fillText(labels[i], nx, ny-30);
 
     // Animated dot flowing down from node to bar, then along bar to center
     if(entrance > 0.5){
@@ -1784,8 +1785,8 @@ function drawImpactVisual(sp){
 
     // Top highlight
     const hl = ctx.createLinearGradient(nx-cardW/2, ny-cardH/2, nx-cardW/2, ny-cardH/2+cardH*0.3);
-    hl.addColorStop(0, 'rgba(255,255,255,0.03)');
-    hl.addColorStop(1, 'rgba(255,255,255,0)');
+    hl.addColorStop(0, themeHighlight(0.03));
+    hl.addColorStop(1, themeHighlight(0));
     ctx.beginPath();
     ctx.roundRect(nx-cardW/2, ny-cardH/2, cardW, cardH, 14);
     ctx.fillStyle = hl;
@@ -1941,8 +1942,8 @@ function drawRoadmapVisual(sp){
 
     // Top highlight
     const hl = ctx.createLinearGradient(px-phaseW/2, py-phaseH/2, px-phaseW/2, py-phaseH/2+phaseH*0.3);
-    hl.addColorStop(0, 'rgba(255,255,255,0.03)');
-    hl.addColorStop(1, 'rgba(255,255,255,0)');
+    hl.addColorStop(0, themeHighlight(0.03));
+    hl.addColorStop(1, themeHighlight(0));
     ctx.beginPath();
     ctx.roundRect(px-phaseW/2, py-phaseH/2, phaseW, phaseH, 12);
     ctx.fillStyle = hl;
@@ -1953,19 +1954,19 @@ function drawRoadmapVisual(sp){
     ctx.arc(px, py - phaseH*0.32, 14, 0, Math.PI*2);
     ctx.fillStyle = i===0 ? 'rgba(59,130,246,0.3)' : 'rgba(59,130,246,0.12)';
     ctx.fill();
-    ctx.fillStyle = i===0 ? '#fff' : 'rgba(255,255,255,0.7)';
+    ctx.fillStyle = i===0 ? COLORS.textPri : themeText(0.7);
     ctx.font = '600 12px Outfit';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
     ctx.fillText(''+(i+1), px, py - phaseH*0.32);
 
     // Phase title
-    ctx.fillStyle = i===0 ? '#fff' : 'rgba(255,255,255,0.7)';
+    ctx.fillStyle = i===0 ? COLORS.textPri : themeText(0.7);
     ctx.font = (i===0 ? '600 ' : '') + '14px Outfit';
     ctx.fillText(phases[i], px, py - phaseH*0.12);
 
     // Phase details (multi-line)
-    ctx.fillStyle = 'rgba(255,255,255,0.4)';
+    ctx.fillStyle = themeText(0.4);
     ctx.font = '12px Outfit';
     const dLines = details[i].split('\n');
     for(let l=0;l<dLines.length;l++){
