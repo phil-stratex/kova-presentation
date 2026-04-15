@@ -1172,8 +1172,8 @@ function drawDashboardVisual(sp){
 
   ctx.save();
   ctx.globalAlpha = alpha * smoothstep(0.05, 0.3, sp);
-  ctx.strokeStyle = `rgba(59,130,246,0.3)`;
-  ctx.lineWidth = 1;
+  ctx.strokeStyle = `rgba(59,130,246,0.5)`;
+  ctx.lineWidth = 1.5;
 
   // Main frame
   ctx.beginPath();
@@ -1196,14 +1196,14 @@ function drawDashboardVisual(sp){
     const cardX = cx - bw/2 + 22 + i*(cardW+18);
     ctx.beginPath();
     ctx.roundRect(cardX, cardY, cardW, cardH, 6);
-    ctx.fillStyle = 'rgba(59,130,246,0.06)';
+    ctx.fillStyle = 'rgba(59,130,246,0.12)';
     ctx.fill();
-    ctx.strokeStyle = 'rgba(59,130,246,0.2)';
+    ctx.strokeStyle = 'rgba(59,130,246,0.35)';
     ctx.stroke();
 
     // Card label
     const cardLabels = t('dashboardCards');
-    ctx.fillStyle = themeText(0.35);
+    ctx.fillStyle = themeText(0.5);
     ctx.font = '16px Outfit';
     ctx.textAlign = 'left';
     ctx.textBaseline = 'top';
@@ -1225,7 +1225,7 @@ function drawDashboardVisual(sp){
   const heights = [0.6, 0.8, 0.45, 0.9, 0.7, 0.5, 0.85, 0.65];
   for(let i=0;i<heights.length;i++){
     const bH = chartH * heights[i] * smoothstep(0.2+i*0.03, 0.5+i*0.03, sp);
-    ctx.fillStyle = i===3 ? 'rgba(59,130,246,0.5)' : 'rgba(59,130,246,0.2)';
+    ctx.fillStyle = i===3 ? 'rgba(59,130,246,0.7)' : 'rgba(59,130,246,0.35)';
     ctx.fillRect(chartX + i*barW + 2, chartY+chartH-bH, barW-4, bH);
   }
 
@@ -1243,7 +1243,7 @@ function drawDashboardVisual(sp){
     if(i===0) ctx.moveTo(px,py);
     else ctx.lineTo(px,py);
   }
-  ctx.strokeStyle = 'rgba(59,130,246,0.5)';
+  ctx.strokeStyle = 'rgba(59,130,246,0.7)';
   ctx.lineWidth = 3;
   ctx.stroke();
 
@@ -1633,7 +1633,7 @@ function drawIntegrationsVisual(sp){
   ctx.beginPath();
   ctx.moveTo(barLeft, barY);
   ctx.lineTo(barRight, barY);
-  ctx.strokeStyle = 'rgba(59,130,246,0.25)';
+  ctx.strokeStyle = 'rgba(59,130,246,0.4)';
   ctx.lineWidth = 2;
   ctx.stroke();
 
@@ -1643,7 +1643,7 @@ function drawIntegrationsVisual(sp){
   ctx.beginPath();
   ctx.moveTo(cx, barY);
   ctx.lineTo(cx, kovaY - 20);
-  ctx.strokeStyle = 'rgba(59,130,246,0.2)';
+  ctx.strokeStyle = 'rgba(59,130,246,0.35)';
   ctx.lineWidth = 1.5;
   ctx.stroke();
 
@@ -1672,8 +1672,8 @@ function drawIntegrationsVisual(sp){
     ctx.beginPath();
     ctx.moveTo(nx, ny+28);
     ctx.lineTo(nx, barY);
-    ctx.strokeStyle = 'rgba(59,130,246,0.15)';
-    ctx.lineWidth = 1;
+    ctx.strokeStyle = 'rgba(59,130,246,0.3)';
+    ctx.lineWidth = 1.5;
     ctx.stroke();
 
     // Node box
