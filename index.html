@@ -1482,7 +1482,7 @@ function drawPositioningVisual(sp){
     ctx.textBaseline = 'middle';
     // Labels centered in each circle
     const labelX = p.x;
-    const labelY = i===0 ? p.y - circleR*0.40 : p.y + circleR*0.40;
+    const labelY = p.y - circleR*0.35;
     ctx.fillText(labels[i], labelX, labelY);
     ctx.font = '14px Outfit';
     ctx.fillStyle = themeText(0.3);
@@ -1873,7 +1873,7 @@ function drawImpactVisual(sp){
 function drawRoadmapVisual(sp){
   const alpha = textOpacity(sp);
   if(alpha < 0.01) return;
-  const cx = W/2, cyBase = H*0.55;
+  const cx = W/2, cyBase = H*0.42;
   const phaseW = Math.min(W*0.25, 200);
   const phaseH = phaseW * 1.1;
   const gap = 16;
