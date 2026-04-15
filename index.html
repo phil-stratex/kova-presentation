@@ -9,14 +9,14 @@
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-html,body{font-family:'Outfit',sans-serif;background:#0a0e1a;color:#fff;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+html,body{font-family:'Outfit',sans-serif;background:#f0f2f5;color:#0f172a;overflow-x:hidden;-webkit-font-smoothing:antialiased}
 canvas#bg{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0}
 .overlay{position:fixed;top:0;left:0;width:100%;height:100%;z-index:1;pointer-events:none;overflow:hidden}
 .scroll-spacer{height:1350vh}
 .sec{position:absolute;top:0;left:0;width:100%;height:100%;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;opacity:0;will-change:transform,opacity;padding:0 6vw}
 .sec h1{font-size:clamp(1.8rem,4.5vw,3.6rem);font-weight:600;line-height:1.15;max-width:850px;margin-bottom:1.2rem;letter-spacing:-0.02em}
-.sec h2{font-size:clamp(1.2rem,2.8vw,2rem);font-weight:500;margin-bottom:0.8rem;color:rgba(255,255,255,0.85)}
-.sec p{font-size:clamp(0.95rem,1.4vw,1.2rem);font-weight:300;color:rgba(255,255,255,0.55);max-width:480px;line-height:1.7}
+.sec h2{font-size:clamp(1.2rem,2.8vw,2rem);font-weight:500;margin-bottom:0.8rem;color:rgba(15,23,42,0.85)}
+.sec p{font-size:clamp(0.95rem,1.4vw,1.2rem);font-weight:300;color:rgba(15,23,42,0.55);max-width:480px;line-height:1.7}
 .sec .logo{width:clamp(140px,18vw,260px);margin-bottom:2.5rem;opacity:0.92;filter:brightness(1.1)}
 .sec .sub{margin-top:0.6rem}
 .char{display:inline-block;opacity:0}
@@ -102,27 +102,37 @@ canvas#bg{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0}
 /* =========================================================
    CONSTANTS
    ========================================================= */
-const COLORS = {
-  bg: '#0a0e1a',
-  bgR: 10, bgG: 14, bgB: 26,
-  dotGrid: 'rgba(255,255,255,0.03)',
-  dotGridHL: 'rgba(255,255,255,0.09)',
-  particle: [150,180,255],
-  particleBright: [200,220,255],
+const DARK_COLORS = {
+  bg: '#0a0e1a', bgR: 10, bgG: 14, bgB: 26,
+  dotGrid: 'rgba(255,255,255,0.03)', dotGridHL: 'rgba(255,255,255,0.09)',
+  particle: [150,180,255], particleBright: [200,220,255],
   connLine: 'rgba(255,255,255,0.04)',
-  accent: '#3b82f6',
-  accentLight: '#60a5fa',
-  accentGlow: 'rgba(59,130,246,0.4)',
-  accentGlowStrong: 'rgba(59,130,246,0.7)',
-  textPri: '#ffffff',
-  textSec: 'rgba(255,255,255,0.6)',
-  textMuted: 'rgba(255,255,255,0.3)',
-  nodeBg: 'rgba(255,255,255,0.04)',
-  nodeBorder: 'rgba(255,255,255,0.1)',
+  accent: '#3b82f6', accentLight: '#60a5fa',
+  accentGlow: 'rgba(59,130,246,0.4)', accentGlowStrong: 'rgba(59,130,246,0.7)',
+  textPri: '#ffffff', textSec: 'rgba(255,255,255,0.6)', textMuted: 'rgba(255,255,255,0.3)',
+  nodeBg: 'rgba(255,255,255,0.04)', nodeBorder: 'rgba(255,255,255,0.1)',
   nodeBorderActive: 'rgba(59,130,246,0.5)',
-  dashedLine: 'rgba(255,255,255,0.12)',
-  solidLine: '#3b82f6'
+  dashedLine: 'rgba(255,255,255,0.12)', solidLine: '#3b82f6'
 };
+const LIGHT_COLORS = {
+  bg: '#f0f2f5', bgR: 240, bgG: 242, bgB: 245,
+  dotGrid: 'rgba(0,0,0,0.03)', dotGridHL: 'rgba(0,0,0,0.07)',
+  particle: [60,90,170], particleBright: [40,70,150],
+  connLine: 'rgba(0,0,0,0.04)',
+  accent: '#2563eb', accentLight: '#3b82f6',
+  accentGlow: 'rgba(37,99,235,0.3)', accentGlowStrong: 'rgba(37,99,235,0.6)',
+  textPri: '#0f172a', textSec: 'rgba(15,23,42,0.6)', textMuted: 'rgba(15,23,42,0.3)',
+  nodeBg: 'rgba(0,0,0,0.03)', nodeBorder: 'rgba(0,0,0,0.08)',
+  nodeBorderActive: 'rgba(37,99,235,0.4)',
+  dashedLine: 'rgba(0,0,0,0.1)', solidLine: '#2563eb'
+};
+let darkMode = false;
+const COLORS = Object.assign({}, LIGHT_COLORS);
+
+// Theme helpers for canvas drawing
+function themeText(a){ return darkMode ? `rgba(255,255,255,${a})` : `rgba(15,23,42,${a})`; }
+function themeNodeBg(){ return darkMode ? 'rgba(15,22,40,0.85)' : 'rgba(255,255,255,0.9)'; }
+function themeNodeBorder(){ return darkMode ? 'rgba(100,140,200,0.15)' : 'rgba(0,0,0,0.08)'; }
 
 const SECTION_COUNT = 12;
 const SEG = 1 / SECTION_COUNT;
@@ -217,8 +227,8 @@ const TRANSLATIONS = {
     de: ['Instandhaltung','Vermietung','Finanzen','Management','Operations','IT','Externe']
   },
   integrationLabels: {
-    en: ['Access Control','Payments','Accounting','Communication','Documents'],
-    de: ['Zutrittskontrolle','Zahlungsverkehr','Buchhaltung','Kommunikation','Dokumente']
+    en: ['Lettings','Maintenance','Revenue & Billing','Compliance & Docs','Resident Service'],
+    de: ['Vermietung','Instandhaltung','Einnahmen & Abrechn.','Compliance & Doku','Bewohner-Service']
   },
   impactMetrics: {
     en: ['Significantly faster\nresponse times','Dramatically fewer\nmanual handoffs','Structured, audit-ready\ndocumentation','Full portfolio\ntransparency','Automated\ncompliance tracking','Seamless resident\ncommunication'],
@@ -243,10 +253,10 @@ let lastTS = 0;
 let loadTime = 0;
 let heroChars = [];
 let pauseWords = [];
-let currentLang = 'en';
+let currentLang = 'de';
 let autoPlaying = false;
 let autoPlayStartTime = 0;
-const autoPlayDuration = 90000;
+const autoPlayDuration = 120000;
 
 /* =========================================================
    UTILITIES
@@ -260,11 +270,11 @@ function easeIn(t){return t*t*t}
 
 function autoPlayEasing(tp){
   const w=[
-    {time:0.00,scroll:0.000},{time:0.07,scroll:0.070},
-    {time:0.12,scroll:0.140},{time:0.22,scroll:0.250},
-    {time:0.30,scroll:0.330},{time:0.38,scroll:0.415},
-    {time:0.47,scroll:0.500},{time:0.55,scroll:0.580},
-    {time:0.64,scroll:0.665},{time:0.74,scroll:0.750},
+    {time:0.00,scroll:0.000},{time:0.06,scroll:0.070},
+    {time:0.10,scroll:0.140},{time:0.18,scroll:0.250},
+    {time:0.25,scroll:0.330},{time:0.35,scroll:0.415},
+    {time:0.44,scroll:0.500},{time:0.52,scroll:0.580},
+    {time:0.63,scroll:0.665},{time:0.75,scroll:0.750},
     {time:0.84,scroll:0.835},{time:0.93,scroll:0.925},
     {time:1.00,scroll:1.000}
   ];
@@ -478,7 +488,7 @@ function drawBurst(){
    DRAWING: BACKGROUND
    ========================================================= */
 function drawBackground(prog){
-  ctx.fillStyle = COLORS.bg;
+  ctx.fillStyle = `rgb(${COLORS.bgR},${COLORS.bgG},${COLORS.bgB})`;
   ctx.fillRect(0,0,W,H);
   // Subtle vignette
   const g = ctx.createRadialGradient(W/2,H/2,0, W/2,H/2, Math.max(W,H)*0.75);
@@ -910,7 +920,7 @@ function drawNodeBox(x, y, w, h, label, iconIdx, opts){
   const r = 14;
   ctx.beginPath();
   ctx.roundRect(nx - sw/2, ny - sh/2, sw, sh, r);
-  ctx.fillStyle = isActive ? 'rgba(20, 30, 55, 0.92)' : 'rgba(15, 22, 40, 0.85)';
+  ctx.fillStyle = themeNodeBg();
   ctx.fill();
   ctx.strokeStyle = isActive ? 'rgba(59,130,246,0.45)' : 'rgba(100,140,200,0.15)';
   ctx.lineWidth = isActive ? 1.5 : 1;
@@ -947,7 +957,7 @@ function drawNodeBox(x, y, w, h, label, iconIdx, opts){
       // Building / property icon (filled silhouette)
       const bs = scale * 1.5;
       const iy = ny - sh*0.05;
-      ctx.fillStyle = 'rgba(255,255,255,0.55)';
+      ctx.fillStyle = themeText(0.55);
       ctx.beginPath();
       ctx.moveTo(nx-7*bs, iy+7*bs);
       ctx.lineTo(nx-7*bs, iy-2*bs);
@@ -967,7 +977,7 @@ function drawNodeBox(x, y, w, h, label, iconIdx, opts){
   }
 
   // Label
-  ctx.fillStyle = isActive ? '#fff' : 'rgba(255,255,255,0.55)';
+  ctx.fillStyle = isActive ? COLORS.textPri : themeText(0.55);
   ctx.font = `${13*scale}px Outfit`;
   ctx.textAlign = 'center';
   ctx.textBaseline = 'top';
@@ -1195,7 +1205,7 @@ function drawDashboardVisual(sp){
 
     // Card label
     const cardLabels = t('dashboardCards');
-    ctx.fillStyle = 'rgba(255,255,255,0.35)';
+    ctx.fillStyle = themeText(0.35);
     ctx.font = '10px Outfit';
     ctx.textAlign = 'left';
     ctx.textBaseline = 'top';
@@ -1315,7 +1325,7 @@ function drawTimelineVisual(sp){
 
     // Step label
     ctx.globalAlpha = alpha * (active ? 0.85 : 0.2);
-    ctx.fillStyle = '#fff';
+    ctx.fillStyle = COLORS.textPri;
     ctx.font = active ? '600 13px Outfit' : '13px Outfit';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'top';
@@ -1369,8 +1379,8 @@ function drawRoutingVisual(sp){
   ctx.shadowBlur = 0;
 
   // Source label
-  ctx.fillStyle = 'rgba(255,255,255,0.5)';
-  ctx.font = '13px Outfit';
+  ctx.fillStyle = themeText(0.5);
+  ctx.font = '14px Outfit';
   ctx.textAlign = 'center';
   ctx.fillText(t('routingSource'), cx, topY - 22);
 
@@ -1400,8 +1410,8 @@ function drawRoutingVisual(sp){
     ctx.stroke();
 
     // End label
-    ctx.fillStyle = 'rgba(255,255,255,0.5)';
-    ctx.font = '11px Outfit';
+    ctx.fillStyle = themeText(0.5);
+    ctx.font = '13px Outfit';
     ctx.textAlign = 'center';
     ctx.fillText(p.label, p.endX, botY + 18);
 
@@ -1468,19 +1478,18 @@ function drawPositioningVisual(sp){
     ctx.stroke();
 
     // Labels INSIDE each circle at the outer edge (away from center)
-    ctx.fillStyle = 'rgba(255,255,255,0.65)';
-    ctx.font = '600 12px Outfit';
+    ctx.fillStyle = themeText(0.65);
+    ctx.font = '600 13px Outfit';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
-    // Position label at the far side of each circle from center
-    const labelDir = i===0 ? -1 : 1;
-    const labelX = i===0 ? p.x : (i===1 ? p.x - circleR*0.3 : p.x + circleR*0.3);
-    const labelY = p.y + labelDir*circleR*0.5;
+    // Labels centered in each circle
+    const labelX = p.x;
+    const labelY = i===0 ? p.y - circleR*0.45 : p.y + circleR*0.45;
     ctx.fillText(labels[i], labelX, labelY);
-    ctx.font = '10px Outfit';
+    ctx.font = '11px Outfit';
     ctx.fillStyle = 'rgba(255,255,255,0.3)';
-    ctx.fillText(subItems[i][0], labelX, labelY + 15);
-    ctx.fillText(subItems[i][1], labelX, labelY + 28);
+    ctx.fillText(subItems[i][0], labelX, labelY + 16);
+    ctx.fillText(subItems[i][1], labelX, labelY + 30);
   }
 
   // Center overlap glow
@@ -1499,7 +1508,7 @@ function drawPositioningVisual(sp){
   const pulse = 1 + Math.sin(time*0.002)*0.02;
   ctx.beginPath();
   ctx.roundRect(cx-30*pulse, centroidY-14*pulse, 60*pulse, 28*pulse, 8);
-  ctx.fillStyle = 'rgba(20,30,55,0.92)';
+  ctx.fillStyle = themeNodeBg();
   ctx.fill();
   ctx.strokeStyle = 'rgba(59,130,246,0.5)';
   ctx.lineWidth = 1.5;
@@ -1641,7 +1650,7 @@ function drawIntegrationsVisual(sp){
   // Kova badge at bottom
   ctx.beginPath();
   ctx.roundRect(cx-40, kovaY-18, 80, 36, 10);
-  ctx.fillStyle = 'rgba(20,30,55,0.92)';
+  ctx.fillStyle = themeNodeBg();
   ctx.fill();
   ctx.strokeStyle = 'rgba(59,130,246,0.5)';
   ctx.lineWidth = 1.5;
@@ -1670,9 +1679,9 @@ function drawIntegrationsVisual(sp){
     // Node box
     ctx.beginPath();
     ctx.roundRect(nx-50, ny-26, 100, 52, 10);
-    ctx.fillStyle = 'rgba(15,22,40,0.85)';
+    ctx.fillStyle = themeNodeBg();
     ctx.fill();
-    ctx.strokeStyle = 'rgba(100,140,200,0.15)';
+    ctx.strokeStyle = themeNodeBorder();
     ctx.lineWidth = 1;
     ctx.stroke();
     // Top highlight
@@ -1685,11 +1694,12 @@ function drawIntegrationsVisual(sp){
     ctx.fill();
 
     // Icon
-    drawIntegrationIcon(i, nx, ny-5, 1.1, 'rgba(255,255,255,0.55)');
+    const nodeIconMap = [0, 1, 5, 8, 9]; // Lettings, Maintenance, Revenue, Compliance, Service
+    drawNodeIcon(nodeIconMap[i], nx, ny-5, 1.1, 'rgba(255,255,255,0.55)');
 
     // Label
-    ctx.fillStyle = 'rgba(255,255,255,0.55)';
-    ctx.font = '11px Outfit';
+    ctx.fillStyle = themeText(0.55);
+    ctx.font = '13px Outfit';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'top';
     ctx.fillText(labels[i], nx, ny+15);
@@ -1745,9 +1755,9 @@ function drawImpactVisual(sp){
   const alpha = textOpacity(sp);
   if(alpha < 0.01) return;
   const cx = W/2, cyBase = H*0.52;
-  const cardW = Math.min(W*0.2, 175);
-  const cardH = cardW * 0.8;
-  const spacingX = cardW + 22;
+  const cardW = Math.min(W*0.22, 195);
+  const cardH = cardW * 0.85;
+  const spacingX = cardW + 25;
   const spacingY = cardH + 22;
   const metricLabels = t('impactMetrics');
   const time = performance.now();
@@ -1766,7 +1776,7 @@ function drawImpactVisual(sp){
     // Card background (dark glass, consistent with other nodes)
     ctx.beginPath();
     ctx.roundRect(nx-cardW/2, ny-cardH/2, cardW, cardH, 14);
-    ctx.fillStyle = 'rgba(15,22,40,0.85)';
+    ctx.fillStyle = themeNodeBg();
     ctx.fill();
     ctx.strokeStyle = 'rgba(59,130,246,0.2)';
     ctx.lineWidth = 1;
@@ -1836,7 +1846,7 @@ function drawImpactVisual(sp){
     }
 
     // Text label (multi-line, split on \n)
-    ctx.fillStyle = 'rgba(255,255,255,0.7)';
+    ctx.fillStyle = themeText(0.7);
     ctx.font = '13px Outfit';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
@@ -1866,8 +1876,8 @@ function drawRoadmapVisual(sp){
   const alpha = textOpacity(sp);
   if(alpha < 0.01) return;
   const cx = W/2, cyBase = H*0.50;
-  const phaseW = Math.min(W*0.18, 155);
-  const phaseH = phaseW * 0.85;
+  const phaseW = Math.min(W*0.2, 170);
+  const phaseH = phaseW * 0.9;
   const gap = 20;
   const rowGap = 22;
   const totalW = phaseW*3 + gap*2;
@@ -1922,7 +1932,7 @@ function drawRoadmapVisual(sp){
     // Card
     ctx.beginPath();
     ctx.roundRect(px-phaseW/2, py-phaseH/2, phaseW, phaseH, 12);
-    ctx.fillStyle = 'rgba(15,22,40,0.85)';
+    ctx.fillStyle = themeNodeBg();
     ctx.fill();
     const borderAlpha = i===0 ? 0.4 : (i===1 ? 0.25 : 0.15);
     ctx.strokeStyle = `rgba(59,130,246,${borderAlpha})`;
@@ -1956,7 +1966,7 @@ function drawRoadmapVisual(sp){
 
     // Phase details (multi-line)
     ctx.fillStyle = 'rgba(255,255,255,0.4)';
-    ctx.font = '11px Outfit';
+    ctx.font = '12px Outfit';
     const dLines = details[i].split('\n');
     for(let l=0;l<dLines.length;l++){
       ctx.fillText(dLines[l], px, py + phaseH*0.08 + l*16);
@@ -2151,6 +2161,36 @@ function updateLangButton(){
   if(btn) btn.textContent = currentLang === 'en' ? 'DE' : 'EN';
 }
 
+function toggleTheme(){
+  darkMode = !darkMode;
+  Object.assign(COLORS, darkMode ? DARK_COLORS : LIGHT_COLORS);
+  document.body.style.background = COLORS.bg;
+  document.body.style.color = COLORS.textPri;
+  document.querySelectorAll('.sec h1').forEach(function(el){ el.style.color = COLORS.textPri; });
+  document.querySelectorAll('.sec h2').forEach(function(el){ el.style.color = darkMode ? 'rgba(255,255,255,0.85)' : 'rgba(15,23,42,0.85)'; });
+  document.querySelectorAll('.sec p').forEach(function(el){ el.style.color = COLORS.textSec; });
+  document.querySelector('.accent').style.color = COLORS.accent;
+  updateThemeButton();
+  updateUIBarColors();
+}
+function updateThemeButton(){
+  const btn = document.getElementById('themeToggle');
+  if(btn) btn.textContent = darkMode ? '\u2600' : '\u263D';
+}
+function updateUIBarColors(){
+  const bar = document.getElementById('uiBar');
+  if(!bar) return;
+  const btns = bar.querySelectorAll('button');
+  const bg = darkMode ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.05)';
+  const border = darkMode ? 'rgba(255,255,255,0.12)' : 'rgba(0,0,0,0.1)';
+  const color = darkMode ? 'rgba(255,255,255,0.6)' : 'rgba(15,23,42,0.6)';
+  btns.forEach(function(b){
+    b.style.background = bg;
+    b.style.borderColor = border;
+    b.style.color = color;
+  });
+}
+
 /* =========================================================
    TEXT: UPDATE OVERLAYS
    ========================================================= */
@@ -2312,15 +2352,15 @@ function createUIBar(){
   bar.id = 'uiBar';
   bar.style.cssText = 'position:fixed;top:20px;right:20px;z-index:10;pointer-events:auto;display:flex;gap:8px;align-items:center;opacity:0;transition:opacity 1s ease;';
 
-  const btnStyle = "background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);color:rgba(255,255,255,0.6);font-family:'Outfit',sans-serif;font-size:13px;padding:7px 14px;border-radius:8px;cursor:pointer;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);transition:all 0.2s ease;outline:none;";
+  const btnStyle = "background:rgba(0,0,0,0.05);border:1px solid rgba(0,0,0,0.1);color:rgba(15,23,42,0.6);font-family:'Outfit',sans-serif;font-size:13px;padding:7px 14px;border-radius:8px;cursor:pointer;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);transition:all 0.2s ease;outline:none;";
 
   const playBtn = document.createElement('button');
   playBtn.id = 'playBtn';
   playBtn.style.cssText = btnStyle + 'font-size:15px;padding:7px 12px;';
   playBtn.textContent = '\u25B6';
   playBtn.addEventListener('click', toggleAutoPlay);
-  playBtn.addEventListener('mouseenter', function(){this.style.background='rgba(255,255,255,0.14)';this.style.color='rgba(255,255,255,0.9)';});
-  playBtn.addEventListener('mouseleave', function(){this.style.background='rgba(255,255,255,0.06)';this.style.color='rgba(255,255,255,0.6)';});
+  playBtn.addEventListener('mouseenter', function(){this.style.background=darkMode?'rgba(255,255,255,0.14)':'rgba(0,0,0,0.1)';});
+  playBtn.addEventListener('mouseleave', function(){this.style.background=darkMode?'rgba(255,255,255,0.06)':'rgba(0,0,0,0.05)';});
 
   const langBtn = document.createElement('button');
   langBtn.id = 'langToggle';
@@ -2329,11 +2369,20 @@ function createUIBar(){
   langBtn.addEventListener('click', function(){
     switchLanguage(currentLang === 'en' ? 'de' : 'en');
   });
-  langBtn.addEventListener('mouseenter', function(){this.style.background='rgba(255,255,255,0.14)';this.style.color='rgba(255,255,255,0.9)';});
-  langBtn.addEventListener('mouseleave', function(){this.style.background='rgba(255,255,255,0.06)';this.style.color='rgba(255,255,255,0.6)';});
+  langBtn.addEventListener('mouseenter', function(){this.style.background=darkMode?'rgba(255,255,255,0.14)':'rgba(0,0,0,0.1)';});
+  langBtn.addEventListener('mouseleave', function(){this.style.background=darkMode?'rgba(255,255,255,0.06)':'rgba(0,0,0,0.05)';});
+
+  const themeBtn = document.createElement('button');
+  themeBtn.id = 'themeToggle';
+  themeBtn.style.cssText = btnStyle;
+  themeBtn.textContent = '\u263D';
+  themeBtn.addEventListener('click', toggleTheme);
+  themeBtn.addEventListener('mouseenter', function(){this.style.background=darkMode?'rgba(255,255,255,0.14)':'rgba(0,0,0,0.1)';});
+  themeBtn.addEventListener('mouseleave', function(){this.style.background=darkMode?'rgba(255,255,255,0.06)':'rgba(0,0,0,0.05)';});
 
   bar.appendChild(playBtn);
   bar.appendChild(langBtn);
+  bar.appendChild(themeBtn);
   document.body.appendChild(bar);
 
   setTimeout(function(){ bar.style.opacity = '1'; }, 1500);
