@@ -1480,9 +1480,11 @@ function drawPositioningVisual(sp){
     ctx.font = '600 17px Outfit';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
-    // Labels centered in each circle
+    // Labels centered vertically in each circle's free area
     const labelX = p.x;
-    const labelY = p.y - circleR*0.35;
+    // Top circle: label in upper half (overlap is below)
+    // Bottom circles: label in lower half (overlap is above)
+    const labelY = i===0 ? p.y - circleR*0.35 : p.y + circleR*0.05;
     ctx.fillText(labels[i], labelX, labelY);
     ctx.font = '14px Outfit';
     ctx.fillStyle = themeText(0.3);
@@ -1896,7 +1898,7 @@ function drawRoadmapVisual(sp){
     const col = i%3;
     const px = startX + col*(phaseW + gap) + phaseW/2;
     const py = cyBase + row*(phaseH + rowGap);
-    const entrance = smoothstep(0.1+i*0.12, 0.35+i*0.12, sp);
+    const entrance = smoothstep(0.05+i*0.06, 0.2+i*0.06, sp);
     ctx.globalAlpha = alpha * entrance;
 
     // Card
