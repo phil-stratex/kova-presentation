@@ -1433,17 +1433,17 @@ function drawPositioningVisual(sp){
   const alpha = textOpacity(sp);
   if(alpha < 0.01) return;
 
-  const cx = W/2, cy = H*0.68;
-  const circleR = Math.min(W*0.13, 105);
-  const dist = circleR * 0.95;
+  const cx = W/2, cy = H*0.72;
+  const circleR = Math.min(W*0.14, 115);
+  const spread = circleR * 0.78;
   const time = performance.now();
   const labels = t('positioningLabels');
 
-  // Triangle positions — close enough to overlap (Venn-style)
+  // Triangle positions — tight overlap for real Venn effect
   const positions = [
-    { x: cx, y: cy - dist*0.65 },
-    { x: cx - dist*0.85, y: cy + dist*0.45 },
-    { x: cx + dist*0.85, y: cy + dist*0.45 }
+    { x: cx, y: cy - spread*0.55 },
+    { x: cx - spread*0.85, y: cy + spread*0.45 },
+    { x: cx + spread*0.85, y: cy + spread*0.45 }
   ];
   const subItems = [
     ['Modern SaaS', 'Open APIs'],
@@ -1467,37 +1467,33 @@ function drawPositioningVisual(sp){
     ctx.lineWidth = 1.5;
     ctx.stroke();
 
-    // Labels positioned OUTSIDE the circles
+    // Labels INSIDE each circle at the outer edge (away from center)
     ctx.fillStyle = 'rgba(255,255,255,0.65)';
     ctx.font = '600 12px Outfit';
     ctx.textAlign = 'center';
-    if(i===0){
-      ctx.textBaseline = 'bottom';
-      ctx.fillText(labels[i], p.x, p.y - circleR - 10);
-      ctx.font = '10px Outfit';
-      ctx.fillStyle = 'rgba(255,255,255,0.35)';
-      ctx.fillText(subItems[i][0] + '  \u00b7  ' + subItems[i][1], p.x, p.y - circleR - 25);
-    } else {
-      ctx.textBaseline = 'top';
-      ctx.fillText(labels[i], p.x, p.y + circleR + 10);
-      ctx.font = '10px Outfit';
-      ctx.fillStyle = 'rgba(255,255,255,0.35)';
-      ctx.fillText(subItems[i][0] + '  \u00b7  ' + subItems[i][1], p.x, p.y + circleR + 26);
-    }
+    ctx.textBaseline = 'middle';
+    // Position label at the far side of each circle from center
+    const labelDir = i===0 ? -1 : 1;
+    const labelX = i===0 ? p.x : (i===1 ? p.x - circleR*0.3 : p.x + circleR*0.3);
+    const labelY = p.y + labelDir*circleR*0.5;
+    ctx.fillText(labels[i], labelX, labelY);
+    ctx.font = '10px Outfit';
+    ctx.fillStyle = 'rgba(255,255,255,0.3)';
+    ctx.fillText(subItems[i][0], labelX, labelY + 15);
+    ctx.fillText(subItems[i][1], labelX, labelY + 28);
   }
 
-  // Center overlap glow (where all 3 circles meet)
+  // Center overlap glow
+  const centroidY = (positions[0].y + positions[1].y + positions[2].y) / 3;
   const overlapEntr = smoothstep(0.25, 0.5, sp);
   ctx.globalAlpha = alpha * overlapEntr;
-  const centerY = cy - dist*0.65/3 + dist*0.45*2/3;
-  const glow = ctx.createRadialGradient(cx, centerY, 0, cx, centerY, circleR*0.5);
-  glow.addColorStop(0, 'rgba(59,130,246,0.15)');
+  const glow = ctx.createRadialGradient(cx, centroidY, 0, cx, centroidY, circleR*0.45);
+  glow.addColorStop(0, 'rgba(59,130,246,0.18)');
   glow.addColorStop(1, 'rgba(59,130,246,0)');
   ctx.fillStyle = glow;
-  ctx.fillRect(cx-circleR, centerY-circleR, circleR*2, circleR*2);
+  ctx.fillRect(cx-circleR, centroidY-circleR, circleR*2, circleR*2);
 
-  // KOVA badge at centroid of the 3 circles
-  const centroidY = (positions[0].y + positions[1].y + positions[2].y) / 3;
+  // KOVA badge at centroid
   const kovaEntr = smoothstep(0.35, 0.55, sp);
   ctx.globalAlpha = alpha * kovaEntr;
   const pulse = 1 + Math.sin(time*0.002)*0.02;
