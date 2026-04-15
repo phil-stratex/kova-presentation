@@ -73,13 +73,13 @@ canvas#bg{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0}
   </div>
 
   <div class="sec" id="sec9">
-    <h1 id="sec10Title">What changes with KOVA.</h1>
-    <p id="sec10Body">The operational improvements you can expect when everything is connected.</p>
+    <h1 id="sec9Title">What changes with KOVA.</h1>
+    <p id="sec9Body">The operational improvements you can expect when everything is connected.</p>
   </div>
 
   <div class="sec" id="sec10">
     <h1 id="sec10Title">The roadmap.</h1>
-    <p id="sec10Body">KOVA is being built in three phases&nbsp;— from core platform to full automation, backed by a network of specialized partners in property tech, fintech, and facility management.</p>
+    <p id="sec10Body">KOVA is being built in six phases&nbsp;— from core platform to full automation, backed by a network of specialized partners in property tech, fintech, and facility management.</p>
   </div>
 
   <div class="sec" id="sec11">
@@ -2116,9 +2116,11 @@ function switchLanguage(lang){
   overlay.style.transition = 'opacity 0.3s ease';
   overlay.style.opacity = '0';
   setTimeout(() => {
-    buildHeroChars(t('heroHL'));
-    buildPauseWords(t('pauseHL'));
-    updateStaticSections();
+    try {
+      buildHeroChars(t('heroHL'));
+      buildPauseWords(t('pauseHL'));
+      updateStaticSections();
+    } catch(e){ console.error('Language switch error:', e); }
     overlay.style.opacity = '1';
   }, 300);
   updateLangButton();
