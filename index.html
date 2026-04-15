@@ -1433,18 +1433,17 @@ function drawPositioningVisual(sp){
   const alpha = textOpacity(sp);
   if(alpha < 0.01) return;
 
-  const cx = W/2, cy = H*0.64;
-  const circleR = Math.min(W*0.12, 95);
-  const triR = circleR * 1.1;
+  const cx = W/2, cy = H*0.68;
+  const circleR = Math.min(W*0.13, 105);
+  const dist = circleR * 0.95;
   const time = performance.now();
   const labels = t('positioningLabels');
-  // labels[0]=Cloud Platform, [1]=Residence Know-how, [2]=Hospitality Experience
 
-  // Triangle positions: top, bottom-left, bottom-right
+  // Triangle positions — close enough to overlap (Venn-style)
   const positions = [
-    { x: cx, y: cy - triR*0.7 },                    // Cloud Platform (top)
-    { x: cx - triR*1.05, y: cy + triR*0.55 },       // Residence Know-how (bottom-left)
-    { x: cx + triR*1.05, y: cy + triR*0.55 }        // Hospitality Experience (bottom-right)
+    { x: cx, y: cy - dist*0.65 },
+    { x: cx - dist*0.85, y: cy + dist*0.45 },
+    { x: cx + dist*0.85, y: cy + dist*0.45 }
   ];
   const subItems = [
     ['Modern SaaS', 'Open APIs'],
@@ -1454,7 +1453,7 @@ function drawPositioningVisual(sp){
 
   ctx.save();
 
-  // Draw 3 circles
+  // Draw 3 overlapping circles
   for(let i=0;i<3;i++){
     const p = positions[i];
     const entrance = smoothstep(0.08+i*0.1, 0.3+i*0.1, sp);
@@ -1462,42 +1461,48 @@ function drawPositioningVisual(sp){
 
     ctx.beginPath();
     ctx.arc(p.x, p.y, circleR, 0, Math.PI*2);
-    ctx.fillStyle = 'rgba(59,130,246,0.06)';
+    ctx.fillStyle = 'rgba(59,130,246,0.05)';
     ctx.fill();
     ctx.strokeStyle = 'rgba(59,130,246,0.25)';
     ctx.lineWidth = 1.5;
     ctx.stroke();
 
-    // Label
-    const labelOffsetY = i===0 ? -circleR-18 : circleR+18;
+    // Labels positioned OUTSIDE the circles
     ctx.fillStyle = 'rgba(255,255,255,0.65)';
-    ctx.font = '600 13px Outfit';
+    ctx.font = '600 12px Outfit';
     ctx.textAlign = 'center';
-    ctx.textBaseline = i===0 ? 'bottom' : 'top';
-    ctx.fillText(labels[i], p.x, p.y + labelOffsetY);
-
-    // Sub-items
-    ctx.font = '11px Outfit';
-    ctx.fillStyle = 'rgba(255,255,255,0.35)';
-    const subY = i===0 ? p.y + labelOffsetY - 30 : p.y + labelOffsetY + 15;
-    ctx.fillText(subItems[i][0] + '  \u00b7  ' + subItems[i][1], p.x, subY);
+    if(i===0){
+      ctx.textBaseline = 'bottom';
+      ctx.fillText(labels[i], p.x, p.y - circleR - 10);
+      ctx.font = '10px Outfit';
+      ctx.fillStyle = 'rgba(255,255,255,0.35)';
+      ctx.fillText(subItems[i][0] + '  \u00b7  ' + subItems[i][1], p.x, p.y - circleR - 25);
+    } else {
+      ctx.textBaseline = 'top';
+      ctx.fillText(labels[i], p.x, p.y + circleR + 10);
+      ctx.font = '10px Outfit';
+      ctx.fillStyle = 'rgba(255,255,255,0.35)';
+      ctx.fillText(subItems[i][0] + '  \u00b7  ' + subItems[i][1], p.x, p.y + circleR + 26);
+    }
   }
 
-  // Center overlap glow
+  // Center overlap glow (where all 3 circles meet)
   const overlapEntr = smoothstep(0.25, 0.5, sp);
   ctx.globalAlpha = alpha * overlapEntr;
-  const glow = ctx.createRadialGradient(cx, cy, 0, cx, cy, circleR*0.7);
-  glow.addColorStop(0, 'rgba(59,130,246,0.12)');
+  const centerY = cy - dist*0.65/3 + dist*0.45*2/3;
+  const glow = ctx.createRadialGradient(cx, centerY, 0, cx, centerY, circleR*0.5);
+  glow.addColorStop(0, 'rgba(59,130,246,0.15)');
   glow.addColorStop(1, 'rgba(59,130,246,0)');
   ctx.fillStyle = glow;
-  ctx.fillRect(cx-circleR, cy-circleR, circleR*2, circleR*2);
+  ctx.fillRect(cx-circleR, centerY-circleR, circleR*2, circleR*2);
 
-  // KOVA badge in center
+  // KOVA badge at centroid of the 3 circles
+  const centroidY = (positions[0].y + positions[1].y + positions[2].y) / 3;
   const kovaEntr = smoothstep(0.35, 0.55, sp);
   ctx.globalAlpha = alpha * kovaEntr;
   const pulse = 1 + Math.sin(time*0.002)*0.02;
   ctx.beginPath();
-  ctx.roundRect(cx-30*pulse, cy-14*pulse, 60*pulse, 28*pulse, 8);
+  ctx.roundRect(cx-30*pulse, centroidY-14*pulse, 60*pulse, 28*pulse, 8);
   ctx.fillStyle = 'rgba(20,30,55,0.92)';
   ctx.fill();
   ctx.strokeStyle = 'rgba(59,130,246,0.5)';
@@ -1507,7 +1512,7 @@ function drawPositioningVisual(sp){
   ctx.font = '600 15px Outfit';
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
-  ctx.fillText('KOVA', cx, cy);
+  ctx.fillText('KOVA', cx, centroidY);
 
   ctx.restore();
 }
