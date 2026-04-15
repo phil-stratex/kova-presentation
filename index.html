@@ -14,9 +14,9 @@ canvas#bg{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0}
 .overlay{position:fixed;top:0;left:0;width:100%;height:100%;z-index:1;pointer-events:none;overflow:hidden}
 .scroll-spacer{height:1350vh}
 .sec{position:absolute;top:0;left:0;width:100%;height:100%;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;opacity:0;will-change:transform,opacity;padding:0 6vw}
-.sec h1{font-size:clamp(1.6rem,3.8vw,3.2rem);font-weight:600;line-height:1.15;max-width:800px;margin-bottom:0.6rem;letter-spacing:-0.02em}
-.sec h2{font-size:clamp(1.2rem,2.6vw,2rem);font-weight:500;margin-bottom:0.5rem;color:rgba(15,23,42,0.85)}
-.sec p{font-size:clamp(0.85rem,1.2vw,1.1rem);font-weight:300;color:rgba(15,23,42,0.55);max-width:520px;line-height:1.55}
+.sec h1{font-size:clamp(1.7rem,4vw,3.4rem);font-weight:600;line-height:1.15;max-width:800px;margin-bottom:0.6rem;letter-spacing:-0.02em}
+.sec h2{font-size:clamp(1.3rem,2.8vw,2.1rem);font-weight:500;margin-bottom:0.5rem;color:rgba(15,23,42,0.85)}
+.sec p{font-size:clamp(0.88rem,1.3vw,1.15rem);font-weight:300;color:rgba(15,23,42,0.55);max-width:520px;line-height:1.55}
 .sec .logo{width:clamp(120px,15vw,220px);margin-bottom:1.5rem;opacity:0.92;filter:brightness(1.1)}
 .sec .sub{margin-top:0.4rem}
 .char{display:inline-block;opacity:0}
@@ -1617,7 +1617,7 @@ function drawIntegrationsVisual(sp){
   const barY = H*0.78;
   const kovaY = H*0.90;
   const labels = t('integrationLabels');
-  const spacing = Math.min(W*0.16, 130);
+  const spacing = Math.min(W*0.19, 155);
   const time = performance.now();
 
   ctx.save();
@@ -1697,10 +1697,10 @@ function drawIntegrationsVisual(sp){
 
     // Label above the tile
     ctx.fillStyle = themeText(0.6);
-    ctx.font = '15px Outfit';
+    ctx.font = '12px Outfit';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'bottom';
-    ctx.fillText(labels[i], nx, ny-30);
+    ctx.fillText(labels[i], nx, ny-30, spacing*0.9);
 
     // Animated dot flowing down from node to bar, then along bar to center
     if(entrance > 0.5){
@@ -1752,7 +1752,7 @@ function drawIntegrationsVisual(sp){
 function drawImpactVisual(sp){
   const alpha = textOpacity(sp);
   if(alpha < 0.01) return;
-  const cx = W/2, cyBase = H*0.56;
+  const cx = W/2, cyBase = H*0.48;
   const cardW = Math.min(W*0.25, 210);
   const cardH = cardW * 1.0;
   const spacingX = cardW + 20;
