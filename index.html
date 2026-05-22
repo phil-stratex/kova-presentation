@@ -12,7 +12,7 @@
 html,body{font-family:'Outfit',sans-serif;background:#f0f2f5;color:#0f172a;overflow-x:hidden;-webkit-font-smoothing:antialiased}
 canvas#bg{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0}
 .overlay{position:fixed;top:0;left:0;width:100%;height:100%;z-index:1;pointer-events:none;overflow:hidden}
-.scroll-spacer{height:1350vh}
+.scroll-spacer{height:2137vh}
 .sec{position:absolute;top:0;left:0;width:100%;height:100%;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;opacity:0;will-change:transform,opacity;padding:0 6vw}
 .sec h1{font-size:clamp(1.7rem,4vw,3.4rem);font-weight:600;line-height:1.15;max-width:800px;margin-bottom:0.6rem;letter-spacing:-0.02em}
 .sec h2{font-size:clamp(1.3rem,2.8vw,2.1rem);font-weight:500;margin-bottom:0.5rem;color:rgba(15,23,42,0.85)}
@@ -24,7 +24,7 @@ canvas#bg{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0}
 .accent{color:#3b82f6}
 .glow-text{text-shadow:0 0 30px rgba(59,130,246,0.6),0 0 60px rgba(59,130,246,0.3),0 0 100px rgba(59,130,246,0.15)}
 #sec3,#sec4{justify-content:flex-start;padding-top:4vh}
-#sec5,#sec6,#sec7,#sec8,#sec9,#sec10,#sec11{justify-content:flex-start;padding-top:5vh}
+#sec5,#sec6,#sec7,#sec8,#sec9,#sec10,#sec11,#secDayLife,#secAiChat,#secI18n,#secEsg,#secCompetition{justify-content:flex-start;padding-top:5vh}
 </style>
 </head>
 <body>
@@ -49,6 +49,11 @@ canvas#bg{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0}
     <h2 class="accent glow-text" id="sec4Title">Connected by KOVA</h2>
   </div>
 
+  <div class="sec" id="secDayLife">
+    <h1 id="secDayLifeTitle">A day in operations.</h1>
+    <p id="secDayLifeBody">Same tasks, different worlds. Without KOVA: scattered tools and hours of waiting. With KOVA: one platform, instant flow.</p>
+  </div>
+
   <div class="sec" id="sec5">
     <h1 id="sec5Title">One view. Every residence.</h1>
     <p id="sec5Body">Occupancy rates per floor, revenue per unit type, open maintenance tickets by category and age&nbsp;— KOVA brings all portfolio insights into a single dashboard built for residence operators.</p>
@@ -64,14 +69,29 @@ canvas#bg{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0}
     <p id="sec7Body">A resident reports a broken heater. A parent asks about parking. An owner wants the monthly report. Using rule-based classification, KOVA routes each request to the right team&nbsp;— with a human-in-the-loop for edge cases.</p>
   </div>
 
+  <div class="sec" id="secAiChat">
+    <h1 id="secAiChatTitle">24/7 answers. Zero effort.</h1>
+    <p id="secAiChatBody">Residents ask, KOVA answers — instantly. Books appointments, resolves common requests, escalates only what truly needs you.</p>
+  </div>
+
   <div class="sec" id="sec8">
     <h1 id="sec8Title">Connected to what you already use.</h1>
     <p id="sec8Body">KOVA&rsquo;s open API architecture connects to access control systems like Salto, payment providers like Stripe or SEPA, and accounting tools like DATEV&nbsp;— nothing gets replaced, everything gets connected.</p>
   </div>
 
+  <div class="sec" id="secI18n">
+    <h1 id="secI18nTitle">Across borders.</h1>
+    <p id="secI18nBody">Multi-language, multi-currency, local tax engines. KOVA scales with your expansion — from Munich to Madrid.</p>
+  </div>
+
   <div class="sec" id="sec9">
     <h1 id="sec9Title">What changes with KOVA.</h1>
     <p id="sec9Body">The operational improvements you can expect when everything works together&nbsp;— from faster responses to complete transparency.</p>
+  </div>
+
+  <div class="sec" id="secEsg">
+    <h1 id="secEsgTitle">Operations. Plus ESG.</h1>
+    <p id="secEsgBody">Energy data, consumption trends, CO₂ reporting. KOVA delivers the numbers institutional owners demand.</p>
   </div>
 
   <div class="sec" id="sec10">
@@ -82,6 +102,11 @@ canvas#bg{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0}
   <div class="sec" id="sec11">
     <h1 id="sec11Title">Built by people who know<br>all three worlds.</h1>
     <p id="sec11Body">We&rsquo;ve managed student residences and run hospitality operations before writing a single line of code. KOVA is built by operators and hoteliers who lived the daily challenges&nbsp;— not consultants who read about them.</p>
+  </div>
+
+  <div class="sec" id="secCompetition">
+    <h1 id="secCompetitionTitle">Where we stand.</h1>
+    <p id="secCompetitionBody">Classic PMS are generic. Smart-lock vendors solve only access. KOVA combines student focus with modern platform tech.</p>
   </div>
 
   <div class="sec" id="sec12">
@@ -132,7 +157,11 @@ function themeNodeBg(){ return darkMode ? 'rgba(15,22,40,0.85)' : 'rgba(255,255,
 function themeNodeBorder(){ return darkMode ? 'rgba(100,140,200,0.15)' : 'rgba(0,0,0,0.08)'; }
 function themeHighlight(a){ return darkMode ? `rgba(255,255,255,${a})` : `rgba(0,0,0,${a})`; }
 
-const SECTION_COUNT = 12;
+const SECTION_COUNT = 17;
+const SECTION_WEIGHTS = [1,1,1,1,1,3,1,1,1,1,1,1,1,1,1,1,1];
+const TOTAL_WEIGHT = SECTION_WEIGHTS.reduce((a,b)=>a+b,0);
+const SEC_BOUNDS = [];
+(function(){let c=0;for(let i=0;i<SECTION_WEIGHTS.length;i++){SEC_BOUNDS.push(c);c+=SECTION_WEIGHTS[i]/TOTAL_WEIGHT;}SEC_BOUNDS.push(1);})();
 const SEG = 1 / SECTION_COUNT;
 const PARTICLE_COUNT = 72;
 const DOT_SPACING = 40;
@@ -235,6 +264,141 @@ const TRANSLATIONS = {
   positioningLabels: {
     en: ['Cloud Platform','Residence Know-how','Hospitality Experience'],
     de: ['Cloud-Plattform','Residenz-Expertise','Hospitality-Erfahrung']
+  },
+  sec5bTitle: {
+    en: "One platform. Unlimited properties.",
+    de: "Eine Plattform. Unbegrenzt Objekte."
+  },
+  sec5bBody: {
+    en: "Each residence operates autonomously — but every data point flows into one central view. KOVA scales with your portfolio, not your headcount.",
+    de: "Jede Residenz arbeitet autonom — aber jeder Datenpunkt fließt in eine zentrale Sicht. KOVA skaliert mit Ihrem Portfolio, nicht mit Ihrer Mitarbeiterzahl."
+  },
+  sec5cTitle: {
+    en: "Central functions. Radical efficiency.",
+    de: "Zentrale Funktionen. Radikale Effizienz."
+  },
+  sec5cBody: {
+    en: "One team for all locations — powered by real-time data and automated workflows across every department.",
+    de: "Ein Team für alle Standorte — gestützt auf Echtzeitdaten und automatisierte Workflows in jeder Abteilung."
+  },
+  centralDepts: {
+    en: ['Controlling','Property Mgmt','Accounting','Staff Planning','Communication','Reporting','Maintenance','Rent Collection','Lettings','Check-in/out','Access Mgmt','Compliance'],
+    de: ['Controlling','Property Mgmt','Buchhaltung','Personalplanung','Kommunikation','Reporting','Wartung','Mietinkasso','Vermietung','Check-in/out','Zugangs-Mgmt','Compliance']
+  },
+  centralBenefits: {
+    en: ['Centralized &\nreal-time','Unified\nprocesses','Automated &\ncentralized','Less administrative\noverhead','One channel for\nall locations','Consolidated\nautomatically','Central ticketing\n& dispatch','Automated billing\n& collections','Central occupancy\nmanagement','Digitized tenant\nturnover','Keyless &\nautomated','Audit-ready\ndocumentation'],
+    de: ['Zentralisiert &\nin Echtzeit','Einheitliche\nProzesse','Automatisiert &\nzentralisiert','Weniger\nVerwaltungsaufwand','Ein Kanal für\nalle Standorte','Konsolidiert\nohne Handarbeit','Zentrales Ticketing\n& Einsatzplanung','Automatisierte\nAbrechnung','Zentrale\nBelegungssteuerung','Digitalisierter\nMieterwechsel','Schlüssellos &\nautomatisiert','Zentrale Ablage\n& audit-ready']
+  },
+  scaleLabel: {
+    en: "Scale without proportional staff increase.",
+    de: "Skalierung ohne proportionalen Personalaufbau."
+  },
+  secDayLifeTitle: {
+    en: "A day in operations.",
+    de: "Ein Tag im Operations-Team."
+  },
+  secDayLifeBody: {
+    en: "Same tasks, different worlds. Without KOVA: scattered tools and hours of waiting. With KOVA: one platform, instant flow.",
+    de: "Gleiche Aufgaben, andere Welt. Ohne KOVA: verstreute Tools, stundenlange Wartezeiten. Mit KOVA: eine Plattform, sofortiger Flow."
+  },
+  dayLifeWithout: { en: "Without KOVA", de: "Ohne KOVA" },
+  dayLifeWith: { en: "With KOVA", de: "Mit KOVA" },
+  dayLifeChaos: {
+    en: ['Email','Excel','WhatsApp','Calls','Notes','Manual'],
+    de: ['E-Mail','Excel','WhatsApp','Anrufe','Notizen','Manuell']
+  },
+  dayLifeSteps: {
+    en: ['Resident request','Auto-routed','Assigned','Resolved'],
+    de: ['Bewohner-Anfrage','Auto-Routing','Zugewiesen','Erledigt']
+  },
+  dayLifeDelay: { en: "4 hrs wait", de: "4 Std. Wartezeit" },
+  dayLifeFast: { en: "< 5 min", de: "< 5 Min" },
+  secAiChatTitle: {
+    en: "24/7 answers. Zero effort.",
+    de: "24/7 Antworten. Ohne Aufwand."
+  },
+  secAiChatBody: {
+    en: "Residents ask, KOVA answers — instantly. Books appointments, resolves common requests, escalates only what truly needs you.",
+    de: "Bewohner stellen Fragen — KOVA antwortet sofort, bucht Termine, löst Probleme. Sie werden nur bei echten Eskalationen involviert."
+  },
+  chatMessages: {
+    en: [
+      {who:'user', text:"When is the technician coming?"},
+      {who:'kova', text:"Today 14:00. Want to reschedule?"},
+      {who:'user', text:"Tomorrow morning please."},
+      {who:'kova', text:"Done — new slot: Tomorrow 9:00 ✓"}
+    ],
+    de: [
+      {who:'user', text:"Wann kommt der Handwerker?"},
+      {who:'kova', text:"Heute 14:00 Uhr. Soll ich verschieben?"},
+      {who:'user', text:"Bitte morgen früh."},
+      {who:'kova', text:"Erledigt — neuer Termin: Morgen 9:00 ✓"}
+    ]
+  },
+  secI18nTitle: {
+    en: "Across borders.",
+    de: "Über Grenzen hinaus."
+  },
+  secI18nBody: {
+    en: "Multi-language, multi-currency, local tax engines. KOVA scales with your expansion — from Munich to Madrid.",
+    de: "Mehrsprachig, multi-currency, lokale Tax-Engines. KOVA wächst mit Ihrer Expansion — von München bis Madrid."
+  },
+  i18nCities: {
+    en: ['Berlin','Vienna','Zurich','Madrid','Paris','Milan','Amsterdam','London'],
+    de: ['Berlin','Wien','Zürich','Madrid','Paris','Mailand','Amsterdam','London']
+  },
+  i18nLangs: ['DE','EN','ES','FR','IT','NL'],
+  i18nCurrencies: ['EUR','GBP','CHF','USD'],
+  i18nCompliance: ['DSGVO','GoBD','EU-VAT'],
+  secEsgTitle: {
+    en: "Operations. Plus ESG.",
+    de: "Operations. Plus ESG."
+  },
+  secEsgBody: {
+    en: "Energy data, consumption trends, CO₂ reporting. KOVA delivers the numbers institutional owners demand.",
+    de: "Energiedaten, Verbrauchstrends, CO₂-Reporting. KOVA liefert die Zahlen, die institutionelle Eigentümer fordern."
+  },
+  esgTabs: {
+    en: ['Energy','Water','CO₂'],
+    de: ['Energie','Wasser','CO₂']
+  },
+  esgMetrics: {
+    en: ['kWh / m²','Liters / day','kg CO₂'],
+    de: ['kWh / m²','Liter / Tag','kg CO₂']
+  },
+  esgBadges: ['ESG-Ready','EU-Taxonomy','GRI'],
+  esgScore: { en: 'ESG Score', de: 'ESG-Score' },
+  secCompetitionTitle: {
+    en: "Where we stand.",
+    de: "Wo wir stehen."
+  },
+  secCompetitionBody: {
+    en: "Classic PMS are generic. Smart-lock vendors solve only access. KOVA combines student focus with modern platform tech.",
+    de: "Klassische PMS sind generisch. Smart-Lock-Anbieter lösen nur Zutritt. KOVA verbindet Studentenfokus mit moderner Plattform-Tech."
+  },
+  competitionAxisX: {
+    en: 'Modern Tech / API-First',
+    de: 'Moderne Tech / API-First'
+  },
+  competitionAxisY: {
+    en: 'Student / PBSA Focus',
+    de: 'Studenten- / PBSA-Fokus'
+  },
+  competitors: {
+    en: [
+      {name:'Excel / Manual', x:0.08, y:0.15, note:'Outdated'},
+      {name:'Generic PMS', x:0.35, y:0.30, note:'Generic'},
+      {name:'Yardi', x:0.30, y:0.55, note:'Established, generic'},
+      {name:'Salto KS', x:0.78, y:0.22, note:'Modern, access only'},
+      {name:'KOVA', x:0.82, y:0.85, note:'Student focus + modern tech'}
+    ],
+    de: [
+      {name:'Excel / Manuell', x:0.08, y:0.15, note:'Veraltet'},
+      {name:'Generische PMS', x:0.35, y:0.30, note:'Generisch'},
+      {name:'Yardi', x:0.30, y:0.55, note:'Etabliert, generisch'},
+      {name:'Salto KS', x:0.78, y:0.22, note:'Modern, nur Zutritt'},
+      {name:'KOVA', x:0.82, y:0.85, note:'Studentenfokus + moderne Tech'}
+    ]
   }
 };
 
@@ -268,13 +432,15 @@ function easeIn(t){return t*t*t}
 
 function autoPlayEasing(tp){
   const w=[
-    {time:0.00,scroll:0.000},{time:0.06,scroll:0.070},
-    {time:0.10,scroll:0.140},{time:0.18,scroll:0.250},
-    {time:0.25,scroll:0.330},{time:0.35,scroll:0.415},
-    {time:0.44,scroll:0.500},{time:0.52,scroll:0.580},
-    {time:0.63,scroll:0.665},{time:0.75,scroll:0.750},
-    {time:0.84,scroll:0.835},{time:0.93,scroll:0.925},
-    {time:1.00,scroll:1.000}
+    {time:0.00,scroll:0.000},{time:0.045,scroll:0.0526},
+    {time:0.085,scroll:0.1053},{time:0.130,scroll:0.1579},
+    {time:0.175,scroll:0.2105},{time:0.225,scroll:0.2632},
+    {time:0.395,scroll:0.4211},{time:0.455,scroll:0.4737},
+    {time:0.515,scroll:0.5263},{time:0.575,scroll:0.5789},
+    {time:0.635,scroll:0.6316},{time:0.695,scroll:0.6842},
+    {time:0.745,scroll:0.7368},{time:0.795,scroll:0.7895},
+    {time:0.850,scroll:0.8421},{time:0.905,scroll:0.8947},
+    {time:0.955,scroll:0.9474},{time:1.000,scroll:1.000}
   ];
   for(let i=0;i<w.length-1;i++){
     if(tp<=w[i+1].time){
@@ -311,9 +477,13 @@ function updatePlayButton(){
 function smoothstep(a,b,t){const x=clamp((t-a)/(b-a),0,1);return x*x*(3-2*x)}
 
 function secInfo(p){
-  const i = Math.min(SECTION_COUNT-1, Math.floor(p / SEG));
-  const local = clamp((p - i*SEG) / SEG, 0, 1);
-  return {idx: i+1, sp: local};
+  for(let i=0;i<SECTION_WEIGHTS.length;i++){
+    if(p < SEC_BOUNDS[i+1] || i === SECTION_WEIGHTS.length-1){
+      const local = clamp((p - SEC_BOUNDS[i]) / (SEC_BOUNDS[i+1] - SEC_BOUNDS[i]), 0, 1);
+      return {idx: i+1, sp: local};
+    }
+  }
+  return {idx: 17, sp: 1};
 }
 
 function textOpacity(sp){
@@ -414,8 +584,8 @@ function updateParticles(dt, time, section, sp){
       }
     }
 
-    // Section 13 (Closing): converge to center
-    if(section === 12){
+    // Section 17 (Closing): converge to center
+    if(section === 17){
       const dx = W/2 - p.baseX;
       const dy = H/2 - p.baseY;
       const force = sp * 0.012;
@@ -511,7 +681,7 @@ function drawDotGrid(prog, time, section, sp){
   let gridMult = 1;
   if(section === 2) gridMult = lerp(1, 0.4, sp); // dim in pause
   if(section === 4) gridMult = lerp(1, 1.5, sp);  // brighten during reveal
-  if(section === 12) gridMult = lerp(1, 0.3, sp);  // dim in closing
+  if(section === 17) gridMult = lerp(1, 0.3, sp);  // dim in closing
 
   for(let r=0;r<rows;r++){
     for(let c=0;c<cols;c++){
@@ -547,7 +717,7 @@ function drawParticles(prog, section, sp){
     connB = 255;
     connAlphaMult = lerp(1, 1.8, sp);
   }
-  if(section === 12){ connAlphaMult = lerp(1, 2.5, sp); } // brighter connections as converging
+  if(section === 17){ connAlphaMult = lerp(1, 2.5, sp); } // brighter connections as converging
 
   // Connection lines
   ctx.lineWidth = 0.5;
@@ -1160,39 +1330,46 @@ function drawKovaReveal(sp){
 }
 
 /* =========================================================
-   VISUAL: DASHBOARD (Section 5)
+   VISUAL: DASHBOARD (Section 5) — sub-phase dispatcher
    ========================================================= */
 function drawDashboardVisual(sp){
-  const alpha = textOpacity(sp);
+  if(sp < 0.36) drawSingleDashboard(sp);
+  if(sp >= 0.28 && sp < 0.70) drawMultiPropertyView(clamp((sp-0.33)/0.33,0,1), sp);
+  if(sp >= 0.62) drawCentralSavings(clamp((sp-0.66)/0.34,0,1), sp);
+}
+
+function drawSingleDashboard(sp){
+  const subSp = clamp(sp / 0.33, 0, 1);
+  const alpha = textOpacity(subSp);
   if(alpha < 0.01) return;
 
+  const shrink = sp > 0.28 ? 1 - smoothstep(0.28, 0.36, sp) : 1;
+  if(shrink < 0.01) return;
+
   const cx = W/2, cy = H*0.70;
-  const bw = Math.min(W*0.75, 750);
+  const bw = Math.min(W*0.75, 750) * lerp(1, 0.3, 1-shrink);
   const bh = bw*0.55;
 
   ctx.save();
-  ctx.globalAlpha = alpha * smoothstep(0.05, 0.3, sp);
-  ctx.strokeStyle = `rgba(59,130,246,0.5)`;
+  ctx.globalAlpha = alpha * smoothstep(0.05, 0.3, subSp) * shrink;
+  ctx.strokeStyle = 'rgba(59,130,246,0.5)';
   ctx.lineWidth = 1.5;
 
-  // Main frame
   ctx.beginPath();
   ctx.roundRect(cx-bw/2, cy-bh/2, bw, bh, 12);
   ctx.stroke();
 
-  // Header bar
   ctx.beginPath();
   ctx.moveTo(cx-bw/2, cy-bh/2+38);
   ctx.lineTo(cx+bw/2, cy-bh/2+38);
   ctx.stroke();
 
-  // 3 metric cards at top
   const cardW = bw*0.28;
   const cardH = 60;
   const cardY = cy - bh/2 + 50;
   for(let i=0;i<3;i++){
-    const cardDelay = smoothstep(0.1+i*0.08, 0.3+i*0.08, sp);
-    ctx.globalAlpha = alpha * cardDelay;
+    const cardDelay = smoothstep(0.1+i*0.08, 0.3+i*0.08, subSp);
+    ctx.globalAlpha = alpha * cardDelay * shrink;
     const cardX = cx - bw/2 + 22 + i*(cardW+18);
     ctx.beginPath();
     ctx.roundRect(cardX, cardY, cardW, cardH, 6);
@@ -1201,22 +1378,19 @@ function drawDashboardVisual(sp){
     ctx.strokeStyle = 'rgba(59,130,246,0.35)';
     ctx.stroke();
 
-    // Card label
     const cardLabels = t('dashboardCards');
     ctx.fillStyle = themeText(0.5);
     ctx.font = '16px Outfit';
     ctx.textAlign = 'left';
     ctx.textBaseline = 'top';
     ctx.fillText(cardLabels[i], cardX+8, cardY+8);
-    // Metric line inside
     ctx.fillStyle = 'rgba(59,130,246,0.4)';
     ctx.fillRect(cardX+8, cardY+24, cardW*0.5, 5);
     ctx.fillStyle = 'rgba(255,255,255,0.15)';
     ctx.fillRect(cardX+8, cardY+38, cardW*0.35, 3);
   }
 
-  // Bar chart area
-  ctx.globalAlpha = alpha * smoothstep(0.2, 0.5, sp);
+  ctx.globalAlpha = alpha * smoothstep(0.2, 0.5, subSp) * shrink;
   const chartX = cx - bw/2 + 22;
   const chartY = cardY + cardH + 30;
   const chartW = bw*0.45;
@@ -1224,13 +1398,12 @@ function drawDashboardVisual(sp){
   const barW = chartW / 8;
   const heights = [0.6, 0.8, 0.45, 0.9, 0.7, 0.5, 0.85, 0.65];
   for(let i=0;i<heights.length;i++){
-    const bH = chartH * heights[i] * smoothstep(0.2+i*0.03, 0.5+i*0.03, sp);
+    const bH = chartH * heights[i] * smoothstep(0.2+i*0.03, 0.5+i*0.03, subSp);
     ctx.fillStyle = i===3 ? 'rgba(59,130,246,0.7)' : 'rgba(59,130,246,0.35)';
     ctx.fillRect(chartX + i*barW + 2, chartY+chartH-bH, barW-4, bH);
   }
 
-  // Line chart area (right side)
-  ctx.globalAlpha = alpha * smoothstep(0.3, 0.6, sp);
+  ctx.globalAlpha = alpha * smoothstep(0.3, 0.6, subSp) * shrink;
   const lcX = cx + bw*0.05;
   const lcY = chartY;
   const lcW = bw*0.4;
@@ -1247,7 +1420,6 @@ function drawDashboardVisual(sp){
   ctx.lineWidth = 3;
   ctx.stroke();
 
-  // Fill under line
   ctx.lineTo(lcX+lcW, lcY+lcH);
   ctx.lineTo(lcX, lcY+lcH);
   ctx.closePath();
@@ -1258,7 +1430,1333 @@ function drawDashboardVisual(sp){
 }
 
 /* =========================================================
-   VISUAL: LEASE TIMELINE (Section 6)
+   VISUAL: MULTI-PROPERTY VIEW (Section 5b)
+   ========================================================= */
+function drawMultiPropertyView(sp, globalSp){
+  const fadeIn = smoothstep(0,0.15,sp);
+  const fadeOut = globalSp > 0.62 ? 1 - smoothstep(0.62,0.70,globalSp) : 1;
+  const alpha = fadeIn * fadeOut;
+  if(alpha < 0.01) return;
+
+  ctx.save();
+  ctx.globalAlpha = alpha;
+
+  const time = performance.now();
+  const propCount = 9;
+
+  // ===== KOVA central data bar (horizontal panel top-center) =====
+  const barProg = smoothstep(0.25, 0.5, sp);
+  const barW = Math.min(W*0.92, 1200);
+  const barH = clamp(H*0.085, 60, 90);
+  const barX = W/2 - barW/2;
+  const barY = H*0.45;
+
+  if(barProg > 0.01){
+    ctx.globalAlpha = alpha * barProg;
+
+    // Bar glow
+    const barGlow = ctx.createRadialGradient(W/2, barY+barH/2, barH*0.3, W/2, barY+barH/2, barW*0.45);
+    barGlow.addColorStop(0, 'rgba(59,130,246,0.10)');
+    barGlow.addColorStop(1, 'rgba(59,130,246,0)');
+    ctx.fillStyle = barGlow;
+    ctx.fillRect(barX-50, barY-30, barW+100, barH+60);
+
+    // Bar background
+    ctx.beginPath();
+    ctx.roundRect(barX, barY, barW, barH, 14);
+    ctx.fillStyle = themeNodeBg();
+    ctx.fill();
+    ctx.strokeStyle = 'rgba(59,130,246,0.45)';
+    ctx.lineWidth = 1.5;
+    ctx.stroke();
+
+    // Top highlight
+    const hlG = ctx.createLinearGradient(barX, barY, barX, barY+barH*0.5);
+    hlG.addColorStop(0, themeHighlight(0.05));
+    hlG.addColorStop(1, themeHighlight(0));
+    ctx.beginPath();
+    ctx.roundRect(barX, barY, barW, barH, 14);
+    ctx.fillStyle = hlG;
+    ctx.fill();
+
+    // KOVA label on left
+    ctx.fillStyle = COLORS.accent;
+    ctx.font = `700 ${clamp(W*0.018,18,26)}px Outfit`;
+    ctx.textAlign = 'left';
+    ctx.textBaseline = 'middle';
+    ctx.fillText('KOVA', barX + 24, barY + barH/2 - 6);
+
+    ctx.fillStyle = themeText(0.45);
+    ctx.font = `300 ${clamp(W*0.011,11,14)}px Outfit`;
+    ctx.fillText(currentLang==='de'?'Zentrale Plattform':'Central Platform', barX + 24, barY + barH/2 + 12);
+
+    // Stats inside bar (right side)
+    const statsCount = 3;
+    const statsW = barW * 0.55;
+    const statsStartX = barX + barW - statsW - 20;
+    const statLabels = currentLang==='de' ? ['Objekte','Live-Daten','Workflows'] : ['Properties','Live Data','Workflows'];
+    const statValues = ['9+','24/7','∞'];
+
+    for(let s=0;s<statsCount;s++){
+      const sx = statsStartX + (s+0.5) * (statsW/statsCount);
+      const statApp = smoothstep(0.4 + s*0.06, 0.55 + s*0.06, sp);
+      ctx.globalAlpha = alpha * barProg * statApp;
+
+      // Divider
+      if(s>0){
+        const dx = statsStartX + s * (statsW/statsCount);
+        ctx.beginPath();
+        ctx.moveTo(dx, barY+barH*0.25);
+        ctx.lineTo(dx, barY+barH*0.75);
+        ctx.strokeStyle = themeHighlight(0.1);
+        ctx.lineWidth = 1;
+        ctx.stroke();
+      }
+
+      ctx.fillStyle = COLORS.accent;
+      ctx.font = `600 ${clamp(W*0.016,16,22)}px Outfit`;
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'bottom';
+      ctx.fillText(statValues[s], sx, barY + barH/2 + 4);
+
+      ctx.fillStyle = themeText(0.5);
+      ctx.font = `300 ${clamp(W*0.010,10,13)}px Outfit`;
+      ctx.textBaseline = 'top';
+      ctx.fillText(statLabels[s], sx, barY + barH/2 + 6);
+    }
+    ctx.globalAlpha = alpha;
+  }
+
+  // ===== Property skyline at bottom =====
+  const skylineY = H*0.85;
+  const skylineSpan = Math.min(W*0.88, 1140);
+  const skylineStart = W/2 - skylineSpan/2;
+  const buildingStep = skylineSpan / (propCount - 1);
+
+  // Ground line
+  const groundProg = smoothstep(0, 0.15, sp);
+  if(groundProg > 0.01){
+    ctx.globalAlpha = alpha * groundProg * 0.4;
+    ctx.beginPath();
+    ctx.moveTo(skylineStart - 20, skylineY + 2);
+    ctx.lineTo(skylineStart + skylineSpan + 20, skylineY + 2);
+    ctx.strokeStyle = themeText(0.2);
+    ctx.lineWidth = 1;
+    ctx.setLineDash([3,4]);
+    ctx.stroke();
+    ctx.setLineDash([]);
+  }
+
+  // Buildings (varied heights for skyline feel)
+  const heights = [0.7, 1.0, 0.55, 0.85, 1.15, 0.75, 0.95, 0.6, 0.8];
+  for(let i=0;i<propCount;i++){
+    const appearProg = smoothstep(0.05 + i*0.04, 0.22 + i*0.04, sp);
+    if(appearProg < 0.01) continue;
+
+    ctx.globalAlpha = alpha * appearProg;
+
+    const bx = skylineStart + i * buildingStep;
+    const bH = (clamp(H*0.085, 55, 85)) * heights[i];
+    const bW = clamp(W*0.04, 32, 50);
+
+    // Building body
+    ctx.beginPath();
+    ctx.roundRect(bx - bW/2, skylineY - bH, bW, bH, [6,6,2,2]);
+    ctx.fillStyle = themeNodeBg();
+    ctx.fill();
+    ctx.strokeStyle = barProg > 0.3 ? 'rgba(59,130,246,0.45)' : themeNodeBorder();
+    ctx.lineWidth = 1;
+    ctx.stroke();
+
+    // Roof accent
+    ctx.beginPath();
+    ctx.moveTo(bx - bW/2 + 3, skylineY - bH);
+    ctx.lineTo(bx + bW/2 - 3, skylineY - bH);
+    ctx.strokeStyle = COLORS.accent;
+    ctx.lineWidth = 2;
+    ctx.stroke();
+
+    // Windows (rows of small dots)
+    const winCols = 3;
+    const winRows = Math.max(2, Math.floor(bH / 14));
+    const winSize = 2.5;
+    const winGapY = (bH - 14) / Math.max(1, winRows-0.5);
+    for(let r=0; r<winRows; r++){
+      for(let c=0; c<winCols; c++){
+        const wx = bx - bW/2 + 6 + c * ((bW-12)/(winCols-1));
+        const wy = skylineY - bH + 8 + r * winGapY;
+        // Pulse some windows
+        const litOff = (i*3 + r*2 + c) % 5;
+        const lit = ((time*0.001 + litOff*0.3) % 4) < 2.5;
+        ctx.beginPath();
+        ctx.arc(wx, wy, winSize, 0, Math.PI*2);
+        ctx.fillStyle = lit && barProg > 0.3 ? COLORS.accentLight : themeText(0.18);
+        ctx.fill();
+      }
+    }
+
+    // Data beam shooting up to KOVA bar
+    const beamProg = smoothstep(0.20 + i*0.03, 0.4 + i*0.03, sp);
+    if(beamProg > 0.01){
+      ctx.globalAlpha = alpha * appearProg * beamProg;
+      const beamTopY = skylineY - bH;
+      const beamBotY = barY + barH;
+      const drawnTop = beamBotY + (beamTopY - beamBotY) * (1 - beamProg);
+
+      // Beam glow
+      ctx.beginPath();
+      ctx.moveTo(bx, beamTopY);
+      ctx.lineTo(bx, drawnTop);
+      ctx.strokeStyle = COLORS.accentGlow;
+      ctx.lineWidth = 3;
+      ctx.stroke();
+
+      // Beam line
+      ctx.beginPath();
+      ctx.moveTo(bx, beamTopY);
+      ctx.lineTo(bx, drawnTop);
+      ctx.strokeStyle = COLORS.accent;
+      ctx.lineWidth = 0.8;
+      ctx.stroke();
+
+      // Flow pulse up the beam
+      if(beamProg > 0.7){
+        const pT = ((time*0.0008 + i*0.2) % 1.4) / 1.4;
+        const py = beamTopY - (beamTopY - beamBotY) * pT;
+        const pA = Math.sin(pT * Math.PI) * 0.9;
+        const pg = ctx.createRadialGradient(bx, py, 0, bx, py, 8);
+        pg.addColorStop(0, `rgba(96,165,250,${pA})`);
+        pg.addColorStop(1, 'rgba(96,165,250,0)');
+        ctx.fillStyle = pg;
+        ctx.fillRect(bx-8, py-8, 16, 16);
+      }
+    }
+  }
+
+  // ===== Stable state summary line =====
+  const stableProg = smoothstep(0.7, 0.9, sp);
+  if(stableProg > 0.01){
+    ctx.globalAlpha = alpha * stableProg;
+    ctx.fillStyle = themeText(0.6);
+    ctx.font = `400 ${clamp(W*0.013,12,17)}px Outfit`;
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(currentLang==='de'?'Eine Plattform — beliebig viele Objekte':'One platform — any number of properties', W/2, (barY + barH + skylineY) / 2);
+  }
+
+  ctx.restore();
+}
+
+/* =========================================================
+   VISUAL: CENTRAL SAVINGS (Section 5c)
+   ========================================================= */
+function drawCentralSavings(sp, globalSp){
+  const fadeIn = smoothstep(0, 0.15, sp);
+  if(fadeIn < 0.01) return;
+
+  ctx.save();
+  ctx.globalAlpha = fadeIn;
+
+  const cx = W/2;
+  const topY = H*0.40;
+  const botY = H*0.92;
+  const colHeight = botY - topY;
+  const rowCount = 6;
+  const rowGap = colHeight / (rowCount + 0.6);
+  const firstRowY = topY + rowGap * 1.1;
+  const branchLen = Math.min(W*0.36, 440);
+  const time = performance.now();
+
+  const depts = t('centralDepts');
+  const benefits = t('centralBenefits');
+
+  // ===== KOVA marker at top =====
+  const markerProg = smoothstep(0, 0.1, sp);
+  const markerR = 30 * markerProg;
+
+  // Halo
+  const haloR = markerR * 2.6;
+  const halo = ctx.createRadialGradient(cx, topY, markerR*0.4, cx, topY, haloR);
+  halo.addColorStop(0, 'rgba(59,130,246,0.20)');
+  halo.addColorStop(1, 'rgba(59,130,246,0)');
+  ctx.fillStyle = halo;
+  ctx.fillRect(cx-haloR, topY-haloR, haloR*2, haloR*2);
+
+  // Marker circle
+  ctx.beginPath();
+  ctx.arc(cx, topY, markerR, 0, Math.PI*2);
+  ctx.fillStyle = themeNodeBg();
+  ctx.fill();
+  ctx.strokeStyle = COLORS.accent;
+  ctx.lineWidth = 1.5;
+  ctx.stroke();
+
+  if(markerR > 10){
+    ctx.fillStyle = COLORS.accent;
+    ctx.font = `700 ${Math.max(11, markerR*0.48)}px Outfit`;
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText('KOVA', cx, topY);
+  }
+
+  // ===== Central vertical pillar =====
+  const pillarProg = smoothstep(0.05, 0.22, sp);
+  const pillarStart = topY + markerR + 2;
+  const pillarEnd = pillarStart + (botY - 30 - pillarStart) * pillarProg;
+
+  // Glow underlayer
+  ctx.beginPath();
+  ctx.moveTo(cx, pillarStart);
+  ctx.lineTo(cx, pillarEnd);
+  ctx.strokeStyle = COLORS.accentGlow;
+  ctx.lineWidth = 5;
+  ctx.stroke();
+
+  // Solid pillar
+  ctx.beginPath();
+  ctx.moveTo(cx, pillarStart);
+  ctx.lineTo(cx, pillarEnd);
+  ctx.strokeStyle = COLORS.accent;
+  ctx.lineWidth = 1.5;
+  ctx.stroke();
+
+  // Travelling data pulses down the pillar
+  if(pillarProg > 0.6){
+    for(let p=0; p<2; p++){
+      const pT = ((time*0.0005 + p*0.5) % 1);
+      const py = pillarStart + (pillarEnd - pillarStart) * pT;
+      const pA = Math.sin(pT * Math.PI) * 0.85;
+      const grad = ctx.createRadialGradient(cx, py, 0, cx, py, 14);
+      grad.addColorStop(0, `rgba(96,165,250,${pA})`);
+      grad.addColorStop(1, 'rgba(96,165,250,0)');
+      ctx.fillStyle = grad;
+      ctx.fillRect(cx-14, py-14, 28, 28);
+    }
+  }
+
+  // ===== 12 branches: alternating left/right, 6 rows =====
+  for(let i=0; i<12; i++){
+    const isLeft = i % 2 === 0;
+    const rowIdx = Math.floor(i / 2);
+    const y = firstRowY + rowIdx * rowGap;
+
+    const branchProg = smoothstep(0.16 + i*0.035, 0.32 + i*0.035, sp);
+    if(branchProg < 0.01) continue;
+
+    ctx.globalAlpha = fadeIn * branchProg;
+
+    const startX = cx;
+    const endX = isLeft ? cx - branchLen * branchProg : cx + branchLen * branchProg;
+
+    // Branch glow
+    ctx.beginPath();
+    ctx.moveTo(startX, y);
+    ctx.lineTo(endX, y);
+    ctx.strokeStyle = COLORS.accentGlow;
+    ctx.lineWidth = 3;
+    ctx.stroke();
+
+    // Branch line
+    ctx.beginPath();
+    ctx.moveTo(startX, y);
+    ctx.lineTo(endX, y);
+    ctx.strokeStyle = COLORS.accent;
+    ctx.lineWidth = 1;
+    ctx.stroke();
+
+    // Origin marker on pillar
+    ctx.beginPath();
+    ctx.arc(startX, y, 3, 0, Math.PI*2);
+    ctx.fillStyle = COLORS.accent;
+    ctx.fill();
+
+    // End cap (small ring)
+    ctx.beginPath();
+    ctx.arc(endX, y, 4.5, 0, Math.PI*2);
+    ctx.fillStyle = themeNodeBg();
+    ctx.fill();
+    ctx.strokeStyle = COLORS.accent;
+    ctx.lineWidth = 1.5;
+    ctx.stroke();
+
+    // Text positioning
+    const textX = isLeft ? endX - 14 : endX + 14;
+    const textAlign = isLeft ? 'right' : 'left';
+
+    // Department name
+    ctx.fillStyle = COLORS.accent;
+    ctx.font = `500 ${clamp(W*0.013,13,18)}px Outfit`;
+    ctx.textAlign = textAlign;
+    ctx.textBaseline = 'bottom';
+    ctx.fillText(depts[i], textX, y - 3);
+
+    // Benefit text (joined to single line)
+    ctx.fillStyle = themeText(0.55);
+    ctx.font = `300 ${clamp(W*0.011,11,14)}px Outfit`;
+    ctx.textBaseline = 'top';
+    const benefit = benefits[i].replace(/\n/g, ' ');
+    ctx.fillText(benefit, textX, y + 5);
+
+    // Flowing pulse along branch
+    if(branchProg > 0.6){
+      const pulseT = ((time*0.0009 + i*0.18) % 1.6) / 1.6;
+      const px = lerp(startX, endX, pulseT);
+      const pulseA = Math.sin(pulseT * Math.PI) * 0.8;
+      ctx.beginPath();
+      ctx.arc(px, y, 2.5, 0, Math.PI*2);
+      ctx.fillStyle = `rgba(96,165,250,${pulseA})`;
+      ctx.fill();
+    }
+  }
+
+  // ===== Summary text at bottom =====
+  const sumProg = smoothstep(0.78, 0.92, sp);
+  if(sumProg > 0.01){
+    ctx.globalAlpha = fadeIn * sumProg;
+    ctx.fillStyle = themeText(0.7);
+    ctx.font = `400 ${clamp(W*0.014,13,18)}px Outfit`;
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(t('scaleLabel'), cx, botY - 4);
+  }
+
+  ctx.restore();
+}
+
+/* =========================================================
+   VISUAL: DAY-IN-THE-LIFE (Section 5 — NEW)
+   ========================================================= */
+function drawDayInLifeVisual(sp){
+  const alpha = textOpacity(sp);
+  if(alpha < 0.01) return;
+
+  ctx.save();
+  ctx.globalAlpha = alpha;
+
+  const time = performance.now();
+  const cyTop = H*0.42;
+  const cyBot = H*0.92;
+  const colHeight = cyBot - cyTop;
+  const colCY = (cyTop + cyBot) / 2;
+  const divX = W/2;
+  const leftCX = W*0.27;
+  const rightCX = W*0.73;
+  const colW = Math.min(W*0.42, 520);
+
+  // Vertical divider
+  const divProg = smoothstep(0, 0.15, sp);
+  ctx.beginPath();
+  ctx.moveTo(divX, cyTop + (cyBot-cyTop)*(1-divProg)*0.3);
+  ctx.lineTo(divX, cyTop + (cyBot-cyTop)*(divProg*0.7+0.3));
+  ctx.strokeStyle = themeText(0.12);
+  ctx.lineWidth = 1;
+  ctx.setLineDash([4,6]);
+  ctx.stroke();
+  ctx.setLineDash([]);
+
+  // Column headers
+  const headerProg = smoothstep(0, 0.12, sp);
+  ctx.globalAlpha = alpha * headerProg;
+  ctx.font = `500 ${clamp(W*0.014,13,18)}px Outfit`;
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  // Left header — without KOVA
+  ctx.fillStyle = 'rgba(220,80,80,0.85)';
+  ctx.fillText(t('dayLifeWithout'), leftCX, cyTop + 18);
+  // Right header — with KOVA
+  ctx.fillStyle = COLORS.accent;
+  ctx.fillText(t('dayLifeWith'), rightCX, cyTop + 18);
+
+  // ===== LEFT SIDE: Chaos =====
+  const leftProg = smoothstep(0.05, 0.4, sp);
+  if(leftProg > 0.01){
+    ctx.globalAlpha = alpha * leftProg;
+    const chaos = t('dayLifeChaos');
+    // Scattered tool boxes
+    const positions = [
+      {x:-0.7, y:-0.3, r:-0.08},
+      {x:0.5,  y:-0.5, r:0.12},
+      {x:-0.4, y:0.1,  r:0.05},
+      {x:0.6,  y:0.2,  r:-0.10},
+      {x:-0.1, y:-0.7, r:0.07},
+      {x:0.1,  y:0.55, r:-0.05}
+    ];
+    for(let i=0;i<chaos.length;i++){
+      const appearProg = smoothstep(0.05 + i*0.04, 0.20 + i*0.04, sp);
+      if(appearProg < 0.01) continue;
+      ctx.globalAlpha = alpha * leftProg * appearProg;
+
+      const wobX = Math.sin(time*0.0008 + i*1.7) * 3;
+      const wobY = Math.cos(time*0.0007 + i*2.1) * 3;
+      const px = leftCX + positions[i].x * colW * 0.45 + wobX;
+      const py = colCY + positions[i].y * colHeight * 0.35 + wobY;
+      const bw = clamp(W*0.085, 80, 120);
+      const bh = clamp(W*0.038, 38, 52);
+
+      ctx.save();
+      ctx.translate(px, py);
+      ctx.rotate(positions[i].r);
+
+      ctx.beginPath();
+      ctx.roundRect(-bw/2, -bh/2, bw, bh, 8);
+      ctx.fillStyle = themeNodeBg();
+      ctx.fill();
+      ctx.strokeStyle = 'rgba(220,80,80,0.35)';
+      ctx.lineWidth = 1;
+      ctx.stroke();
+
+      ctx.fillStyle = themeText(0.7);
+      ctx.font = `500 ${clamp(W*0.012,12,15)}px Outfit`;
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText(chaos[i], 0, 0);
+      ctx.restore();
+    }
+
+    // Chaotic dashed lines between tools
+    ctx.globalAlpha = alpha * leftProg * 0.4;
+    ctx.beginPath();
+    ctx.setLineDash([3,6]);
+    ctx.strokeStyle = 'rgba(220,80,80,0.4)';
+    ctx.lineWidth = 1;
+    for(let i=0;i<positions.length-1;i++){
+      const p1 = positions[i], p2 = positions[(i+2) % positions.length];
+      ctx.moveTo(leftCX + p1.x*colW*0.45, colCY + p1.y*colHeight*0.35);
+      ctx.lineTo(leftCX + p2.x*colW*0.45, colCY + p2.y*colHeight*0.35);
+    }
+    ctx.stroke();
+    ctx.setLineDash([]);
+
+    // Delay badge (pulsing)
+    const delayProg = smoothstep(0.3, 0.45, sp);
+    if(delayProg > 0.01){
+      ctx.globalAlpha = alpha * leftProg * delayProg;
+      const pulse = 1 + Math.sin(time*0.004) * 0.04;
+      const delayY = cyBot - 50;
+      const dw = clamp(W*0.13, 130, 180) * pulse;
+      const dh = clamp(W*0.04, 38, 52) * pulse;
+
+      ctx.beginPath();
+      ctx.roundRect(leftCX - dw/2, delayY - dh/2, dw, dh, dh/2);
+      ctx.fillStyle = 'rgba(220,80,80,0.15)';
+      ctx.fill();
+      ctx.strokeStyle = 'rgba(220,80,80,0.6)';
+      ctx.lineWidth = 1.5;
+      ctx.stroke();
+
+      ctx.fillStyle = 'rgba(220,80,80,0.9)';
+      ctx.font = `600 ${clamp(W*0.014,13,17)}px Outfit`;
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText('⏱ ' + t('dayLifeDelay'), leftCX, delayY);
+    }
+  }
+
+  // ===== RIGHT SIDE: KOVA flow =====
+  const rightProg = smoothstep(0.3, 0.6, sp);
+  if(rightProg > 0.01){
+    ctx.globalAlpha = alpha * rightProg;
+    const steps = t('dayLifeSteps');
+    const laneY = colCY - 30;
+    const laneW = colW * 0.85;
+    const laneX = rightCX - laneW/2;
+
+    // Lane background
+    ctx.beginPath();
+    ctx.roundRect(laneX, laneY - 22, laneW, 44, 22);
+    ctx.fillStyle = 'rgba(59,130,246,0.08)';
+    ctx.fill();
+    ctx.strokeStyle = 'rgba(59,130,246,0.25)';
+    ctx.lineWidth = 1;
+    ctx.stroke();
+
+    // Step nodes along lane
+    for(let i=0;i<steps.length;i++){
+      const stepProg = smoothstep(0.35 + i*0.07, 0.50 + i*0.07, sp);
+      if(stepProg < 0.01) continue;
+
+      ctx.globalAlpha = alpha * rightProg * stepProg;
+      const sx = laneX + (i + 0.5) * (laneW / steps.length);
+      const sy = laneY;
+
+      // Connector line
+      if(i > 0){
+        const prevX = laneX + (i - 0.5) * (laneW / steps.length);
+        ctx.beginPath();
+        ctx.moveTo(prevX + 14, sy);
+        ctx.lineTo(sx - 14, sy);
+        ctx.strokeStyle = COLORS.accent;
+        ctx.lineWidth = 2;
+        ctx.stroke();
+      }
+
+      // Step circle
+      ctx.beginPath();
+      ctx.arc(sx, sy, 12, 0, Math.PI*2);
+      ctx.fillStyle = COLORS.accent;
+      ctx.fill();
+
+      // Checkmark inside
+      ctx.beginPath();
+      ctx.moveTo(sx-5, sy);
+      ctx.lineTo(sx-1, sy+4);
+      ctx.lineTo(sx+5, sy-4);
+      ctx.strokeStyle = '#fff';
+      ctx.lineWidth = 2;
+      ctx.lineCap = 'round';
+      ctx.lineJoin = 'round';
+      ctx.stroke();
+
+      // Step label
+      ctx.fillStyle = themeText(0.7);
+      ctx.font = `400 ${clamp(W*0.010,10,13)}px Outfit`;
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'top';
+      ctx.fillText(steps[i], sx, sy + 22);
+    }
+
+    // Flow pulse traveling along lane
+    if(rightProg > 0.7){
+      const pT = (time*0.0006) % 1;
+      const px = laneX + 14 + (laneW - 28) * pT;
+      const pA = Math.sin(pT * Math.PI) * 0.9;
+      const pg = ctx.createRadialGradient(px, laneY, 0, px, laneY, 14);
+      pg.addColorStop(0, `rgba(96,165,250,${pA})`);
+      pg.addColorStop(1, 'rgba(96,165,250,0)');
+      ctx.fillStyle = pg;
+      ctx.fillRect(px-14, laneY-14, 28, 28);
+    }
+
+    // Fast badge
+    const fastProg = smoothstep(0.55, 0.7, sp);
+    if(fastProg > 0.01){
+      ctx.globalAlpha = alpha * rightProg * fastProg;
+      const fastY = cyBot - 50;
+      const fw = clamp(W*0.10, 110, 150);
+      const fh = clamp(W*0.04, 38, 52);
+
+      ctx.beginPath();
+      ctx.roundRect(rightCX - fw/2, fastY - fh/2, fw, fh, fh/2);
+      ctx.fillStyle = 'rgba(59,130,246,0.15)';
+      ctx.fill();
+      ctx.strokeStyle = COLORS.accent;
+      ctx.lineWidth = 1.5;
+      ctx.stroke();
+
+      ctx.fillStyle = COLORS.accent;
+      ctx.font = `600 ${clamp(W*0.014,13,17)}px Outfit`;
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText('⚡ ' + t('dayLifeFast'), rightCX, fastY);
+    }
+  }
+
+  ctx.restore();
+}
+
+/* =========================================================
+   VISUAL: AI-CHAT (Section 9 — NEW)
+   ========================================================= */
+function drawAiChatVisual(sp){
+  const alpha = textOpacity(sp);
+  if(alpha < 0.01) return;
+
+  ctx.save();
+  ctx.globalAlpha = alpha;
+
+  const time = performance.now();
+  const cx = W/2;
+  const frameW = Math.min(W*0.55, 540);
+  const frameH = Math.min(H*0.48, 380);
+  const frameX = cx - frameW/2;
+  const frameY = H*0.48;
+
+  // Frame container
+  const frameProg = smoothstep(0, 0.15, sp);
+  ctx.globalAlpha = alpha * frameProg;
+  ctx.beginPath();
+  ctx.roundRect(frameX, frameY, frameW, frameH, 16);
+  ctx.fillStyle = themeNodeBg();
+  ctx.fill();
+  ctx.strokeStyle = 'rgba(59,130,246,0.35)';
+  ctx.lineWidth = 1.5;
+  ctx.stroke();
+
+  // Top highlight
+  const hlG = ctx.createLinearGradient(frameX, frameY, frameX, frameY + frameH*0.3);
+  hlG.addColorStop(0, themeHighlight(0.04));
+  hlG.addColorStop(1, themeHighlight(0));
+  ctx.beginPath();
+  ctx.roundRect(frameX, frameY, frameW, frameH, 16);
+  ctx.fillStyle = hlG;
+  ctx.fill();
+
+  // Header bar with avatar dot
+  ctx.beginPath();
+  ctx.arc(frameX + 22, frameY + 22, 7, 0, Math.PI*2);
+  ctx.fillStyle = COLORS.accent;
+  ctx.fill();
+  ctx.fillStyle = themeText(0.7);
+  ctx.font = `500 ${clamp(W*0.012,12,15)}px Outfit`;
+  ctx.textAlign = 'left';
+  ctx.textBaseline = 'middle';
+  ctx.fillText('KOVA Assistant', frameX + 36, frameY + 22);
+
+  ctx.beginPath();
+  ctx.moveTo(frameX + 14, frameY + 42);
+  ctx.lineTo(frameX + frameW - 14, frameY + 42);
+  ctx.strokeStyle = themeHighlight(0.08);
+  ctx.lineWidth = 1;
+  ctx.stroke();
+
+  // Chat messages
+  const msgs = t('chatMessages');
+  const msgTop = frameY + 56;
+  const msgGap = (frameH - 70) / msgs.length;
+  const msgW = frameW * 0.62;
+
+  for(let i=0;i<msgs.length;i++){
+    const showProg = smoothstep(0.12 + i*0.16, 0.28 + i*0.16, sp);
+    if(showProg < 0.01) continue;
+
+    ctx.globalAlpha = alpha * frameProg * showProg;
+    const msg = msgs[i];
+    const isUser = msg.who === 'user';
+    const my = msgTop + i * msgGap;
+    const mxStart = isUser ? frameX + 18 : frameX + frameW - 18 - msgW;
+
+    // Bubble
+    const bubbleH = clamp(W*0.032, 36, 50);
+    ctx.beginPath();
+    if(isUser){
+      ctx.roundRect(mxStart, my, msgW, bubbleH, [12,12,12,4]);
+      ctx.fillStyle = themeHighlight(0.06);
+    } else {
+      ctx.roundRect(mxStart, my, msgW, bubbleH, [12,12,4,12]);
+      ctx.fillStyle = 'rgba(59,130,246,0.16)';
+    }
+    ctx.fill();
+    if(!isUser){
+      ctx.strokeStyle = 'rgba(59,130,246,0.4)';
+      ctx.lineWidth = 1;
+      ctx.stroke();
+    }
+
+    // Lightning icon for KOVA messages
+    if(!isUser){
+      ctx.fillStyle = COLORS.accent;
+      ctx.font = `500 ${clamp(W*0.011,11,14)}px Outfit`;
+      ctx.textAlign = 'left';
+      ctx.textBaseline = 'top';
+      ctx.fillText('⚡', mxStart + 10, my + 7);
+    }
+
+    // Text
+    ctx.fillStyle = themeText(isUser ? 0.78 : 0.85);
+    ctx.font = `400 ${clamp(W*0.012,12,15)}px Outfit`;
+    ctx.textAlign = 'left';
+    ctx.textBaseline = 'middle';
+    const textOffset = isUser ? 14 : 28;
+    ctx.fillText(msg.text, mxStart + textOffset, my + bubbleH/2);
+
+    // Green flash for last (resolved) message
+    if(i === msgs.length-1 && showProg > 0.6){
+      const flash = (Math.sin(time*0.005) + 1) * 0.5 * 0.3;
+      ctx.beginPath();
+      ctx.roundRect(mxStart, my, msgW, bubbleH, [12,12,4,12]);
+      ctx.fillStyle = `rgba(34,197,94,${flash})`;
+      ctx.fill();
+    }
+
+    // Typing indicator between messages (if next is not yet visible)
+    const nextProg = i < msgs.length-1 ? smoothstep(0.12 + (i+1)*0.16, 0.28 + (i+1)*0.16, sp) : 1;
+    if(showProg > 0.7 && nextProg < 0.5 && i < msgs.length-1){
+      const nextIsUser = msgs[i+1].who === 'user';
+      const tyMx = nextIsUser ? frameX + 18 : frameX + frameW - 18 - 50;
+      const tyMy = my + msgGap;
+      for(let d=0;d<3;d++){
+        const dotProg = ((time*0.005 + d*0.3) % 1.5);
+        const dotA = Math.sin(dotProg*Math.PI/1.5) * 0.7;
+        ctx.beginPath();
+        ctx.arc(tyMx + 14 + d*10, tyMy + 14, 3, 0, Math.PI*2);
+        ctx.fillStyle = `rgba(${nextIsUser?'120,120,140':'59,130,246'},${dotA})`;
+        ctx.fill();
+      }
+    }
+  }
+
+  ctx.restore();
+}
+
+/* =========================================================
+   VISUAL: INTERNATIONALIZATION (Section 11 — NEW)
+   ========================================================= */
+function drawI18nVisual(sp){
+  const alpha = textOpacity(sp);
+  if(alpha < 0.01) return;
+
+  ctx.save();
+  ctx.globalAlpha = alpha;
+
+  const time = performance.now();
+  const cx = W/2;
+  const mapCY = H*0.62;
+  const mapR = Math.min(W*0.20, H*0.22, 230);
+
+  // Stylized map outline (rough Europe shape)
+  const mapProg = smoothstep(0, 0.2, sp);
+  if(mapProg > 0.01){
+    ctx.globalAlpha = alpha * mapProg;
+    ctx.beginPath();
+    // Rough Europe-ish blob
+    const pts = [
+      [-0.85,-0.20],[-0.70,-0.55],[-0.30,-0.80],[0.05,-0.90],
+      [0.45,-0.75],[0.85,-0.45],[0.95,-0.05],[0.85,0.35],
+      [0.45,0.65],[0.10,0.80],[-0.35,0.65],[-0.75,0.30],[-0.90,0.05]
+    ];
+    for(let i=0;i<pts.length;i++){
+      const px = cx + pts[i][0] * mapR * 1.3;
+      const py = mapCY + pts[i][1] * mapR;
+      if(i===0) ctx.moveTo(px, py);
+      else {
+        const prev = pts[i-1];
+        const cpX = cx + (prev[0]+pts[i][0])/2 * mapR * 1.3 + (Math.sin(i*7)*0.08)*mapR;
+        const cpY = mapCY + (prev[1]+pts[i][1])/2 * mapR + (Math.cos(i*5)*0.08)*mapR;
+        ctx.quadraticCurveTo(cpX, cpY, px, py);
+      }
+    }
+    ctx.closePath();
+    ctx.fillStyle = 'rgba(59,130,246,0.05)';
+    ctx.fill();
+    ctx.strokeStyle = themeText(0.20);
+    ctx.lineWidth = 1;
+    ctx.setLineDash([4,5]);
+    ctx.stroke();
+    ctx.setLineDash([]);
+  }
+
+  // City hotspots (positions approximating European cities)
+  const cities = t('i18nCities');
+  const cityPos = [
+    {x:0.10,  y:-0.30},  // Berlin
+    {x:0.20,  y:-0.05},  // Vienna
+    {x:-0.05, y:0.05},   // Zurich
+    {x:-0.50, y:0.35},   // Madrid
+    {x:-0.25, y:-0.05},  // Paris
+    {x:0.05,  y:0.15},   // Milan
+    {x:-0.18, y:-0.42},  // Amsterdam
+    {x:-0.40, y:-0.40}   // London
+  ];
+
+  // Central KOVA hub
+  const hubProg = smoothstep(0.15, 0.4, sp);
+  if(hubProg > 0.01){
+    ctx.globalAlpha = alpha * hubProg;
+    const pulse = 1 + Math.sin(time*0.003) * 0.04;
+    const hubR = 18 * hubProg * pulse;
+    const haloR = hubR * 2.5;
+    const halo = ctx.createRadialGradient(cx, mapCY, hubR*0.3, cx, mapCY, haloR);
+    halo.addColorStop(0, 'rgba(59,130,246,0.30)');
+    halo.addColorStop(1, 'rgba(59,130,246,0)');
+    ctx.fillStyle = halo;
+    ctx.fillRect(cx-haloR, mapCY-haloR, haloR*2, haloR*2);
+
+    ctx.beginPath();
+    ctx.arc(cx, mapCY, hubR, 0, Math.PI*2);
+    ctx.fillStyle = themeNodeBg();
+    ctx.fill();
+    ctx.strokeStyle = COLORS.accent;
+    ctx.lineWidth = 1.5;
+    ctx.stroke();
+
+    ctx.fillStyle = COLORS.accent;
+    ctx.font = `700 ${Math.max(9, hubR*0.55)}px Outfit`;
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText('K', cx, mapCY);
+  }
+
+  // City dots + lines
+  for(let i=0;i<cities.length;i++){
+    const appearProg = smoothstep(0.10 + i*0.04, 0.30 + i*0.04, sp);
+    if(appearProg < 0.01) continue;
+
+    const px = cx + cityPos[i].x * mapR * 1.3;
+    const py = mapCY + cityPos[i].y * mapR;
+
+    // Connection line to hub
+    const lineProg = smoothstep(0.30 + i*0.03, 0.55 + i*0.03, sp);
+    if(lineProg > 0.01){
+      ctx.globalAlpha = alpha * lineProg;
+      const ex = cx + (px - cx) * 0.15;
+      const ey = mapCY + (py - mapCY) * 0.15;
+      const mx = lerp(px, ex, lineProg);
+      const my = lerp(py, ey, lineProg);
+      ctx.beginPath();
+      ctx.moveTo(px, py);
+      ctx.lineTo(mx, my);
+      ctx.strokeStyle = COLORS.accentGlow;
+      ctx.lineWidth = 2;
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.moveTo(px, py);
+      ctx.lineTo(mx, my);
+      ctx.strokeStyle = COLORS.accent;
+      ctx.lineWidth = 0.8;
+      ctx.stroke();
+
+      // Flow pulse
+      if(lineProg > 0.7){
+        const pT = ((time*0.0009 + i*0.3) % 1.5) / 1.5;
+        const ppx = lerp(px, ex, pT);
+        const ppy = lerp(py, ey, pT);
+        const pA = Math.sin(pT * Math.PI) * 0.8;
+        ctx.beginPath();
+        ctx.arc(ppx, ppy, 2.5, 0, Math.PI*2);
+        ctx.fillStyle = `rgba(96,165,250,${pA})`;
+        ctx.fill();
+      }
+    }
+
+    // City dot
+    ctx.globalAlpha = alpha * appearProg;
+    ctx.beginPath();
+    ctx.arc(px, py, 5, 0, Math.PI*2);
+    ctx.fillStyle = themeNodeBg();
+    ctx.fill();
+    ctx.strokeStyle = COLORS.accent;
+    ctx.lineWidth = 1.5;
+    ctx.stroke();
+
+    // City label
+    ctx.fillStyle = themeText(0.65);
+    ctx.font = `400 ${clamp(W*0.010,10,12)}px Outfit`;
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'top';
+    ctx.fillText(cities[i], px, py + 9);
+  }
+
+  // Bottom badges row
+  const badgesProg = smoothstep(0.6, 0.85, sp);
+  if(badgesProg > 0.01){
+    ctx.globalAlpha = alpha * badgesProg;
+    const langs = TRANSLATIONS.i18nLangs;
+    const currs = TRANSLATIONS.i18nCurrencies;
+    const comps = TRANSLATIONS.i18nCompliance;
+    const allBadges = langs.concat(currs).concat(comps);
+
+    const badgesY = H * 0.93;
+    const badgeW = clamp(W*0.06, 60, 80);
+    const badgeH = clamp(W*0.025, 22, 32);
+    const badgeGap = 6;
+    const totalW = allBadges.length * badgeW + (allBadges.length-1)*badgeGap;
+    let bx = cx - totalW/2;
+
+    for(let i=0;i<allBadges.length;i++){
+      const isLang = i < langs.length;
+      const isCurr = i >= langs.length && i < langs.length + currs.length;
+      const labelType = isLang ? 'Lang' : (isCurr ? 'Curr' : 'Reg');
+      const bp = smoothstep(0.6 + i*0.02, 0.75 + i*0.02, sp);
+      if(bp < 0.01){ bx += badgeW + badgeGap; continue; }
+
+      ctx.globalAlpha = alpha * badgesProg * bp;
+      ctx.beginPath();
+      ctx.roundRect(bx, badgesY, badgeW, badgeH, badgeH/2);
+      ctx.fillStyle = themeNodeBg();
+      ctx.fill();
+      ctx.strokeStyle = isLang ? 'rgba(59,130,246,0.4)' : (isCurr ? 'rgba(96,165,250,0.45)' : 'rgba(150,180,230,0.4)');
+      ctx.lineWidth = 1;
+      ctx.stroke();
+
+      ctx.fillStyle = COLORS.accent;
+      ctx.font = `500 ${clamp(W*0.010,10,13)}px Outfit`;
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText(allBadges[i], bx + badgeW/2, badgesY + badgeH/2);
+
+      bx += badgeW + badgeGap;
+    }
+  }
+
+  ctx.restore();
+}
+
+/* =========================================================
+   VISUAL: ESG / SUSTAINABILITY (Section 13 — NEW)
+   ========================================================= */
+function drawEsgVisual(sp){
+  const alpha = textOpacity(sp);
+  if(alpha < 0.01) return;
+
+  ctx.save();
+  ctx.globalAlpha = alpha;
+
+  const time = performance.now();
+  const cx = W/2, cy = H*0.66;
+  const bw = Math.min(W*0.75, 780);
+  const bh = bw*0.42;
+
+  // Frame
+  ctx.globalAlpha = alpha * smoothstep(0.05, 0.25, sp);
+  ctx.beginPath();
+  ctx.roundRect(cx-bw/2, cy-bh/2, bw, bh, 14);
+  ctx.fillStyle = themeNodeBg();
+  ctx.fill();
+  ctx.strokeStyle = 'rgba(34,197,94,0.4)';
+  ctx.lineWidth = 1.5;
+  ctx.stroke();
+
+  // Top highlight
+  const hlG = ctx.createLinearGradient(cx-bw/2, cy-bh/2, cx-bw/2, cy-bh/2+bh*0.3);
+  hlG.addColorStop(0, themeHighlight(0.04));
+  hlG.addColorStop(1, themeHighlight(0));
+  ctx.beginPath();
+  ctx.roundRect(cx-bw/2, cy-bh/2, bw, bh, 14);
+  ctx.fillStyle = hlG;
+  ctx.fill();
+
+  // Tabs
+  const tabs = t('esgTabs');
+  const tabY = cy - bh/2 + 26;
+  ctx.font = `500 ${clamp(W*0.012,12,15)}px Outfit`;
+  ctx.textAlign = 'left';
+  ctx.textBaseline = 'middle';
+  for(let i=0;i<tabs.length;i++){
+    const tx = cx - bw/2 + 20 + i*90;
+    const isActive = i === 0;
+    ctx.fillStyle = isActive ? COLORS.accent : themeText(0.45);
+    ctx.fillText(tabs[i], tx, tabY);
+    if(isActive){
+      ctx.beginPath();
+      ctx.moveTo(tx-2, tabY+12);
+      ctx.lineTo(tx + ctx.measureText(tabs[i]).width, tabY+12);
+      ctx.strokeStyle = COLORS.accent;
+      ctx.lineWidth = 2;
+      ctx.stroke();
+    }
+  }
+
+  // Header bar separator
+  ctx.beginPath();
+  ctx.moveTo(cx-bw/2, cy-bh/2+44);
+  ctx.lineTo(cx+bw/2, cy-bh/2+44);
+  ctx.strokeStyle = themeHighlight(0.07);
+  ctx.lineWidth = 1;
+  ctx.stroke();
+
+  // Metric cards (3 across the top)
+  const metrics = t('esgMetrics');
+  const arrows = ['↓','↓','↓'];
+  const cardW = bw*0.18;
+  const cardH = 54;
+  const cardY = cy - bh/2 + 60;
+  for(let i=0;i<metrics.length;i++){
+    const cardProg = smoothstep(0.15+i*0.06, 0.35+i*0.06, sp);
+    if(cardProg < 0.01) continue;
+    ctx.globalAlpha = alpha * cardProg;
+    const cardX = cx - bw/2 + 22 + i*(cardW+14);
+
+    ctx.beginPath();
+    ctx.roundRect(cardX, cardY, cardW, cardH, 6);
+    ctx.fillStyle = 'rgba(34,197,94,0.10)';
+    ctx.fill();
+    ctx.strokeStyle = 'rgba(34,197,94,0.35)';
+    ctx.stroke();
+
+    ctx.fillStyle = themeText(0.55);
+    ctx.font = `400 ${clamp(W*0.010,10,13)}px Outfit`;
+    ctx.textAlign = 'left';
+    ctx.textBaseline = 'top';
+    ctx.fillText(metrics[i], cardX+8, cardY+8);
+
+    ctx.fillStyle = 'rgba(34,197,94,0.85)';
+    ctx.font = `600 ${clamp(W*0.018,16,22)}px Outfit`;
+    ctx.fillText(arrows[i] + ' 12%', cardX+8, cardY+24);
+  }
+
+  // Line chart (energy declining over time)
+  const chartProg = smoothstep(0.25, 0.55, sp);
+  if(chartProg > 0.01){
+    ctx.globalAlpha = alpha * chartProg;
+    const lcX = cx - bw/2 + 22;
+    const lcY = cardY + cardH + 22;
+    const lcW = bw*0.55;
+    const lcH = bh - 160;
+    const pts = [0.20, 0.30, 0.25, 0.40, 0.30, 0.50, 0.45, 0.60, 0.55, 0.70, 0.65, 0.80];
+
+    // Grid lines
+    ctx.strokeStyle = themeHighlight(0.05);
+    ctx.lineWidth = 1;
+    for(let g=0;g<4;g++){
+      const gy = lcY + (g+1) * (lcH/4);
+      ctx.beginPath();
+      ctx.moveTo(lcX, gy);
+      ctx.lineTo(lcX + lcW, gy);
+      ctx.stroke();
+    }
+
+    ctx.beginPath();
+    const drawN = Math.floor(pts.length * chartProg);
+    for(let i=0;i<drawN;i++){
+      const px = lcX + (i/(pts.length-1))*lcW;
+      const py = lcY + lcH - pts[i]*lcH;
+      if(i===0) ctx.moveTo(px,py);
+      else ctx.lineTo(px,py);
+    }
+    ctx.strokeStyle = 'rgba(34,197,94,0.85)';
+    ctx.lineWidth = 2.5;
+    ctx.stroke();
+
+    // Fill under line
+    if(drawN > 1){
+      const lastX = lcX + ((drawN-1)/(pts.length-1))*lcW;
+      ctx.lineTo(lastX, lcY+lcH);
+      ctx.lineTo(lcX, lcY+lcH);
+      ctx.closePath();
+      ctx.fillStyle = 'rgba(34,197,94,0.10)';
+      ctx.fill();
+    }
+
+    // Latest dot pulse
+    if(drawN > 0){
+      const lastI = drawN-1;
+      const lpx = lcX + (lastI/(pts.length-1))*lcW;
+      const lpy = lcY + lcH - pts[lastI]*lcH;
+      const pulse = 1 + Math.sin(time*0.005)*0.3;
+      ctx.beginPath();
+      ctx.arc(lpx, lpy, 5*pulse, 0, Math.PI*2);
+      ctx.fillStyle = 'rgba(34,197,94,0.4)';
+      ctx.fill();
+      ctx.beginPath();
+      ctx.arc(lpx, lpy, 3, 0, Math.PI*2);
+      ctx.fillStyle = 'rgba(34,197,94,1)';
+      ctx.fill();
+    }
+  }
+
+  // ESG Score donut (right side)
+  const donutProg = smoothstep(0.4, 0.7, sp);
+  if(donutProg > 0.01){
+    ctx.globalAlpha = alpha * donutProg;
+    const donutCX = cx + bw*0.30;
+    const donutCY = cardY + cardH + 22 + (bh - 160)/2;
+    const donutR = Math.min(bw*0.08, 58);
+
+    // Background ring
+    ctx.beginPath();
+    ctx.arc(donutCX, donutCY, donutR, 0, Math.PI*2);
+    ctx.strokeStyle = themeHighlight(0.08);
+    ctx.lineWidth = 8;
+    ctx.stroke();
+
+    // Active arc (A rating = 92%)
+    ctx.beginPath();
+    ctx.arc(donutCX, donutCY, donutR, -Math.PI/2, -Math.PI/2 + Math.PI*2*0.92*donutProg);
+    ctx.strokeStyle = 'rgba(34,197,94,0.9)';
+    ctx.lineWidth = 8;
+    ctx.lineCap = 'round';
+    ctx.stroke();
+    ctx.lineCap = 'butt';
+
+    // Score letter
+    ctx.fillStyle = 'rgba(34,197,94,0.95)';
+    ctx.font = `700 ${donutR*0.9}px Outfit`;
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText('A', donutCX, donutCY - 2);
+
+    // Label
+    ctx.fillStyle = themeText(0.55);
+    ctx.font = `400 ${clamp(W*0.010,10,13)}px Outfit`;
+    ctx.textBaseline = 'top';
+    ctx.fillText(t('esgScore'), donutCX, donutCY + donutR + 6);
+  }
+
+  // Badges below frame
+  const badgeProg = smoothstep(0.65, 0.85, sp);
+  if(badgeProg > 0.01){
+    ctx.globalAlpha = alpha * badgeProg;
+    const badges = TRANSLATIONS.esgBadges;
+    const badgeY = cy + bh/2 + 20;
+    const bw2 = clamp(W*0.09, 90, 130);
+    const bh2 = clamp(W*0.028, 26, 34);
+    const gap = 12;
+    const totalW = badges.length * bw2 + (badges.length-1)*gap;
+    let bx = cx - totalW/2;
+    for(let i=0;i<badges.length;i++){
+      ctx.beginPath();
+      ctx.roundRect(bx, badgeY, bw2, bh2, bh2/2);
+      ctx.fillStyle = 'rgba(34,197,94,0.12)';
+      ctx.fill();
+      ctx.strokeStyle = 'rgba(34,197,94,0.4)';
+      ctx.lineWidth = 1;
+      ctx.stroke();
+      ctx.fillStyle = 'rgba(34,197,94,0.95)';
+      ctx.font = `500 ${clamp(W*0.011,11,13)}px Outfit`;
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText(badges[i], bx + bw2/2, badgeY + bh2/2);
+      bx += bw2 + gap;
+    }
+  }
+
+  ctx.restore();
+}
+
+/* =========================================================
+   VISUAL: COMPETITION 2D-QUADRANT (Section 16 — NEW)
+   ========================================================= */
+function drawCompetitionVisual(sp){
+  const alpha = textOpacity(sp);
+  if(alpha < 0.01) return;
+
+  ctx.save();
+  ctx.globalAlpha = alpha;
+
+  const time = performance.now();
+  const cx = W/2, cy = H*0.66;
+  const chartW = Math.min(W*0.6, 660);
+  const chartH = chartW * 0.65;
+  const chartX = cx - chartW/2;
+  const chartY = cy - chartH/2;
+
+  // Highlighted top-right quadrant background
+  const quadProg = smoothstep(0, 0.2, sp);
+  ctx.globalAlpha = alpha * quadProg * 0.6;
+  ctx.beginPath();
+  ctx.roundRect(chartX + chartW/2, chartY, chartW/2, chartH/2, [0,8,0,0]);
+  const quadGrad = ctx.createLinearGradient(chartX+chartW/2, chartY, chartX+chartW, chartY+chartH/2);
+  quadGrad.addColorStop(0, 'rgba(59,130,246,0.04)');
+  quadGrad.addColorStop(1, 'rgba(59,130,246,0.12)');
+  ctx.fillStyle = quadGrad;
+  ctx.fill();
+
+  // Axes
+  ctx.globalAlpha = alpha * quadProg;
+  ctx.strokeStyle = themeText(0.25);
+  ctx.lineWidth = 1.5;
+  // X-axis (bottom)
+  ctx.beginPath();
+  ctx.moveTo(chartX, chartY + chartH);
+  ctx.lineTo(chartX + chartW + 14, chartY + chartH);
+  ctx.stroke();
+  // Y-axis (left)
+  ctx.beginPath();
+  ctx.moveTo(chartX, chartY + chartH);
+  ctx.lineTo(chartX, chartY - 14);
+  ctx.stroke();
+  // X arrowhead
+  ctx.beginPath();
+  ctx.moveTo(chartX + chartW + 14, chartY + chartH);
+  ctx.lineTo(chartX + chartW + 8, chartY + chartH - 5);
+  ctx.lineTo(chartX + chartW + 8, chartY + chartH + 5);
+  ctx.closePath();
+  ctx.fillStyle = themeText(0.25);
+  ctx.fill();
+  // Y arrowhead
+  ctx.beginPath();
+  ctx.moveTo(chartX, chartY - 14);
+  ctx.lineTo(chartX - 5, chartY - 8);
+  ctx.lineTo(chartX + 5, chartY - 8);
+  ctx.closePath();
+  ctx.fill();
+
+  // Grid quadrant divider (faint)
+  ctx.beginPath();
+  ctx.moveTo(chartX + chartW/2, chartY);
+  ctx.lineTo(chartX + chartW/2, chartY + chartH);
+  ctx.strokeStyle = themeHighlight(0.06);
+  ctx.lineWidth = 1;
+  ctx.setLineDash([2,4]);
+  ctx.stroke();
+  ctx.beginPath();
+  ctx.moveTo(chartX, chartY + chartH/2);
+  ctx.lineTo(chartX + chartW, chartY + chartH/2);
+  ctx.stroke();
+  ctx.setLineDash([]);
+
+  // Axis labels
+  ctx.fillStyle = themeText(0.6);
+  ctx.font = `500 ${clamp(W*0.012,12,15)}px Outfit`;
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'top';
+  ctx.fillText(t('competitionAxisX'), chartX + chartW/2, chartY + chartH + 18);
+  ctx.save();
+  ctx.translate(chartX - 22, chartY + chartH/2);
+  ctx.rotate(-Math.PI/2);
+  ctx.fillText(t('competitionAxisY'), 0, 0);
+  ctx.restore();
+
+  // Competitors
+  const competitors = t('competitors');
+  for(let i=0;i<competitors.length;i++){
+    const isKova = competitors[i].name === 'KOVA';
+    const appearProg = smoothstep(0.2 + i*0.07, 0.4 + i*0.07, sp);
+    if(appearProg < 0.01) continue;
+
+    ctx.globalAlpha = alpha * appearProg;
+    const px = chartX + competitors[i].x * chartW;
+    const py = chartY + chartH - competitors[i].y * chartH;
+    const r = isKova ? 14 : 8;
+
+    // Glow for KOVA
+    if(isKova){
+      const pulse = 1 + Math.sin(time*0.003) * 0.15;
+      const glowR = r * 3.5 * pulse;
+      const glow = ctx.createRadialGradient(px, py, r*0.5, px, py, glowR);
+      glow.addColorStop(0, 'rgba(59,130,246,0.40)');
+      glow.addColorStop(1, 'rgba(59,130,246,0)');
+      ctx.fillStyle = glow;
+      ctx.fillRect(px-glowR, py-glowR, glowR*2, glowR*2);
+    }
+
+    // Dot
+    ctx.beginPath();
+    ctx.arc(px, py, r, 0, Math.PI*2);
+    ctx.fillStyle = isKova ? COLORS.accent : themeNodeBg();
+    ctx.fill();
+    ctx.strokeStyle = isKova ? COLORS.accent : themeText(0.4);
+    ctx.lineWidth = isKova ? 2 : 1.2;
+    ctx.stroke();
+
+    // Inner highlight for KOVA
+    if(isKova){
+      ctx.fillStyle = '#fff';
+      ctx.font = `700 ${r*0.9}px Outfit`;
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText('K', px, py);
+    }
+
+    // Label (offset so it doesn't overlap dot)
+    const labelOffX = isKova ? 0 : (competitors[i].x > 0.5 ? -10 : 10);
+    const labelOffY = isKova ? r + 8 : 0;
+    const labelAlign = isKova ? 'center' : (competitors[i].x > 0.5 ? 'right' : 'left');
+    const labelBaseline = isKova ? 'top' : 'middle';
+
+    ctx.fillStyle = isKova ? COLORS.accent : themeText(0.7);
+    ctx.font = `${isKova?'600':'500'} ${clamp(W*0.012,12,15)}px Outfit`;
+    ctx.textAlign = labelAlign;
+    ctx.textBaseline = labelBaseline;
+    const labelX = px + labelOffX + (isKova?0:(competitors[i].x > 0.5 ? -r-2 : r+2));
+    const labelY = py + labelOffY;
+    ctx.fillText(competitors[i].name, labelX, labelY);
+
+    // Sublabel (note) below name
+    ctx.fillStyle = themeText(0.45);
+    ctx.font = `300 ${clamp(W*0.010,10,12)}px Outfit`;
+    if(isKova){
+      ctx.fillText(competitors[i].note, labelX, labelY + 17);
+    } else {
+      ctx.fillText(competitors[i].note, labelX, labelY + 13);
+    }
+  }
+
+  ctx.restore();
+}
+
+/* =========================================================
+   VISUAL: LEASE TIMELINE (Section 7)
    ========================================================= */
 function drawTimelineVisual(sp){
   const alpha = textOpacity(sp);
@@ -2090,6 +3588,16 @@ function updateStaticSections(){
   document.getElementById('sec11Body').innerHTML = t('sec11Body');
   document.getElementById('sec12Pre').textContent = t('sec12Pre');
   document.getElementById('sec12Sub').textContent = t('sec12Sub');
+  document.getElementById('secDayLifeTitle').textContent = t('secDayLifeTitle');
+  document.getElementById('secDayLifeBody').innerHTML = t('secDayLifeBody');
+  document.getElementById('secAiChatTitle').textContent = t('secAiChatTitle');
+  document.getElementById('secAiChatBody').innerHTML = t('secAiChatBody');
+  document.getElementById('secI18nTitle').textContent = t('secI18nTitle');
+  document.getElementById('secI18nBody').innerHTML = t('secI18nBody');
+  document.getElementById('secEsgTitle').textContent = t('secEsgTitle');
+  document.getElementById('secEsgBody').innerHTML = t('secEsgBody');
+  document.getElementById('secCompetitionTitle').textContent = t('secCompetitionTitle');
+  document.getElementById('secCompetitionBody').innerHTML = t('secCompetitionBody');
 }
 
 function switchLanguage(lang){
@@ -2191,7 +3699,30 @@ function updateTextOverlays(prog){
           const threshold = w / pauseWords.length;
           pauseWords[w].style.opacity = wordProg > threshold ? '1' : '0';
         }
-      } else if(secIdx === 12){
+      } else if(secIdx === 6){
+        // Section 6 (Dashboard): sub-phase text switching
+        const titleEl = document.getElementById('sec5Title');
+        const bodyEl = document.getElementById('sec5Body');
+        if(sp < 0.30){
+          titleEl.innerHTML = t('sec5Title');
+          bodyEl.innerHTML = t('sec5Body');
+          const subSp = sp / 0.33;
+          opacity = textOpacity(subSp);
+          yOff = textY(subSp);
+        } else if(sp < 0.63){
+          titleEl.innerHTML = t('sec5bTitle');
+          bodyEl.innerHTML = t('sec5bBody');
+          const subSp = (sp - 0.33) / 0.33;
+          opacity = textOpacity(subSp);
+          yOff = textY(subSp);
+        } else {
+          titleEl.innerHTML = t('sec5cTitle');
+          bodyEl.innerHTML = t('sec5cBody');
+          const subSp = (sp - 0.66) / 0.34;
+          opacity = textOpacity(subSp);
+          yOff = textY(subSp);
+        }
+      } else if(secIdx === 17){
         // Closing: fade in, hold forever (no fade out at end)
         opacity = smoothstep(0, 0.2, sp);
         yOff = sp < 0.15 ? 30*(1-sp/0.15) : 0;
@@ -2254,14 +3785,19 @@ function render(timestamp){
   // 6. Section-specific canvas content
   if(section === 3) drawFragmentedDiagram(sp);
   if(section === 4) drawKovaReveal(sp);
-  if(section === 5) drawDashboardVisual(sp);
-  if(section === 6) drawTimelineVisual(sp);
-  if(section === 7) drawRoutingVisual(sp);
-  if(section === 8) drawIntegrationsVisual(sp);
-  if(section === 9) drawImpactVisual(sp);
-  if(section === 10) drawRoadmapVisual(sp);
-  if(section === 11) drawPositioningVisual(sp);
-  if(section === 12) drawClosingVisual(sp);
+  if(section === 5) drawDayInLifeVisual(sp);
+  if(section === 6) drawDashboardVisual(sp);
+  if(section === 7) drawTimelineVisual(sp);
+  if(section === 8) drawRoutingVisual(sp);
+  if(section === 9) drawAiChatVisual(sp);
+  if(section === 10) drawIntegrationsVisual(sp);
+  if(section === 11) drawI18nVisual(sp);
+  if(section === 12) drawImpactVisual(sp);
+  if(section === 13) drawEsgVisual(sp);
+  if(section === 14) drawRoadmapVisual(sp);
+  if(section === 15) drawPositioningVisual(sp);
+  if(section === 16) drawCompetitionVisual(sp);
+  if(section === 17) drawClosingVisual(sp);
 
   // Cross-fade diagram at section edges for smooth transitions
   if(section === 2 && sp > 0.8){
@@ -2271,7 +3807,7 @@ function render(timestamp){
     ctx.restore();
   }
   if(section === 5 && sp < 0.2){
-    // Fade out Kova reveal into dashboard section
+    // Fade out Kova reveal into Day-in-Life section
     ctx.save(); ctx.globalAlpha = (1 - sp/0.2) * 0.3;
     drawKovaReveal(1);
     ctx.restore();
